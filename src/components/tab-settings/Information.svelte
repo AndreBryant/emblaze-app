@@ -2,7 +2,9 @@
 	import Table from './information/Table.svelte';
 
 	export let midiData = null;
+	export let filename;
 
+	let fileData = {};
 	let headerData = {};
 	let durationData = {};
 	let tracksData = {};
@@ -10,6 +12,9 @@
 
 	$: {
 		if (midiData) {
+			fileData.head = 'File Information';
+			fileData.properties = [{ Filename: filename }];
+
 			headerData.head = 'Header Information';
 			headerData.properties = [
 				{ Name: midiData.header.name },
@@ -38,16 +43,13 @@
 </script>
 
 <div class="flex flex-col gap-8 w-full">
-	<h2 class="text-xl">MIDI Information</h2>
+	<h2 class="text-xl font-semibold">MIDI Information</h2>
 	{#if midiData}
 		<div class="flex flex-col gap-4 overflow-auto mr-8">
 			<!-- <pre>{JSON.stringify(midiData, null, 2)}</pre> -->
 			<ul class="flex flex-col gap-8">
 				<li>
-					<h3 class="text-lg font-semibold">File Info</h3>
-					<div>
-						<p>File name: {midiData}</p>
-					</div>
+					<Table data={fileData} />
 				</li>
 				<li>
 					<Table data={headerData} />
@@ -62,7 +64,7 @@
 		</div>
 	{:else}
 		<div class="flex flex-col gap-4">
-			<p>No MIDI Loaded</p>
+			<pre class="opacity-70">No MIDI Loaded</pre>
 		</div>
 	{/if}
 </div>

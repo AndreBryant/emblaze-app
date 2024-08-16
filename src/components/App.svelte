@@ -7,13 +7,16 @@
 	export let activeTabValue = 0;
 
 	let midiData;
+	let filename;
 
 	const handleMidiLoaded = (e) => {
 		midiData = e.detail.midiData;
+		filename = e.detail.filename;
 	};
 
 	const handleMidiUnloaded = () => {
 		midiData = null;
+		filename = null;
 	};
 
 	const handleClick = (tabValue) => () => (activeTabValue = tabValue);
@@ -44,7 +47,7 @@
 	<div class="flex-grow ml-64">
 		{#each items as item}
 			{#if activeTabValue === item.value}
-				<TabContent component={item.component} props={{ midiData }} />
+				<TabContent component={item.component} props={{ midiData, filename }} />
 			{/if}
 		{/each}
 	</div>

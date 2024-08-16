@@ -4,7 +4,7 @@
 
 <table class="table-fixed w-96">
 	<thead>
-		<th class="text-lg font-semibold">{data.head}</th>
+		<th class="text-lg font-normal">{data.head}</th>
 	</thead>
 	<tbody>
 		{#each data.properties as p}

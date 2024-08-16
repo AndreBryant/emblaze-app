@@ -16,7 +16,8 @@
 				filename = midiFile.name;
 				hasMidiFileLoaded = true;
 				dispatch('midiFileLoad', {
-					midiData: midi
+					midiData: midi,
+					filename: filename
 				});
 			} catch (error) {
 				console.error('Error processing MIDI file:', error);
@@ -35,7 +36,8 @@
 		hasMidiFileLoaded = false;
 		document.getElementById('midi-file').value = null;
 		dispatch('midiFileUnloaded', {
-			midiData: null
+			midiData: null,
+			filename: null
 		});
 	};
 </script>
