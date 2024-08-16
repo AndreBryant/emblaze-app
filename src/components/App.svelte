@@ -1,4 +1,5 @@
 <script>
+	import { Piano } from 'lucide-svelte';
 	import AppTitle from './AppTitle.svelte';
 	import TabTrigger from './TabTrigger.svelte';
 	import TabContent from './TabContent.svelte';
@@ -44,10 +45,10 @@
 		</div>
 	</div>
 
-	<div class="flex-grow ml-64">
+	<div class="flex-grow ml-64 relative">
 		{#each items as item}
 			{#if activeTabValue === item.value}
-				<TabContent component={item.component} props={{ midiData, filename }} />
+				<TabContent component={item.component} logo={item.logo} props={{ midiData, filename }} />
 			{/if}
 		{/each}
 	</div>
