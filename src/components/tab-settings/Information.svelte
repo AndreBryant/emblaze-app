@@ -45,9 +45,9 @@
 <div class="flex flex-col gap-8 w-full">
 	<h2 class="text-xl font-semibold">MIDI Information</h2>
 	{#if midiData}
-		<div class="flex flex-col gap-4 overflow-auto mr-8">
+		<div class="flex flex-col gap-4 mr-8">
 			<!-- <pre>{JSON.stringify(midiData, null, 2)}</pre> -->
-			<ul class="flex flex-col gap-8">
+			<ul class="flex flex-col gap-8 w-full lg:w-[30vw]">
 				<li>
 					<Table data={fileData} />
 				</li>
@@ -64,7 +64,7 @@
 		</div>
 	{:else}
 		<div class="flex flex-col gap-4">
-			<pre class="opacity-70">No MIDI Loaded</pre>
+			<pre class="opacity-70">&gt; No MIDI file loaded.</pre>
 		</div>
 	{/if}
 </div>

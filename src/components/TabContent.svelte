@@ -10,7 +10,7 @@
 		<span class="icon">
 			<svelte:component this={logo} size={128} />
 		</span>
-		<pre class="text-center text-sm">{label}</pre>
+		<pre class="text-center text-sm select-none">{label}</pre>
 	</div>
 </div>
 <div class="h-full w-full p-8">

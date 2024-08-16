@@ -1,5 +1,4 @@
 <script>
-	import { Piano } from 'lucide-svelte';
 	import AppTitle from './AppTitle.svelte';
 	import TabTrigger from './TabTrigger.svelte';
 	import TabContent from './TabContent.svelte';
@@ -25,9 +24,9 @@
 
 <div class="flex flex-row w-full">
 	<div
-		class="p-8 flex flex-col gap-8 w-64 border-r border-r-secondary border-opacity-30 fixed h-full"
+		class="p-8 flex flex-col gap-8 w-64 border-r border-r-secondary border-opacity-30 fixed h-full select-none"
 	>
-		<AppTitle>MIDI App</AppTitle>
+		<AppTitle>Emblaze App</AppTitle>
 		<div class="flex-grow">
 			<ul class="flex flex-col gap-4">
 				{#each items as item}
