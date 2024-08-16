@@ -48,7 +48,12 @@
 	<div class="flex-grow ml-64 relative">
 		{#each items as item}
 			{#if activeTabValue === item.value}
-				<TabContent component={item.component} logo={item.logo} props={{ midiData, filename }} />
+				<TabContent
+					component={item.component}
+					label={item.label}
+					logo={item.logo}
+					props={{ midiData, filename }}
+				/>
 			{/if}
 		{/each}
 	</div>
