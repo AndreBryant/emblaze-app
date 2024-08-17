@@ -25,26 +25,26 @@
 	});
 </script>
 
-<div class="flex flex-col gap-4 h-full">
+<div class="flex flex-col gap-1 h-full">
 	<h2 class="text-xl">Render/Preview</h2>
-	<pre class="text-sm opacity-70">&gt; {$filename ? $filename : 'No MIDI File Loaded'}</pre>
+
 	<div class="flex-grow flex flex-col gap-8">
 		<div class="w-full h-full flex flex-col flex-grow justify-center items-center gap-2">
 			<!-- P5 SKETCH CONTAINER  -->
 			<div
 				id="sketch-holder"
-				class="w-full lg:w-3/4 aspect-video backdrop-blur-sm border border-black"
+				class="w-full lg:w-3/5 aspect-video backdrop-blur-sm border border-black"
 			></div>
 
 			<!-- PLAY CONTROLS -->
 			<div class="w-full flex flex-col justify-center items-center gap-2">
 				<!-- Progess Bar -->
-				<div class="w-full lg:w-3/4">
-					<input type="range" class="w-full h-1 accent-acc-2-light pointer-events-none" />
+				<div class="w-full lg:w-3/5">
+					<input type="range" class="w-full h-1 accent-acc-2-light pointer-events-none" value="0" />
 				</div>
 
 				<!-- Buttons -->
-				<div class="w-full lg:w-3/4 flex justify-between">
+				<div class="w-full lg:w-3/5 flex justify-between">
 					<!-- RENDER BUTTON -->
 					<div class="flex gap-4">
 						<button
@@ -70,4 +70,8 @@
 			</div>
 		</div>
 	</div>
+
+	<pre class="text-sm opacity-70">&gt; {$filename
+			? 'filename: ' + $filename
+			: 'No MIDI File Loaded'}</pre>
 </div>
