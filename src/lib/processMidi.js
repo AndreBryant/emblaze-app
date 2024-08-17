@@ -1,4 +1,4 @@
-import * as tone from 'tone';
+// import * as tone from 'tone';
 import * as tm from '@tonejs/midi';
 
 // const Midi = tm.default.Midi;

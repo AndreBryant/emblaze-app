@@ -4,7 +4,7 @@
 	import TabContent from './TabContent.svelte';
 	import FileInput from './FileInput.svelte';
 	export let items = [];
-	export let activeTabValue = 0;
+	export let activeTabValue = 3;
 
 	let midiData;
 	let filename;
@@ -44,7 +44,7 @@
 		</div>
 	</div>
 
-	<div class="flex-grow ml-64 relative">
+	<div class="flex-grow ml-64 relative overflow-y-auto">
 		{#each items as item}
 			{#if activeTabValue === item.value}
 				<TabContent
