@@ -20,7 +20,7 @@
 
 <div class="flex flex-row w-full relative">
 	<div
-		class={`p-8 flex flex-col gap-8 border-r border-r-secondary border-opacity-30 fixed h-full select-none w-${wStyle}`}
+		class={`p-8 flex flex-col gap-8 border-r border-r-secondary border-opacity-30 fixed h-full select-none bg-gradient-to-r from-primary from-50% to-[#050509] w-${wStyle}`}
 	>
 		<AppTitle label={'Emblaze App'} />
 		<div class="flex-grow">
@@ -41,7 +41,7 @@
 		<div class="fixed top-1/2 left-8">
 			<button
 				type="button"
-				class=" hover:bg-secondary-dark hover:text-primary rounded-lg p-1"
+				class="border hover:bg-secondary-dark hover:text-primary rounded-lg p-1"
 				on:click={toggleSidebar}
 			>
 				{#if $isSideBarCollapsed}
