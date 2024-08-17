@@ -5,7 +5,9 @@
 	export let label;
 </script>
 
-<div class="absolute top-0 left-0 h-full w-full flex justify-center items-center">
+<div
+	class="absolute top-0 left-0 h-full w-full flex justify-center items-center pointer-events-none"
+>
 	<div class="opacity-5">
 		<span class="icon">
 			<svelte:component this={logo} size={128} />

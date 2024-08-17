@@ -1,13 +1,13 @@
 <script>
 	import { midiData, filename, midiLoaded } from '$lib/stores/midi-stores.js';
+	import { activeTabValue } from '$lib/stores/app-stores.js';
 	import AppTitle from './AppTitle.svelte';
 	import TabTrigger from './TabTrigger.svelte';
 	import TabContent from './TabContent.svelte';
 	import FileInput from './FileInput.svelte';
 	export let items = [];
-	export let activeTabValue = 3;
 
-	const handleClick = (tabValue) => () => (activeTabValue = tabValue);
+	const handleClick = (tabValue) => () => ($activeTabValue = tabValue);
 </script>
 
 <div class="flex flex-row w-full">
@@ -34,7 +34,7 @@
 
 	<div class="flex-grow ml-64 relative overflow-y-auto">
 		{#each items as item}
-			{#if activeTabValue === item.value}
+			{#if $activeTabValue === item.value}
 				<TabContent component={item.component} label={item.label} logo={item.logo} />
 			{/if}
 		{/each}

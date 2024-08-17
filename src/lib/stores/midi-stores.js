@@ -5,3 +5,7 @@ export const midiData = writable(null);
 export const filename = writable(null);
 
 export const midiLoaded = writable(false);
+
+export const paused = writable(true);
+
+export const recording = writable(false);
