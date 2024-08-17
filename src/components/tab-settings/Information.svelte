@@ -1,8 +1,6 @@
 <script>
 	import Table from './information/Table.svelte';
-
-	export let midiData = null;
-	export let filename;
+	import { midiData, filename } from '$lib/stores/midi-stores.js';
 
 	let fileData = {};
 	let headerData = {};
@@ -11,23 +9,23 @@
 	let noteCount = 0;
 
 	$: {
-		if (midiData) {
+		if ($midiData) {
 			fileData.head = 'File Information';
-			fileData.properties = [{ Filename: filename }];
+			fileData.properties = [{ Filename: $filename }];
 
 			headerData.head = 'Header Information';
 			headerData.properties = [
-				{ Name: midiData.header.name },
-				{ 'Tempo Events': midiData.header.tempos.length },
-				{ 'Time Signatures': midiData.header.timeSignatures.length },
-				{ PPQ: midiData.header.ppq }
+				{ Name: $midiData.header.name },
+				{ 'Tempo Events': $midiData.header.tempos.length },
+				{ 'Time Signatures': $midiData.header.timeSignatures.length },
+				{ PPQ: $midiData.header.ppq }
 			];
 
 			durationData.head = 'Duration';
-			durationData.properties = [{ Value: midiData.duration + ' seconds' }];
+			durationData.properties = [{ Value: $midiData.duration + ' seconds' }];
 
 			noteCount = 0;
-			midiData.tracks.forEach((track) => {
+			$midiData.tracks.forEach((track) => {
 				if (track.notes) {
 					noteCount += track.notes.length;
 				}
@@ -35,7 +33,7 @@
 
 			tracksData.head = 'Tracks Information';
 			tracksData.properties = [
-				{ 'Track Count': midiData.tracks.length },
+				{ 'Track Count': $midiData.tracks.length },
 				{ 'Note Count': noteCount }
 			];
 		}
@@ -44,9 +42,9 @@
 
 <div class="flex flex-col gap-8 w-full">
 	<h2 class="text-xl font-semibold">MIDI Information</h2>
-	{#if midiData}
+	{#if $midiData}
 		<div class="flex flex-col gap-4 mr-8">
-			<!-- <pre>{JSON.stringify(midiData, null, 2)}</pre> -->
+			<!-- <pre>{JSON.stringify($midiData, null, 2)}</pre> -->
 			<ul class="flex flex-col gap-8 w-full lg:w-[30vw]">
 				<li>
 					<Table data={fileData} />

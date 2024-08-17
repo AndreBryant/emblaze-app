@@ -1,27 +1,18 @@
 <script>
 	import Button from './Buttons/Button.svelte';
-	import { createEventDispatcher } from 'svelte';
 	import { processFile } from '$lib/processMidi.js';
-
-	let midi;
-	let filename = '';
-	let hasMidiFileLoaded = false;
-	let dispatch = createEventDispatcher();
+	import { midiData, filename, midiLoaded } from '$lib/stores/midi-stores.js';
 
 	const handleFileChange = async (e) => {
 		const midiFile = e.target.files[0];
 		if (midiFile) {
 			try {
-				midi = await processFile(midiFile);
-				filename = midiFile.name;
-				hasMidiFileLoaded = true;
-				dispatch('midiFileLoad', {
-					midiData: midi,
-					filename: filename
-				});
+				$midiData = await processFile(midiFile);
+				$filename = midiFile.name;
+				$midiLoaded = true;
 			} catch (error) {
 				console.error('Error processing MIDI file:', error);
-				hasMidiFileLoaded = false;
+				$midiLoaded = false;
 			}
 		}
 	};
@@ -31,14 +22,10 @@
 	};
 
 	const unloadFile = () => {
-		midi = null;
-		filename = '';
-		hasMidiFileLoaded = false;
+		$filename = '';
+		$midiData = null;
+		$midiLoaded = false;
 		document.getElementById('midi-file').value = null;
-		dispatch('midiFileUnloaded', {
-			midiData: null,
-			filename: null
-		});
 	};
 </script>
 
@@ -50,7 +37,7 @@
 	on:change={handleFileChange}
 	class="hidden"
 />
-{#if hasMidiFileLoaded}
+{#if $midiLoaded}
 	<Button
 		type="button"
 		variant="destructive"
@@ -63,7 +50,7 @@
 <Button
 	type="button"
 	variant="primary"
-	value={`${filename ? filename : 'Select File'}`}
+	value={`${$filename ? $filename : 'Select File'}`}
 	wFull={true}
 	onclick={triggerFileInput}
 />

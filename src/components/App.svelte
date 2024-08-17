@@ -1,23 +1,11 @@
 <script>
+	import { midiData, filename, midiLoaded } from '$lib/stores/midi-stores.js';
 	import AppTitle from './AppTitle.svelte';
 	import TabTrigger from './TabTrigger.svelte';
 	import TabContent from './TabContent.svelte';
 	import FileInput from './FileInput.svelte';
 	export let items = [];
 	export let activeTabValue = 3;
-
-	let midiData;
-	let filename;
-
-	const handleMidiLoaded = (e) => {
-		midiData = e.detail.midiData;
-		filename = e.detail.filename;
-	};
-
-	const handleMidiUnloaded = () => {
-		midiData = null;
-		filename = null;
-	};
 
 	const handleClick = (tabValue) => () => (activeTabValue = tabValue);
 </script>
@@ -40,19 +28,14 @@
 			</ul>
 		</div>
 		<div class=" ">
-			<FileInput on:midiFileLoad={handleMidiLoaded} on:midiFileUnloaded={handleMidiUnloaded} />
+			<FileInput />
 		</div>
 	</div>
 
 	<div class="flex-grow ml-64 relative overflow-y-auto">
 		{#each items as item}
 			{#if activeTabValue === item.value}
-				<TabContent
-					component={item.component}
-					label={item.label}
-					logo={item.logo}
-					props={{ midiData, filename }}
-				/>
+				<TabContent component={item.component} label={item.label} logo={item.logo} />
 			{/if}
 		{/each}
 	</div>
