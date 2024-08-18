@@ -55,7 +55,7 @@
 	}
 </script>
 
-<button {type} class={style + 'flex flex-row gap-2'} on:click={onclick}>
+<button {type} class={style + 'flex flex-row gap-2 truncate'} on:click={onclick}>
 	<span class="icon">
 		<svelte:component this={icon} size={22} />
 	</span>

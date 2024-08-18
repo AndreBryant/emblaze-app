@@ -10,7 +10,7 @@
 <li>
 	<button
 		type="button"
-		class={`flex gap-2 text-md items-center underline-offset-4 transition-all hover:opacity-90 ${active ? 'opacity-90 underline' : 'opacity-55'}`}
+		class={`flex gap-2 text-md items-center underline-offset-4 truncate hover:opacity-90 ${active ? 'opacity-90 underline' : 'opacity-55'}`}
 		on:click={onClick}
 	>
 		<span class="icon ml-1">
