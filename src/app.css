@@ -9,6 +9,27 @@ body {
 	width: 100vw;
 }
 
+/* SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+	width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #6b7280;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #e5e7eb;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #f9fafb;
+}
+
 /* LMAO */
 #sidebar,
 #main-content,
