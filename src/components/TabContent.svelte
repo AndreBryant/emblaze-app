@@ -24,6 +24,6 @@
 		<pre class="text-center text-sm select-none">{label}</pre>
 	</div>
 </div>
-<div class="h-full w-full p-8">
+<div class="h-full w-full py-8 px-12">
 	<svelte:component this={component} {...props} />
 </div>

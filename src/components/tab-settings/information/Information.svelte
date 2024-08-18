@@ -41,7 +41,7 @@
 	}
 </script>
 
-<div class="flex flex-col gap-8 w-full">
+<div class="flex flex-col gap-8 w-full backdrop-blur-sm">
 	<h2 class="text-xl font-semibold">MIDI Information</h2>
 	{#if !$midiData}
 		<NoFileLoaded />
