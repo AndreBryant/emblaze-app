@@ -1,5 +1,5 @@
 <script>
-	import Table from './information/Table.svelte';
+	import Table from './Table.svelte';
 	import { midiData, filename } from '$lib/stores/midi-stores.js';
 
 	let fileData = {};

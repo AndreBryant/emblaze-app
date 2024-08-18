@@ -1,8 +1,8 @@
 <script>
 	import Button from './Buttons/Button.svelte';
-	import { FileX2, FileCheck2 } from 'lucide-svelte';
+	import { FileX2, FileCheck2, File } from 'lucide-svelte';
 	import { processFile } from '$lib/processMidi.js';
-	import { isSideBarCollapsed } from '$lib/stores/app-stores.js';
+	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	import { midiData, filename, midiLoaded } from '$lib/stores/midi-stores.js';
 
 	const handleFileChange = async (e) => {
@@ -40,9 +40,9 @@
 	class="hidden"
 />
 {#if $midiLoaded}
-	{#if $isSideBarCollapsed}
+	{#if $isSidebarCollapsed}
 		<Button variant="destructive" onclick={unloadFile}>
-			<FileX2 />
+			<FileX2 size={22} />
 		</Button>
 	{:else}
 		<Button
@@ -55,9 +55,13 @@
 	{/if}
 {/if}
 
-{#if $isSideBarCollapsed}
+{#if $isSidebarCollapsed}
 	<Button variant="primary" onclick={triggerFileInput}>
-		<FileCheck2 />
+		{#if $midiLoaded}
+			<FileCheck2 size={22} />
+		{:else}
+			<File size={22} />
+		{/if}
 	</Button>
 {:else}
 	<Button

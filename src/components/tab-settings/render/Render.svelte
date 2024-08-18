@@ -1,7 +1,7 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
 	import { filename, paused } from '$lib/stores/midi-stores.js';
-	import Button from '../Buttons/Button.svelte';
+	import Button from '../../Buttons/Button.svelte';
 
 	import { Play, Pause, ChevronsRight, ChevronLeft, Boxes } from 'lucide-svelte';
 

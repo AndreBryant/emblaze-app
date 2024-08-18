@@ -1,10 +1,12 @@
 <script>
-	import App from '../components/App.svelte';
-	import Information from '../components/tab-settings/Information.svelte';
-	import Customize from '../components/tab-settings/Customize.svelte';
-	import Filters from '../components/tab-settings/Filters.svelte';
-	import Render from '../components/tab-settings/Render.svelte';
-	import SavedSettings from '../components/tab-settings/SavedSettings.svelte';
+	import Sidebar from '../components/Sidebar.svelte';
+	import MainContent from '../components/MainContent.svelte';
+
+	import Information from '../components/tab-settings/information/Information.svelte';
+	import Customize from '../components/tab-settings/customize/Customize.svelte';
+	import Filters from '../components/tab-settings/filters/Filters.svelte';
+	import Render from '../components/tab-settings/render/Render.svelte';
+	import SavedSettings from '../components/tab-settings/saved-settings/SavedSettings.svelte';
 	import { Info, Settings, Sparkles, Video, Save } from 'lucide-svelte';
 
 	let items = [
@@ -16,6 +18,7 @@
 	];
 </script>
 
-<div class="flex w-full h-full">
-	<App {items} />
+<div class="flex h-full w-full flex-row relative">
+	<Sidebar {items} />
+	<MainContent {items} />
 </div>
