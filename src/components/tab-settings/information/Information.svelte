@@ -1,6 +1,7 @@
 <script>
-	import Table from './Table.svelte';
 	import { midiData, filename } from '$lib/stores/midi-stores.js';
+	import NoFileLoaded from '../../NoFileLoaded.svelte';
+	import Table from './Table.svelte';
 
 	let fileData = {};
 	let headerData = {};
@@ -42,7 +43,9 @@
 
 <div class="flex flex-col gap-8 w-full">
 	<h2 class="text-xl font-semibold">MIDI Information</h2>
-	{#if $midiData}
+	{#if !$midiData}
+		<NoFileLoaded />
+	{:else}
 		<div class="flex flex-col gap-4 mr-8">
 			<!-- <pre>{JSON.stringify($midiData, null, 2)}</pre> -->
 			<ul class="flex flex-col gap-8 w-full lg:w-[30vw]">
@@ -59,10 +62,6 @@
 					<Table data={tracksData} />
 				</li>
 			</ul>
-		</div>
-	{:else}
-		<div class="flex flex-col gap-4">
-			<pre class="opacity-70">&gt; No MIDI file loaded.</pre>
 		</div>
 	{/if}
 </div>

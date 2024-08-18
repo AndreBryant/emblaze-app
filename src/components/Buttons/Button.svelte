@@ -19,9 +19,9 @@
 			break;
 		case 'destructive':
 			style =
-				'my-2 px-2 py-1 text-sm text-secondary bg-red-500 font-semibold rounded-lg' +
+				'my-2 px-2 py-1 text-sm text-secondary bg-red-700 font-semibold rounded-lg' +
 				(wFull ? ' w-full' : '') +
-				' hover:bg-red-600 hover:cursor-pointer' +
+				' hover:bg-red-800 hover:cursor-pointer' +
 				' transition duration-150' +
 				' overflow-hidden text-ellipsis whitespace-nowrap';
 

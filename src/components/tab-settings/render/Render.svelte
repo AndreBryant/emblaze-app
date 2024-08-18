@@ -15,6 +15,8 @@
 
 			let parent = document.getElementById('sketch-holder');
 			p5Sketch = createSketch(p5.default, parent);
+
+			// p5Sketch.currentTick|currentTime <-- modify these here but remember to pause then play again when changing ticks
 		}
 	});
 
@@ -23,6 +25,8 @@
 			p5Sketch.remove();
 		}
 	});
+
+	const togglePlay = () => ($paused = !$paused);
 </script>
 
 <div class="flex flex-col gap-1 h-full">
@@ -58,11 +62,13 @@
 					<!-- PLAY/PAUSE + SEEK BUTTONS -->
 					<div class="justify-center flex gap-8">
 						<Button variant="ghost"><ChevronLeft /></Button>
-						{#if $paused}
-							<Button variant="primary"><Play /></Button>
-						{:else}
-							<Button variant="primary"><Pause /></Button>
-						{/if}
+						<Button variant="primary" onclick={togglePlay}>
+							{#if $paused}
+								<Play />
+							{:else}
+								<Pause />
+							{/if}
+						</Button>
 						<Button variant="ghost"><ChevronsRight /></Button>
 					</div>
 					<div></div>

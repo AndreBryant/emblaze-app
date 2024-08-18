@@ -16,11 +16,11 @@
 
 <div
 	id="sidebar"
-	class={`p-8 flex flex-col gap-8 border-r border-r-secondary border-opacity-30 fixed h-full select-none bg-gradient-to-r from-primary from-50% to-[#030920] ${$isSidebarCollapsed ? ' w-24' : ' w-64'}`}
+	class={`p-8 flex flex-col gap-8 border-r border-r-secondary border-opacity-30 fixed h-full select-none bg-gradient-to-r from-primary from-50% to-[#010510] ${$isSidebarCollapsed ? ' w-24' : ' w-64'}`}
 >
 	<AppTitle label={'Emblaze MIDI'} />
 	<div class="flex-grow">
-		<ul class="flex flex-col gap-6 justify-center">
+		<ul class="flex flex-col gap-8 justify-center">
 			{#each items as item}
 				<TabTrigger
 					logo={item.logo}

@@ -1,12 +1,21 @@
 <script>
+	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	export let component;
 	export let props = {};
 	export let logo;
 	export let label;
+
+	let wStyle = '64';
+
+	$: wStyle = $isSidebarCollapsed ? '24' : '64';
 </script>
 
 <div
-	class="absolute top-0 left-0 h-full w-full flex justify-center items-center pointer-events-none"
+	class={'fixed top-0 left-0 h-full flex justify-center items-center pointer-events-none ' +
+		' ml-' +
+		wStyle +
+		' ' +
+		($isSidebarCollapsed ? 'w-[calc(100vw-6rem)]' : 'w-[calc(100vw-16rem)]')}
 >
 	<div class="opacity-5">
 		<span class="icon">
