@@ -10,6 +10,8 @@ body {
 }
 
 /* LMAO */
-* {
+#sidebar,
+#main-content,
+#main-content-icon-bg {
 	transition: 0.35s;
 }

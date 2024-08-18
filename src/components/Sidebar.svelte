@@ -17,6 +17,7 @@
 </script>
 
 <div
+	id="sidebar"
 	class={`p-8 flex flex-col gap-8 border-r
 	border-r-secondary border-opacity-30
 	fixed h-full select-none

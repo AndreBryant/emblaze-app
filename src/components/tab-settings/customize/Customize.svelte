@@ -2,28 +2,7 @@
 	import LoadSave from './LoadSave.svelte';
 	import SaveCurrent from './SaveCurrent.svelte';
 	import PianoFields from './fields/PianoFields.svelte';
-	// <!-- Note Canvas -->
-	// <div>
-	// 	<h3>Note Canvas Customizations</h3>
-	// 	<p>notespeed</p>
-	// 	<p>key flare</p>
-	// 	<p>particles</p>
-	// </div>
-
-	// <!-- if particles:on -->
-	// <div>
-	// 	<h3>Particles</h3>
-	// 	<p>turbulence</p>
-	// 	<p>numOfParticles per note</p>
-	// 	<p>shoot velocity</p>
-	// </div>
-
-	// <!-- if flare:on -->
-	// <div>
-	// 	<h3>Key Flare</h3>
-	// 	<p>intensity</p>
-	// 	<p>type: fire, spark, or bubbles(? haha)</p>
-	// </div>
+	import NoteCanvasFields from './fields/NoteCanvasFields.svelte';
 
 	// <!-- Color Scheme -->
 	// <div>
@@ -53,5 +32,6 @@
 	<div class="flex flex-col gap-8">
 		<SaveCurrent />
 		<PianoFields />
+		<NoteCanvasFields />
 	</div>
 </div>

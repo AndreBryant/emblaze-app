@@ -3,9 +3,9 @@
 </script>
 
 <!-- Save current Setting -->
-<div class="w-full lg:w-96 flex flex-col gap-2">
+<div class="w-full lg:w--5/12 flex flex-col gap-2">
 	<h3 class="text-lg font-semibold">Save Current Settings</h3>
-	<div class="flex gap-2 items-center w-full lg:w-96 font-mono text-secondary-dark">
+	<div class="flex gap-2 items-center w-full lg:w-5/12 font-mono text-secondary-dark">
 		<div>
 			<Button variant="primary">Save</Button>
 		</div>

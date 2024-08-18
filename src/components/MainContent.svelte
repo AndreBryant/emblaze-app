@@ -7,7 +7,10 @@
 	export let items = [];
 </script>
 
-<div class={`flex-grow ${$isSidebarCollapsed ? ' ml-24' : ' ml-64'} relative overflow-y-auto`}>
+<div
+	id="main-content"
+	class={`flex-grow ${$isSidebarCollapsed ? ' ml-24' : ' ml-64'} relative overflow-y-auto`}
+>
 	{#each items as item}
 		{#if $activeTabValue === item.value}
 			<TabContent component={item.component} label={item.label} logo={item.logo} />

@@ -11,6 +11,7 @@
 </script>
 
 <div
+	id="main-content-icon-bg"
 	class={'fixed top-0 left-0 h-full flex justify-center items-center pointer-events-none ' +
 		' ml-' +
 		wStyle +

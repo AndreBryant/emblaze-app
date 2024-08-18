@@ -17,7 +17,6 @@
 			</td>
 			<td>
 				<div class="flex gap-4 col-span-6">
-					<input type="checkbox" checked />
 					<div class="flex items-center">
 						<pre>Piano Blaze Color: </pre>
 						<input
