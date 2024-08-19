@@ -10,7 +10,7 @@ const settingIDs = writable([]);
 // ]
 
 // [{sID, piano}, {sID, piano}, {sID, piano}, ...]
-const cPiano = writable(null);
+const cPiano = writable([]);
 
 // [{sID, noteCanvas}, {sID, noteCanvas}, {sID, noteCanvas}, ...]
 const cNoteCanvas = writable(null);
@@ -46,4 +46,6 @@ const video = {
 	store: cVideo
 };
 
-export { ids, piano, noteCanvas, colorScheme, video };
+const hasError = writable({ value: false, errors: [] });
+
+export { ids, piano, noteCanvas, colorScheme, video, hasError };

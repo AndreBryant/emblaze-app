@@ -1,6 +1,6 @@
 <script>
 	import { browser } from '$app/environment';
-	import { ids } from '$lib/stores/customize-stores.js';
+	import { hasError, ids, piano } from '$lib/stores/customize-stores.js';
 	import { onMount } from 'svelte';
 
 	import LoadSave from './LoadSave.svelte';
@@ -11,27 +11,32 @@
 	import VideoFields from './fields/VideoFields.svelte';
 
 	let idStore;
-	let itemField = ids.itemField;
-
+	let idField = ids.itemField;
 	$: idStore = ids.store;
+
+	let pianoStore;
+	let pianoField = piano.itemField;
+	$: pianoStore = piano.store;
 
 	const fetchDataFromLocalStorage = () => {
 		if (browser) {
-			const data = localStorage.getItem(itemField) || '[]';
-			console.log('fetched from ls', JSON.parse(data));
+			let data = localStorage.getItem(idField) || '[]';
 			$idStore = JSON.parse(data);
+
+			data = localStorage.getItem(pianoField) || '[]';
+			$pianoStore = JSON.parse(data);
 		}
 	};
 
 	const debugLocal = () => {
 		if (browser) {
-			(() => localStorage.removeItem(itemField))();
+			(() => localStorage.clear())();
 			fetchDataFromLocalStorage();
 		}
 	};
 
 	const handleCustomizeSave = (e) => {
-		if (e.detail.save) {
+		if (e.detail.save && !$hasError.value) {
 			const id = e.detail.id;
 			pianoFieldsRef.handleSave(id);
 			noteCanvasFieldsRef.handleSave(id);
@@ -50,14 +55,15 @@
 	});
 </script>
 
-<pre>{JSON.stringify($idStore)}</pre>
-<button
+<!-- <pre>{JSON.stringify($pianoStore, null, 2)}</pre> -->
+<!-- <pre>{JSON.stringify($idStore, null, 2)}</pre> -->
+<!-- <button
 	type="button"
 	class="border px-4 py-1 bg-yellow-400 text-primary border-primary"
 	on:click={debugLocal}
 >
 	debug Reset LocalStorage
-</button>
+</button> -->
 
 <div class="flex flex-col gap-8 pb-8 backdrop-blur-sm">
 	<h2 class="text-xl">Customize</h2>

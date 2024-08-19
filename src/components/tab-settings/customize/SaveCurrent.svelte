@@ -1,6 +1,6 @@
 <script>
 	import { browser } from '$app/environment';
-	import { ids } from '$lib/stores/customize-stores.js';
+	import { hasError, ids } from '$lib/stores/customize-stores.js';
 	import { createEventDispatcher } from 'svelte';
 	import Button from '../../Buttons/Button.svelte';
 
@@ -36,7 +36,7 @@
 <div class="w-full lg:w--5/12 flex flex-col gap-2">
 	<h3 class="text-lg font-semibold">Save Current Settings</h3>
 	<div class="flex gap-2 items-center w-full lg:w-5/12 font-mono text-secondary-dark">
-		<div>
+		<div class={`${$hasError.value ? 'opacity-40 pointer-events-none select-none' : ''}`}>
 			<Button variant="primary" onclick={handleSave}>Save</Button>
 		</div>
 		<input
