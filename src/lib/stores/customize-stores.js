@@ -1,15 +1,49 @@
 import { writable } from 'svelte/store';
 
-// Fetch these from local storage
+const key = 'emblaze-'; //'emblaze-' +  storeName
+const field = 'emblaze-';
 
-const savedSettingNames = writable(null);
+const settingIDs = writable([]);
 
+// [
+// ... settingIDs
+// ]
+
+// [{sID, piano}, {sID, piano}, {sID, piano}, ...]
 const cPiano = writable(null);
 
+// [{sID, noteCanvas}, {sID, noteCanvas}, {sID, noteCanvas}, ...]
 const cNoteCanvas = writable(null);
 
+// [{sID, colorScheme}, {sID, colorScheme}, {sID, colorScheme}, ...]
 const cColorScheme = writable(null);
 
+// [{sID, video}, {sID, video}, {sID, video}, ...]
 const cVideo = writable(null);
 
-export { cPiano, cNoteCanvas, cColorScheme, cVideo };
+const ids = {
+	itemField: field + 'settingIDs',
+	store: settingIDs
+};
+
+const piano = {
+	itemField: field + 'cpiano',
+	store: cPiano
+};
+
+const noteCanvas = {
+	itemField: field + 'cNoteCanvas',
+	store: cNoteCanvas
+};
+
+const colorScheme = {
+	item: field + 'cColorScheme',
+	store: cColorScheme
+};
+
+const video = {
+	item: field + 'cVideo',
+	store: cVideo
+};
+
+export { ids, piano, noteCanvas, colorScheme, video };

@@ -1,4 +1,11 @@
 <script>
+	import { piano } from '$lib/stores/customize-stores.js';
+
+	const handleSave = (id) => {
+		console.log('piano fields receives customize save', id);
+	};
+
+	export { handleSave };
 </script>
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">

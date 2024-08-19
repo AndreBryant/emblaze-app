@@ -1,5 +1,35 @@
 <script>
+	import { browser } from '$app/environment';
+	import { ids } from '$lib/stores/customize-stores.js';
+	import { createEventDispatcher } from 'svelte';
 	import Button from '../../Buttons/Button.svelte';
+
+	let idStore;
+	let itemField = ids.itemField;
+
+	$: idStore = ids.store;
+
+	const dispatch = createEventDispatcher();
+
+	let name = '';
+	const handleSave = () => {
+		if (browser) {
+			const arr = $idStore.slice();
+			arr.push(name);
+
+			const dataString = JSON.stringify(Array.from(new Set(arr)));
+			localStorage.setItem(itemField, dataString);
+			$idStore = JSON.parse(localStorage.getItem(itemField));
+
+			dispatch('customizeSave', {
+				save: true,
+				id: name,
+				overwrite: true // TODO: handle this later
+			});
+
+			name = '';
+		}
+	};
 </script>
 
 <!-- Save current Setting -->
@@ -7,12 +37,11 @@
 	<h3 class="text-lg font-semibold">Save Current Settings</h3>
 	<div class="flex gap-2 items-center w-full lg:w-5/12 font-mono text-secondary-dark">
 		<div>
-			<Button variant="primary">Save</Button>
+			<Button variant="primary" onclick={handleSave}>Save</Button>
 		</div>
 		<input
 			type="text"
-			name=""
-			id=""
+			bind:value={name}
 			placeholder="name the setting"
 			class="bg-primary border border-secondary-acc px-2 py-1 w-full"
 		/>

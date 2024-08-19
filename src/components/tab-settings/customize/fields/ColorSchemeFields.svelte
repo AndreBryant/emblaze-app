@@ -1,4 +1,9 @@
 <script>
+	const handleSave = (id) => {
+		console.log('color scheme fields receives customize save', id);
+	};
+
+	export { handleSave };
 </script>
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">

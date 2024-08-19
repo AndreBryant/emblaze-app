@@ -1,9 +1,9 @@
 <script>
-	export let type;
-	export let variant;
-	export let value;
+	export let type = 'button';
+	export let variant = '';
+	export let value = '';
 	export let wFull = false;
-	export let onclick;
+	export let onclick = () => {};
 	export let icon = null;
 	let style;
 

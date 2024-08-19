@@ -1,11 +1,9 @@
 <script>
-	// <!-- Video Customizations -->
-	// <div>
-	// 	<h3>Video Customizations</h3>
-	// 	<p>dimensions: 360p 720p 1080p 4k 8k</p>
-	// 	<p>Note Size: tick based|time based</p>
-	// 	<p>framerate: 60 | 30 | custom:max[60]</p>
-	// </div>
+	const handleSave = (id) => {
+		console.log('video fields receives customize save', id);
+	};
+
+	export { handleSave };
 </script>
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">
