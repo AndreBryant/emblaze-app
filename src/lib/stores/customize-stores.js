@@ -1,13 +1,11 @@
 import { writable } from 'svelte/store';
 
-const key = 'emblaze-'; //'emblaze-' +  storeName
 const field = 'emblaze-';
-
-const settingIDs = writable(['default']);
 
 // [
 // ... settingIDs
 // ]
+const settingIDs = writable(['default']);
 
 // [{sID, piano}, {sID, piano}, {sID, piano}, ...]
 const pianoDefault = {
@@ -23,16 +21,16 @@ const pianoDefault = {
 const cPiano = writable([pianoDefault]);
 
 // [{sID, noteCanvas}, {sID, noteCanvas}, {sID, noteCanvas}, ...]
-const cNoteCanvas = writable(null);
+const cNoteCanvas = writable([]);
 
 // [{sID, colorScheme}, {sID, colorScheme}, {sID, colorScheme}, ...]
-const cColorScheme = writable(null);
+const cColorScheme = writable([]);
 
 // [{sID, video}, {sID, video}, {sID, video}, ...]
-const cVideo = writable(null);
+const cVideo = writable([]);
 
-const cLoadedSetting = writable(null);
 // if null, load default settings
+const cLoadedSetting = writable(null);
 
 const ids = {
 	itemField: field + 'settingIDs',

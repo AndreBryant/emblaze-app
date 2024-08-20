@@ -1,6 +1,13 @@
 <script>
 	import { browser } from '$app/environment';
-	import { hasError, ids, piano } from '$lib/stores/customize-stores.js';
+	import {
+		hasError,
+		ids,
+		piano,
+		noteCanvas,
+		colorScheme,
+		video
+	} from '$lib/stores/customize-stores.js';
 	import { onMount } from 'svelte';
 
 	import LoadSave from './LoadSave.svelte';
@@ -18,16 +25,44 @@
 	let pianoField = piano.itemField;
 	$: pianoStore = piano.store;
 
+	let noteCanvasStore;
+	let noteCanvasField = noteCanvas.itemField;
+	$: noteCanvasStore = noteCanvas.store;
+
+	let colorSchemeStore;
+	let ColorSchemeField = colorScheme.itemField;
+	$: colorSchemeStore = colorScheme.store;
+
+	let videoStore;
+	let videoField = video.itemField;
+	$: videoStore = video.store;
+
 	const fetchDataFromLocalStorage = () => {
 		if (browser) {
+			// id
 			let data = localStorage.getItem(idField) || '[]';
 			let dataStr = JSON.parse(data).filter((id) => id !== 'default');
 			$idStore = Array.from(new Set($idStore.concat(dataStr)));
 
+			// piano
 			data = localStorage.getItem(pianoField) || '[]';
 			dataStr = JSON.parse(data).filter((piano) => piano.sID !== 'default');
-			console.log(JSON.parse(localStorage.getItem(pianoField)));
 			$pianoStore = Array.from(new Set($pianoStore.concat(dataStr)));
+
+			// note canvas
+			data = localStorage.getItem(noteCanvasField) || '[]';
+			dataStr = JSON.parse(data).filter((noteCanvas) => noteCanvas.sID !== 'default');
+			$noteCanvasStore = Array.from(new Set($noteCanvasStore.concat(dataStr)));
+
+			// color scheme
+			data = localStorage.getItem(ColorSchemeField) || '[]';
+			dataStr = JSON.parse(data).filter((colorScheme) => colorScheme.sID !== 'default');
+			$colorSchemeStore = Array.from(new Set($colorSchemeStore.concat(dataStr)));
+
+			// video
+			data = localStorage.getItem(videoField) || '[]';
+			dataStr = JSON.parse(data).filter((video) => video.sID !== 'default');
+			$videoStore = Array.from(new Set($videoStore.concat(dataStr)));
 		}
 	};
 
