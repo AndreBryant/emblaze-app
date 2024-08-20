@@ -22,18 +22,18 @@
 		if (browser) {
 			let data = localStorage.getItem(idField) || '[]';
 			let dataStr = JSON.parse(data).filter((id) => id !== 'default');
-			$idStore = $idStore.concat(dataStr);
+			$idStore = Array.from(new Set($idStore.concat(dataStr)));
 
 			data = localStorage.getItem(pianoField) || '[]';
 			dataStr = JSON.parse(data).filter((piano) => piano.sID !== 'default');
-			$pianoStore = $pianoStore.concat(dataStr);
+			console.log(JSON.parse(localStorage.getItem(pianoField)));
+			$pianoStore = Array.from(new Set($pianoStore.concat(dataStr)));
 		}
 	};
 
 	const debugLocal = () => {
 		if (browser) {
 			(() => localStorage.clear())();
-			fetchDataFromLocalStorage();
 		}
 	};
 
@@ -52,6 +52,7 @@
 			noteCanvasFieldsRef.handleSave(id);
 			colorSchemeFieldsRef.handleSave(id);
 			videoFieldsRef.handleSave(id);
+			loadSaveRef.setSelected(id);
 		}
 	};
 
@@ -59,13 +60,14 @@
 	let noteCanvasFieldsRef;
 	let colorSchemeFieldsRef;
 	let videoFieldsRef;
+	let loadSaveRef;
 
 	onMount(() => {
 		fetchDataFromLocalStorage();
 	});
 </script>
 
-<pre>{JSON.stringify($pianoStore, null, 2)}</pre>
+<!-- <pre>{JSON.stringify($pianoStore, null, 2)}</pre>
 <pre>{JSON.stringify($idStore, null, 2)}</pre>
 <button
 	type="button"
@@ -73,13 +75,13 @@
 	on:click={debugLocal}
 >
 	debug Reset LocalStorage
-</button>
+</button> -->
 
 <div class="flex flex-col gap-8 pb-8 backdrop-blur-sm">
 	<h2 class="text-xl">Customize</h2>
 
 	<div class="flex flex-col gap-4">
-		<LoadSave on:loadSave={handleLoadSetting} />
+		<LoadSave bind:this={loadSaveRef} on:loadSave={handleLoadSetting} />
 		<hr class="opacity-40" />
 	</div>
 	<div class="flex flex-col gap-8">

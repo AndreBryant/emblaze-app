@@ -15,13 +15,19 @@
 			id: selected
 		});
 	};
+
+	const setSelected = (id) => {
+		selected = id;
+	};
+
+	export { setSelected };
 </script>
 
 <!-- load Saved Setting -->
 <div class="flex flex-col gap-4">
 	<h3 class="text-lg font-semibold">Load Saved Settings</h3>
 	<div class="flex gap-2 items-center w-full lg:w-5/12 font-mono text-secondary-dark">
-		<pre>Selected: {selected}</pre>
+		<pre>Selected:</pre>
 		<select
 			name=""
 			id=""

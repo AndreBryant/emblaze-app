@@ -27,6 +27,15 @@
 
 	const handleLoadSetting = (id) => {
 		console.log('piano load', id);
+		if (browser) {
+			console.log($pianoStore);
+			const data = $pianoStore.filter((piano) => piano.sID === id)[0]['piano'];
+			pianoRimColor = data.pianoRimColor;
+			pianoBlazeColor = data.pianoBlazeColor;
+			numOfKeys = data.numOfKeys;
+			startKey = data.startKey;
+			lastKey = data.lastKey;
+		}
 	};
 
 	let pianoRimColor = '#C27803';

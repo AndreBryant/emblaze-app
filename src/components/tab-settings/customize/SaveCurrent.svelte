@@ -18,7 +18,7 @@
 		if (browser) {
 			const arr = $idStore.slice();
 			arr.push(name);
-			console.log(arr);
+
 			const dataString = JSON.stringify(Array.from(new Set(arr)));
 			localStorage.setItem(itemField, dataString);
 			$idStore = JSON.parse(localStorage.getItem(itemField));
