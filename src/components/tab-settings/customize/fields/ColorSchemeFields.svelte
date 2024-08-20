@@ -23,5 +23,16 @@
 				</div>
 			</td>
 		</tr>
+		<tr>
+			<td class="py-1">
+				<pre>color by:</pre>
+			</td>
+			<td>
+				<select class="bg-primary border border-secondary-acc px-2 py-1 w-full">
+					<option value="channel">channel</option>
+					<option value="track">track</option>
+				</select>
+			</td>
+		</tr>
 	</table>
 </div>
