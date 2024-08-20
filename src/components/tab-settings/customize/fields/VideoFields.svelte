@@ -1,11 +1,48 @@
 <script>
+	import { browser } from '$app/environment';
+	import { video } from '$lib/stores/customize-stores.js';
+
+	let videoStore;
+	let itemField;
+
+	$: videoStore = video.store;
+
 	const handleSave = (id) => {
-		console.log('video fields receives customize save', id);
-	};
-	const handleLoadSetting = (id) => {
-		console.log('video load', id);
+		if (browser) {
+			const videoData = {
+				sID: id,
+				video: {
+					quality,
+					fps
+				}
+			};
+
+			let arr = $videoStore.slice();
+			arr = arr.filter((v) => v.sID !== id);
+			arr.push(videoData);
+
+			const dataString = JSON.stringify(arr);
+			localStorage.setItem(itemField, dataString);
+			$videoStore = JSON.parse(localStorage.getItem(itemField));
+		}
 	};
 
+	const handleLoadSetting = (id) => {
+		if (browser) {
+			const data = $videoStore.filter((video) => video.sID === id)[0]['video'];
+			quality = data.quality;
+			fps = data.fps;
+		}
+	};
+
+	let quality = '1';
+	let fps = '30';
+
+	$: {
+		let val = Number(fps);
+		if (val < 0) fps = '0';
+		if (val > 60) fps = '60';
+	}
 	export { handleSave, handleLoadSetting };
 </script>
 
@@ -20,12 +57,15 @@
 			</td>
 			<td>
 				<div class="flex gap-4">
-					<select name="" id="" class="bg-primary border border-secondary-acc px-2 py-1 w-full">
-						<option value="">360p</option>
-						<option value="" selected>720p</option>
-						<option value="">1080p</option>
-						<option value="">4k</option>
-						<option value="">8k</option>
+					<select
+						bind:value={quality}
+						class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+					>
+						<option value="0">360p</option>
+						<option value="1">720p</option>
+						<option value="2">1080p</option>
+						<option value="3">4k</option>
+						<option value="4">8k</option>
 					</select>
 				</div>
 			</td>
@@ -38,7 +78,13 @@
 			</td>
 			<td>
 				<div class="flex gap-4">
-					<input type="number" class=" bg-primary border border-secondary-acc font-mono w-full" />
+					<input
+						type="number"
+						class=" bg-primary border border-secondary-acc font-mono w-full px-3"
+						bind:value={fps}
+						min="0"
+						max="60"
+					/>
 				</div>
 			</td>
 		</tr>

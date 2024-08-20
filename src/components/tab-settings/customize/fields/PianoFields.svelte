@@ -149,7 +149,7 @@
 					bind:value={startKey}
 					min={0}
 					max={lastKey}
-					class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+					class="bg-primary border border-secondary-acc px-3 py-1 w-full"
 				/>
 			</td>
 		</tr>
@@ -163,7 +163,7 @@
 					bind:value={lastKey}
 					min={startKey}
 					max={127}
-					class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+					class="bg-primary border border-secondary-acc px-3 py-1 w-full"
 				/>
 			</td>
 		</tr>

@@ -27,7 +27,14 @@ const cNoteCanvas = writable([]);
 const cColorScheme = writable([]);
 
 // [{sID, video}, {sID, video}, {sID, video}, ...]
-const cVideo = writable([]);
+const videoDefault = {
+	sID: 'default',
+	video: {
+		quality: '1',
+		fps: '30'
+	}
+};
+const cVideo = writable([videoDefault]);
 
 // if null, load default settings
 const cLoadedSetting = writable(null);
