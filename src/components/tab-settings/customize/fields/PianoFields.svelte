@@ -25,6 +25,10 @@
 		}
 	};
 
+	const handleLoadSetting = (id) => {
+		console.log('piano load', id);
+	};
+
 	let pianoRimColor = '#C27803';
 	let pianoBlazeColor = '#C27803';
 	let numOfKeys = '88';
@@ -39,7 +43,6 @@
 	const errMsg =
 		'Error: (Piano Settings) The number of keys must be between at least 2 and at most 128.';
 	$: {
-		console.log($hasError);
 		if (numOfKeys === 'custom') {
 			const keys = Number(lastKey) - Number(startKey) + 1;
 			if (keys <= 1 || keys > 128) {
@@ -74,7 +77,7 @@
 			}
 		}
 	}
-	export { handleSave };
+	export { handleSave, handleLoadSetting };
 </script>
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">

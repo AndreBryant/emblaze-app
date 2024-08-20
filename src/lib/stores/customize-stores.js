@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 const key = 'emblaze-'; //'emblaze-' +  storeName
 const field = 'emblaze-';
 
-const settingIDs = writable([]);
+const settingIDs = writable(['default']);
 
 // [
 // ... settingIDs
@@ -20,6 +20,9 @@ const cColorScheme = writable(null);
 
 // [{sID, video}, {sID, video}, {sID, video}, ...]
 const cVideo = writable(null);
+
+const cLoadedSetting = writable(null);
+// if null, load default settings
 
 const ids = {
 	itemField: field + 'settingIDs',
@@ -46,6 +49,11 @@ const video = {
 	store: cVideo
 };
 
+const loadedSetting = {
+	itemField: field + 'cLoadedSetting',
+	store: cLoadedSetting
+};
+
 const hasError = writable({ value: false, errors: [] });
 
-export { ids, piano, noteCanvas, colorScheme, video, hasError };
+export { ids, piano, noteCanvas, colorScheme, video, loadedSetting, hasError };

@@ -2,8 +2,11 @@
 	const handleSave = (id) => {
 		console.log('note canvas fields receives customize save', id);
 	};
+	const handleLoadSetting = (id) => {
+		console.log('note canvas load', id);
+	};
 
-	export { handleSave };
+	export { handleSave, handleLoadSetting };
 </script>
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">

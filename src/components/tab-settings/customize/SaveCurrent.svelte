@@ -12,11 +12,13 @@
 	const dispatch = createEventDispatcher();
 
 	let name = '';
+	const errMsg = 'Error: (Save Settings) Name for a setting cannot be blank.';
+
 	const handleSave = () => {
 		if (browser) {
 			const arr = $idStore.slice();
 			arr.push(name);
-
+			console.log(arr);
 			const dataString = JSON.stringify(Array.from(new Set(arr)));
 			localStorage.setItem(itemField, dataString);
 			$idStore = JSON.parse(localStorage.getItem(itemField));
@@ -51,4 +53,10 @@
 			Saving overwrites existing setting with the same name.
 		</p>
 	</div>
+	<!-- Error Fields -->
+	{#if $hasError.errors.includes(errMsg)}
+		<div>
+			<p class="text-red-600 font-mono">{errMsg}</p>
+		</div>
+	{/if}
 </div>

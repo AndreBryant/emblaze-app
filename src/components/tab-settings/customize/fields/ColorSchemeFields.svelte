@@ -2,8 +2,10 @@
 	const handleSave = (id) => {
 		console.log('color scheme fields receives customize save', id);
 	};
-
-	export { handleSave };
+	const handleLoadSetting = (id) => {
+		console.log('color scheme load', id);
+	};
+	export { handleSave, handleLoadSetting };
 </script>
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">

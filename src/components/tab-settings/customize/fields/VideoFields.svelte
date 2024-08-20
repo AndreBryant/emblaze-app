@@ -2,8 +2,11 @@
 	const handleSave = (id) => {
 		console.log('video fields receives customize save', id);
 	};
+	const handleLoadSetting = (id) => {
+		console.log('video load', id);
+	};
 
-	export { handleSave };
+	export { handleSave, handleLoadSetting };
 </script>
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">
