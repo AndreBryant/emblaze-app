@@ -24,7 +24,14 @@ const cPiano = writable([pianoDefault]);
 const cNoteCanvas = writable([]);
 
 // [{sID, colorScheme}, {sID, colorScheme}, {sID, colorScheme}, ...]
-const cColorScheme = writable([]);
+const colorSchemeDefault = {
+	sID: 'default',
+	colorScheme: {
+		colorBy: 'track',
+		colorGeneration: 'random'
+	}
+};
+const cColorScheme = writable([colorSchemeDefault]);
 
 // [{sID, video}, {sID, video}, {sID, video}, ...]
 const videoDefault = {
@@ -37,7 +44,7 @@ const videoDefault = {
 const cVideo = writable([videoDefault]);
 
 // if null, load default settings
-const cLoadedSetting = writable(null);
+const cLoadedSetting = writable('default');
 
 const ids = {
 	itemField: field + 'settingIDs',

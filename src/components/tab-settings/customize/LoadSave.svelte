@@ -1,16 +1,18 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { ids } from '$lib/stores/customize-stores.js';
+	import { ids, loadedSetting } from '$lib/stores/customize-stores.js';
 
 	const dispatch = createEventDispatcher();
 
 	let settings;
-	let selected = 'default';
-
 	$: settings = ids.store;
 
+	let selected = 'default';
+	let loadedSettingStore;
+	$: loadedSettingStore = loadedSetting.store;
+
 	const handleSelect = () => {
-		console.log('select');
+		$loadedSettingStore = selected;
 		dispatch('loadSave', {
 			id: selected
 		});
