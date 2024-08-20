@@ -10,7 +10,17 @@ const settingIDs = writable(['default']);
 // ]
 
 // [{sID, piano}, {sID, piano}, {sID, piano}, ...]
-const cPiano = writable([]);
+const pianoDefault = {
+	sID: 'default',
+	piano: {
+		pianoRimColor: '#C27803',
+		pianoBlazeColor: '#C27803',
+		numOfKeys: '88',
+		startKey: '21',
+		lastKey: '108'
+	}
+};
+const cPiano = writable([pianoDefault]);
 
 // [{sID, noteCanvas}, {sID, noteCanvas}, {sID, noteCanvas}, ...]
 const cNoteCanvas = writable(null);

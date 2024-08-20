@@ -25,7 +25,8 @@
 			$idStore = $idStore.concat(dataStr);
 
 			data = localStorage.getItem(pianoField) || '[]';
-			$pianoStore = $pianoStore.concat(JSON.parse(data));
+			dataStr = JSON.parse(data).filter((piano) => piano.sID !== 'default');
+			$pianoStore = $pianoStore.concat(dataStr);
 		}
 	};
 
@@ -64,7 +65,7 @@
 	});
 </script>
 
-<!-- <pre>{JSON.stringify($pianoStore, null, 2)}</pre> -->
+<pre>{JSON.stringify($pianoStore, null, 2)}</pre>
 <pre>{JSON.stringify($idStore, null, 2)}</pre>
 <button
 	type="button"
