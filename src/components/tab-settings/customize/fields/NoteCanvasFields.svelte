@@ -6,6 +6,11 @@
 		console.log('note canvas load', id);
 	};
 
+	let noteSizing = '0';
+	let noteSpeed = '10';
+	let noteType = '0';
+	let keyFlare = false;
+	let noteParticle = false;
 	export { handleSave, handleLoadSetting };
 </script>
 
@@ -20,9 +25,9 @@
 			</td>
 			<td>
 				<div class="flex gap-4">
-					<select name="" id="" class="bg-primary border border-secondary-acc px-2 py-1 w-full">
-						<option value="" selected>Tick Based</option>
-						<option value="">Time Based</option>
+					<select class="bg-primary border border-secondary-acc px-2 py-1 w-full">
+						<option value="0" selected>Tick Based</option>
+						<option value="1">Time Based</option>
 					</select>
 				</div>
 			</td>
@@ -41,15 +46,26 @@
 			</td>
 		</tr>
 		<tr>
+			<td class="py-1">
+				<pre>Note Type</pre>
+			</td>
+			<select class="bg-primary border border-secondary-acc px-2 py-1 w-full">
+				<option value="0" selected>Neon (white outline)</option>
+				<option value="1">Neon (higher contrast outline)</option>
+				<option value="2">No outline</option>
+				<option value="3">With Gradient</option>
+			</select>
+		</tr>
+		<tr>
 			<td class="pt-8 pb-1" colspan="2">
 				<div class="flex gap-2">
 					<pre>Key Flare: </pre>
-					<input type="checkbox" name="" id="" />
+					<input type="checkbox" name="" id="" bind:checked={keyFlare} />
 				</div>
 			</td>
 		</tr>
 		<!-- Disable (opacity-30, pointer events none) this if key flare is not checked  -->
-		<tr>
+		<tr class={`${!keyFlare ? 'pointer-events-none opacity-40 select-none' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Type: </pre>
@@ -65,7 +81,7 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
+		<tr class={`${!keyFlare ? 'pointer-events-none opacity-40 select-none' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Intensity: </pre>
@@ -82,11 +98,11 @@
 			<td class="pt-8 pb-1" colspan="2">
 				<div class="flex gap-2">
 					<pre>Note Particle: </pre>
-					<input type="checkbox" name="" id="" />
+					<input type="checkbox" name="" id="" bind:checked={noteParticle} />
 				</div>
 			</td>
 		</tr>
-		<tr>
+		<tr class={`${!noteParticle ? 'pointer-events-none opacity-40 select-none' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Turbulence: </pre>
@@ -99,7 +115,7 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
+		<tr class={`${!noteParticle ? 'pointer-events-none opacity-40 select-none' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Number of Particles per Note: </pre>
@@ -112,7 +128,7 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
+		<tr class={`${!noteParticle ? 'pointer-events-none opacity-40 select-none' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Shoot Velocity: </pre>
