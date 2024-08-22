@@ -1,7 +1,4 @@
-// import * as tone from 'tone';
 import * as tm from '@tonejs/midi';
-
-// const Midi = tm.default.Midi;
 
 export const processFile = async (file) => {
 	const reader = new FileReader();
@@ -24,4 +21,10 @@ export const processFile = async (file) => {
 		};
 		reader.readAsArrayBuffer(file);
 	});
+};
+
+import * as cStores from './stores/customize-stores.js';
+
+export const loadConfigurations = () => {
+	// console.log(cStores);
 };

@@ -4,7 +4,6 @@
 
 	let videoStore;
 	let itemField;
-
 	$: videoStore = video.store;
 
 	const handleSave = (id) => {
