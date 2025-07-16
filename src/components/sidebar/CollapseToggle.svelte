@@ -7,10 +7,10 @@
 	};
 </script>
 
-<div class="fixed top-1/2 left-8">
+<div class="absolute top-1/2 left-0">
 	<button
 		type="button"
-		class="border border-secondary/20 rounded-lg p-1 opacity-50 hover:opacity-100 transition-all"
+		class="border border-secondary/20 bg-secondary-acc/20 rounded-lg p-1 opacity-50 hover:opacity-100 transition-all"
 		on:click={toggleSidebar}
 	>
 		{#if $isSidebarCollapsed}

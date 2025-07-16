@@ -12,7 +12,7 @@
 	</span>
 {:else}
 	<span
-		class="absolute hidden top-1/2 -translate-y-1/2 left-12 w-max text-sm px-4 py-2 rounded-lg bg-primary border border-secondary-dark/10 xl:group-hover:block"
+		class="absolute hidden top-1/2 -translate-y-1/2 left-12 w-max text-sm px-4 py-2 rounded-lg bg-primary border border-secondary-dark/10 group-hover:block"
 		>{label}</span
 	>
 {/if}

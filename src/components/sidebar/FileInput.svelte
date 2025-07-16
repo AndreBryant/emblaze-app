@@ -43,7 +43,7 @@
 />
 
 <div class="space-y-4">
-	<hr class="border-secondary/20" />
+	<hr class="border-secondary/10" />
 
 	<!-- For the unload midi file button -->
 	{#if $midiLoaded}

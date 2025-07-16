@@ -3,7 +3,6 @@
 	import AppTitle from './sidebar/AppTitle.svelte';
 	import Tabs from './sidebar/Tabs.svelte';
 	import FileInput from './sidebar/FileInput.svelte';
-	import CollapseToggle from './sidebar/CollapseToggle.svelte';
 
 	export let items = [];
 </script>
@@ -18,5 +17,4 @@
 	<AppTitle label={'Emblaze'} />
 	<Tabs {items} />
 	<FileInput />
-	<CollapseToggle />
 </div>

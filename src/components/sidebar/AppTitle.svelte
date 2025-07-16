@@ -11,5 +11,5 @@
 			{label}
 		{/if}
 	</h1>
-	<hr class="border-secondary/20" />
+	<hr class="border-secondary/10" />
 </div>
