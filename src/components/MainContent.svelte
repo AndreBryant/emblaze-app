@@ -2,7 +2,6 @@
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	import { activeTabValue } from '$lib/stores/app-stores.js';
 	import Header from './Header/Header.svelte';
-	import CollapseToggle from './sidebar/CollapseToggle.svelte';
 
 	import TabContent from './sidebar/tab/TabContent.svelte';
 
@@ -13,8 +12,6 @@
 	id="main-content"
 	class={`flex-grow ${$isSidebarCollapsed ? ' ml-24' : ' ml-64'} relative overflow-y-auto`}
 >
-	<CollapseToggle />
-
 	{#each items as item}
 		{#if $activeTabValue === item.value}
 			<Header title={item.label} subtitle={item.subtitle} />
