@@ -12,7 +12,7 @@
 <li>
 	<button
 		type="button"
-		class="relative group flex gap-2 text-md items-center underline-offset-4 hover:opacity-90"
+		class="relative group flex gap-2 text-md items-center underline-offset-4"
 		on:click={onClick}
 	>
 		<TabTriggerIcon {active} {logo} />

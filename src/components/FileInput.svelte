@@ -5,6 +5,8 @@
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	import { midiData, filename, midiLoaded } from '$lib/stores/midi-stores.js';
 
+	const iconSize = 22;
+
 	const handleFileChange = async (e) => {
 		const midiFile = e.target.files[0];
 		if (midiFile) {
@@ -39,11 +41,11 @@
 	on:change={handleFileChange}
 	class="hidden"
 />
+
+<!-- For the unload midi file button -->
 {#if $midiLoaded}
 	{#if $isSidebarCollapsed}
-		<Button variant="destructive" onclick={unloadFile}>
-			<FileX2 size={22} />
-		</Button>
+		<Button variant="destructive" onclick={unloadFile} icon={FileX2} />
 	{:else}
 		<Button
 			type="button"
@@ -55,14 +57,19 @@
 	{/if}
 {/if}
 
+<!-- For the load midi file button -->
 {#if $isSidebarCollapsed}
-	<Button variant="primary" onclick={triggerFileInput}>
-		{#if $midiLoaded}
-			<FileCheck2 size={22} />
-		{:else}
-			<File size={22} />
-		{/if}
-	</Button>
+	{#if $midiLoaded}
+		<Button
+			variant="primary"
+			onclick={triggerFileInput}
+			wFull={true}
+			icon={FileCheck2}
+			classes="p-4"
+		/>
+	{:else}
+		<Button variant="primary" onclick={triggerFileInput} wFull={true} icon={File} classes="p-4" />
+	{/if}
 {:else}
 	<Button
 		type="button"

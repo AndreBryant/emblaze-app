@@ -5,6 +5,9 @@
 	export let wFull = false;
 	export let onclick = () => {};
 	export let icon = null;
+	export let classes = '';
+	export let title = '';
+
 	let style;
 
 	switch (variant) {
@@ -55,10 +58,17 @@
 	}
 </script>
 
-<button {type} class={style + 'flex flex-row gap-2 truncate'} on:click={onclick}>
-	<span class="icon">
-		<svelte:component this={icon} size={22} />
-	</span>
+<button
+	{type}
+	{title}
+	class={style + ' flex flex-row gap-2 truncate items-center justify-center ' + classes}
+	on:click={onclick}
+>
+	{#if icon}
+		<span class="icon">
+			<svelte:component this={icon} size={22} />
+		</span>
+	{/if}
 	{value ? value : ''}
 	<slot />
 </button>

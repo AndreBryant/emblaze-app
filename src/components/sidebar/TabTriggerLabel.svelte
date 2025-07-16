@@ -5,7 +5,7 @@
 </script>
 
 {#if !$isSidebarCollapsed}
-	<span class={`truncate ${active ? 'opacity-90 underline' : 'opacity-55'}`}>
+	<span class={`truncate text-sm ${active ? 'opacity-90 underline' : 'opacity-55'}`}>
 		{label}
 	</span>
 {:else}

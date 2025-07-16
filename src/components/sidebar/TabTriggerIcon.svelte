@@ -3,6 +3,6 @@
 	export let logo;
 </script>
 
-<span class={`icon ml-1 ${active ? 'opacity-86' : 'opacity-55'}`}>
+<span class={`icon ml-1 ${active ? 'opacity-85' : 'opacity-55 group-hover:opacity-70'}`}>
 	<svelte:component this={logo} size={24} />
 </span>

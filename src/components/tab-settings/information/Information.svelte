@@ -1,6 +1,6 @@
 <script>
 	import { midiData, filename } from '$lib/stores/midi-stores.js';
-	import NoFileLoaded from '../../NoFileLoaded.svelte';
+	import NoFileLoaded from './NoFileLoaded.svelte';
 	import Table from './Table.svelte';
 
 	let fileData = {};
