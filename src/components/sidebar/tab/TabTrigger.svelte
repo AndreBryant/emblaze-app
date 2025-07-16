@@ -9,12 +9,8 @@
 	export let onClick;
 </script>
 
-<li>
-	<button
-		type="button"
-		class="relative group flex gap-2 text-md items-center underline-offset-4"
-		on:click={onClick}
-	>
+<li class:ml-4={!$isSidebarCollapsed}>
+	<button type="button" class="relative group flex gap-2 text-md items-center" on:click={onClick}>
 		<TabTriggerIcon {active} {logo} />
 		<TabTriggerLabel {label} {isSidebarCollapsed} {active} />
 	</button>

@@ -42,7 +42,7 @@
 	class="hidden"
 />
 
-<div class="space-y-2">
+<div class="space-y-4">
 	<hr class="border-secondary/20" />
 
 	<!-- For the unload midi file button -->

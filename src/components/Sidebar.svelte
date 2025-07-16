@@ -10,7 +10,7 @@
 
 <div
 	id="sidebar"
-	class={`z-20 px-4 py-8 flex flex-col gap-12 border-r
+	class={`z-20 px-4 py-8 flex flex-col gap-10 border-r
 	border-r-secondary-dark/10 border-opacity-30
 	fixed h-full select-none
 	${$isSidebarCollapsed ? ' w-24 items-center' : ' w-64'}`}
