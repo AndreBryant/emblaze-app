@@ -16,7 +16,7 @@
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">
 	<h3 class="text-lg font-semibold">Note Canvas Settings</h3>
-	<table class="table-fixed w-full font-mono text-secondary-dark">
+	<table class="table-fixed w-full text-secondary-dark">
 		<tr>
 			<td class="py-1">
 				<div class="flex items-center">
@@ -41,7 +41,7 @@
 			<td>
 				<div class="flex gap-4">
 					<input type="range" class="flex-grow" />
-					<input type="number" class="w-32 bg-primary border border-secondary-acc font-mono" />
+					<input type="number" class="w-32 bg-primary border border-secondary-acc" />
 				</div>
 			</td>
 		</tr>
@@ -90,7 +90,7 @@
 			<td>
 				<div class="flex gap-4">
 					<input type="range" class="flex-grow" />
-					<input type="number" class="w-32 bg-primary border border-secondary-acc font-mono" />
+					<input type="number" class="w-32 bg-primary border border-secondary-acc" />
 				</div>
 			</td>
 		</tr>
@@ -111,7 +111,7 @@
 			<td>
 				<div class="flex gap-4">
 					<input type="range" class="flex-grow" />
-					<input type="number" class="w-32 bg-primary border border-secondary-acc font-mono" />
+					<input type="number" class="w-32 bg-primary border border-secondary-acc" />
 				</div>
 			</td>
 		</tr>
@@ -124,7 +124,7 @@
 			<td>
 				<div class="flex gap-4">
 					<input type="range" class="flex-grow" />
-					<input type="number" class="w-32 bg-primary border border-secondary-acc font-mono" />
+					<input type="number" class="w-32 bg-primary border border-secondary-acc" />
 				</div>
 			</td>
 		</tr>
@@ -137,7 +137,7 @@
 			<td>
 				<div class="flex gap-4">
 					<input type="range" class="flex-grow" />
-					<input type="number" class="w-32 bg-primary border border-secondary-acc font-mono" />
+					<input type="number" class="w-32 bg-primary border border-secondary-acc" />
 				</div>
 			</td>
 		</tr>

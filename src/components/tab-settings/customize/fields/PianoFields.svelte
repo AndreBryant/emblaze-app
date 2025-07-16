@@ -92,7 +92,7 @@
 	<h3 class="text-lg font-semibold">Piano Settings</h3>
 
 	<div></div>
-	<table class="table-fixed w-full font-mono text-secondary-dark">
+	<table class="table-fixed w-full text-secondary-dark">
 		<tr>
 			<td class="py-1">
 				<div class="flex items-center">
@@ -173,7 +173,7 @@
 	<!-- Error Fields -->
 	{#if $hasError.errors.includes(errMsg)}
 		<div>
-			<p class="text-red-600 font-mono">{errMsg}</p>
+			<p class="text-red-600">{errMsg}</p>
 		</div>
 	{/if}
 </div>

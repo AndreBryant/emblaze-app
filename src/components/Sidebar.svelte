@@ -13,7 +13,6 @@
 	class={`z-20 px-4 py-8 flex flex-col gap-12 border-r
 	border-r-secondary-dark/10 border-opacity-30
 	fixed h-full select-none
-	bg-gradient-to-r from-primary from-50% to-[#010510]
 	${$isSidebarCollapsed ? ' w-24 items-center' : ' w-64'}`}
 >
 	<AppTitle label={'Emblaze'} />

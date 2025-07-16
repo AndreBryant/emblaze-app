@@ -38,7 +38,7 @@
 <!-- Save current Setting -->
 <div class="w-full lg:w--5/12 flex flex-col gap-2">
 	<h3 class="text-lg font-semibold">Save Current Settings</h3>
-	<div class="flex gap-2 items-center w-full lg:w-5/12 font-mono text-secondary-dark">
+	<div class="flex gap-2 items-center w-full lg:w-5/12 text-secondary-dark">
 		<div class={`${$hasError.value ? 'opacity-40 pointer-events-none select-none' : ''}`}>
 			<Button variant="primary" onclick={handleSave}>Save</Button>
 		</div>
@@ -50,7 +50,7 @@
 		/>
 	</div>
 	<div>
-		<p class="opacity-60 font-mono text-sm flex items-center gap-2">
+		<p class="opacity-60 text-sm flex items-center gap-2">
 			<TriangleAlert size={20} />
 			Saving overwrites existing setting with the same name.
 		</p>
@@ -58,7 +58,7 @@
 	<!-- Error Fields -->
 	{#if $hasError.errors.includes(errMsg)}
 		<div>
-			<p class="text-red-600 font-mono">{errMsg}</p>
+			<p class="text-red-600">{errMsg}</p>
 		</div>
 	{/if}
 </div>

@@ -47,7 +47,7 @@
 
 <div class="w-full lg:w-5/12 flex flex-col gap-4">
 	<h3 class="text-lg font-semibold">Video Settings</h3>
-	<table class="table-fixed w-full font-mono text-secondary-dark">
+	<table class="table-fixed w-full text-secondary-dark">
 		<tr>
 			<td class="py-1">
 				<div>
@@ -79,7 +79,7 @@
 				<div class="flex gap-4">
 					<input
 						type="number"
-						class=" bg-primary border border-secondary-acc font-mono w-full px-3"
+						class=" bg-primary border border-secondary-acc w-full px-3"
 						bind:value={fps}
 						min="0"
 						max="60"
