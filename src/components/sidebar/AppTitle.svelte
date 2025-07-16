@@ -4,11 +4,12 @@
 	export let label;
 </script>
 
-<div>
-	<h1 class="text-2xl flex flex-row items-center gap-2 truncate">
+<div class="space-y-4">
+	<h1 class="text-2xl tracking-wide font-bold flex flex-row items-center gap-1 truncate">
 		<Flame class="text-acc-1 " size={32} />
 		{#if !$isSidebarCollapsed}
 			{label}
 		{/if}
 	</h1>
+	<hr class="border-secondary/20" />
 </div>

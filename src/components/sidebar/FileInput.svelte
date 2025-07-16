@@ -1,5 +1,5 @@
 <script>
-	import Button from './Buttons/Button.svelte';
+	import Button from '../Buttons/Button.svelte';
 	import { FileX2, FileCheck2, File } from 'lucide-svelte';
 	import { processFile } from '$lib/processMidi.js';
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
@@ -42,40 +42,44 @@
 	class="hidden"
 />
 
-<!-- For the unload midi file button -->
-{#if $midiLoaded}
+<div class="space-y-2">
+	<hr class="border-secondary/20" />
+
+	<!-- For the unload midi file button -->
+	{#if $midiLoaded}
+		{#if $isSidebarCollapsed}
+			<Button variant="destructive" onclick={unloadFile} icon={FileX2} />
+		{:else}
+			<Button
+				type="button"
+				variant="destructive"
+				value="Unload File"
+				wFull={true}
+				onclick={unloadFile}
+			/>
+		{/if}
+	{/if}
+
+	<!-- For the load midi file button -->
 	{#if $isSidebarCollapsed}
-		<Button variant="destructive" onclick={unloadFile} icon={FileX2} />
+		{#if $midiLoaded}
+			<Button
+				variant="primary"
+				onclick={triggerFileInput}
+				wFull={true}
+				icon={FileCheck2}
+				classes="p-4"
+			/>
+		{:else}
+			<Button variant="primary" onclick={triggerFileInput} wFull={true} icon={File} classes="p-4" />
+		{/if}
 	{:else}
 		<Button
 			type="button"
-			variant="destructive"
-			value="Unload File"
-			wFull={true}
-			onclick={unloadFile}
-		/>
-	{/if}
-{/if}
-
-<!-- For the load midi file button -->
-{#if $isSidebarCollapsed}
-	{#if $midiLoaded}
-		<Button
 			variant="primary"
-			onclick={triggerFileInput}
 			wFull={true}
-			icon={FileCheck2}
-			classes="p-4"
+			onclick={triggerFileInput}
+			value={`${$filename ? $filename : 'Select File'}`}
 		/>
-	{:else}
-		<Button variant="primary" onclick={triggerFileInput} wFull={true} icon={File} classes="p-4" />
 	{/if}
-{:else}
-	<Button
-		type="button"
-		variant="primary"
-		wFull={true}
-		onclick={triggerFileInput}
-		value={`${$filename ? $filename : 'Select File'}`}
-	/>
-{/if}
+</div>

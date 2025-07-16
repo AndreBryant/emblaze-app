@@ -2,7 +2,7 @@
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	import { activeTabValue } from '$lib/stores/app-stores.js';
 
-	import TabContent from './sidebar/TabContent.svelte';
+	import TabContent from './sidebar/tab/TabContent.svelte';
 
 	export let items = [];
 </script>

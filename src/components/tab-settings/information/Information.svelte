@@ -1,5 +1,6 @@
 <script>
 	import { midiData, filename } from '$lib/stores/midi-stores.js';
+	import Header from '../../Header/Header.svelte';
 	import NoFileLoaded from './NoFileLoaded.svelte';
 	import Table from './Table.svelte';
 
@@ -42,7 +43,8 @@
 </script>
 
 <div class="flex flex-col gap-8 w-full backdrop-blur-sm">
-	<h2 class="text-xl font-semibold">MIDI Information</h2>
+	<Header title="MIDI Information" subtitle="Specific details about the MIDI file." />
+
 	{#if !$midiData}
 		<NoFileLoaded />
 	{:else}
