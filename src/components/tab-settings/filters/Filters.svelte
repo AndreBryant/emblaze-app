@@ -1,5 +1,4 @@
 <div class="flex flex-col gap-8 pb-8 backdrop-blur-sm h-full">
-	<h2 class="text-xl">Filters</h2>
 	<!-- Filters -->
 	<div>
 		<h3>Filters</h3>

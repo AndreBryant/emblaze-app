@@ -1,6 +1,7 @@
 <script>
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	import { activeTabValue } from '$lib/stores/app-stores.js';
+	import Header from './Header/Header.svelte';
 
 	import TabContent from './sidebar/tab/TabContent.svelte';
 
@@ -13,8 +14,8 @@
 >
 	{#each items as item}
 		{#if $activeTabValue === item.value}
+			<Header title={item.label} subtitle={item.subtitle} />
 			<TabContent component={item.component} label={item.label} logo={item.logo} />
-			{$isSidebarCollapsed ? ' ' : ''}
 		{/if}
 	{/each}
 </div>

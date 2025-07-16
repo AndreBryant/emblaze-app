@@ -10,11 +10,42 @@
 	import { Info, Settings, Sparkles, Video, Save } from 'lucide-svelte';
 
 	let items = [
-		{ logo: Info, label: 'MIDI Information', value: 0, component: Information },
-		{ logo: Settings, label: 'Customize', value: 1, component: Customize },
-		{ logo: Sparkles, label: 'Filters', value: 2, component: Filters },
-		{ logo: Video, label: 'Render/Preview', value: 3, component: Render },
-		{ logo: Save, label: 'Saved Settings', value: 4, component: SavedSettings }
+		{
+			logo: Info,
+			label: 'MIDI Information',
+			subtitle: 'Specific details about the MIDI file.',
+			value: 0,
+			component: Information
+		},
+		{
+			logo: Settings,
+			label: 'Customize',
+			subtitle: 'Set the MIDI video configuration.',
+			value: 1,
+			component: Customize
+		},
+		{
+			logo: Sparkles,
+			label: 'Filters',
+			subtitle: 'Add filters and other effects',
+			value: 2,
+			component: Filters
+		},
+		{
+			logo: Video,
+			label: 'Render/Preview',
+			subtitle: 'See how your video looks like before rendering.',
+			value: 3,
+			component: Render
+		},
+		{
+			logo: Save,
+			label: 'Saved Settings',
+			subtitle:
+				'Here are your saved settings (these are stored in the local storage of the browser)',
+			value: 4,
+			component: SavedSettings
+		}
 	];
 </script>
 

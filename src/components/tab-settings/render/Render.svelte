@@ -30,8 +30,6 @@
 </script>
 
 <div class="flex flex-col gap-1 h-full">
-	<h2 class="text-xl">Render/Preview</h2>
-
 	<div class="flex-grow flex flex-col gap-8">
 		<div class="w-full h-full flex flex-col flex-grow justify-center items-center gap-2">
 			<!-- P5 SKETCH CONTAINER  -->

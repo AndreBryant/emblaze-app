@@ -115,8 +115,6 @@
 </button> -->
 
 <div class="flex flex-col gap-8 pb-8 backdrop-blur-sm">
-	<h2 class="text-xl">Customize</h2>
-
 	<div class="flex flex-col gap-4">
 		<LoadSave bind:this={loadSaveRef} on:loadSave={handleLoadSetting} />
 		<hr class="opacity-40" />
