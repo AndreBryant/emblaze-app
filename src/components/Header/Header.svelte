@@ -8,4 +8,5 @@
 <div class="flex flex-col gap-2">
 	<H2>{title}</H2>
 	<H3>{subtitle}</H3>
+	<hr class="border-secondary/10" />
 </div>
