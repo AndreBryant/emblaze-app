@@ -34,7 +34,7 @@
 		}
 	};
 
-	let quality = '1';
+	let quality = '360p';
 	let fps = '30';
 
 	$: {
@@ -60,11 +60,11 @@
 						bind:value={quality}
 						class="bg-primary border border-secondary-acc px-2 py-1 w-full"
 					>
-						<option value="0">360p</option>
-						<option value="1">720p</option>
-						<option value="2">1080p</option>
-						<option value="3">4k</option>
-						<option value="4">8k</option>
+						<option value="360p">360p</option>
+						<option value="720p">720p</option>
+						<option value="1080p">1080p</option>
+						<option value="4k">4k</option>
+						<option value="8k">8k</option>
 					</select>
 				</div>
 			</td>

@@ -102,17 +102,17 @@
 	});
 </script>
 
-<!-- <pre>{JSON.stringify($colorSchemeStore, null, 2)}</pre> -->
-<!-- <pre>{JSON.stringify($videoStore, null, 2)}</pre> -->
-<!-- <pre>{JSON.stringify($pianoStore, null, 2)}</pre> -->
-<!-- <pre>{JSON.stringify($idStore, null, 2)}</pre> -->
-<!-- <button
+<!-- <pre>{JSON.stringify($idStore, null, 2)}</pre>
+<pre>{JSON.stringify($pianoStore, null, 2)}</pre>
+<pre>{JSON.stringify($colorSchemeStore, null, 2)}</pre>
+<pre>{JSON.stringify($videoStore, null, 2)}</pre> -->
+<button
 	type="button"
 	class="border px-4 py-1 bg-yellow-400 text-primary border-primary"
 	on:click={debugLocal}
 >
 	debug Reset LocalStorage
-</button> -->
+</button>
 
 <div class="flex flex-col gap-8 pb-8 backdrop-blur-sm">
 	<h2 class="text-xl">Customize</h2>

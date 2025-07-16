@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { hasError, ids } from '$lib/stores/customize-stores.js';
 	import { createEventDispatcher } from 'svelte';
+	import { Triangle, TriangleAlert } from 'lucide-svelte';
 	import Button from '../../Buttons/Button.svelte';
 
 	let idStore;
@@ -49,7 +50,8 @@
 		/>
 	</div>
 	<div>
-		<p class="opacity-60 font-mono text-sm">
+		<p class="opacity-60 font-mono text-sm flex items-center gap-2">
+			<TriangleAlert size={20} />
 			Saving overwrites existing setting with the same name.
 		</p>
 	</div>

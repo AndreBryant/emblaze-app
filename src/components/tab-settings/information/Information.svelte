@@ -47,7 +47,7 @@
 		<NoFileLoaded />
 	{:else}
 		<div class="flex flex-col gap-4 mr-8">
-			<pre>{JSON.stringify($midiData, null, 2)}</pre>
+			<!-- <pre>{JSON.stringify($midiData, null, 2)}</pre> -->
 			<ul class="flex flex-col gap-8 w-full lg:w-[30vw]">
 				<li>
 					<Table data={fileData} />

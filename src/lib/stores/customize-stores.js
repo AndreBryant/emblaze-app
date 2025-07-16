@@ -37,7 +37,7 @@ const cColorScheme = writable([colorSchemeDefault]);
 const videoDefault = {
 	sID: 'default',
 	video: {
-		quality: '1',
+		quality: '360p',
 		fps: '30'
 	}
 };

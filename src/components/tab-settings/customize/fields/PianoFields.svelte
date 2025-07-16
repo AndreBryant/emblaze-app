@@ -84,6 +84,7 @@
 			}
 		}
 	}
+
 	export { handleSave, handleLoadSetting };
 </script>
 
