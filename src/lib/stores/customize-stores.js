@@ -1,11 +1,30 @@
 import { writable } from 'svelte/store';
+import { browser } from '$app/environment';
+/**
+ * TODO: Fetch local storage first then append added settings aside from the default
+ */
 
 const field = 'emblaze-';
+
+function loadFromStorage(key, fallback) {
+	if (!browser) return fallback;
+
+	try {
+		const raw = localStorage.getItem(key);
+		if (raw) {
+			const parsed = JSON.parsed(raw);
+			return parsed;
+		}
+	} catch (err) {
+		console.error(`Failed to load ${key} from local storage`, err);
+	}
+	return fallback;
+}
 
 // [
 // ... settingIDs
 // ]
-const settingIDs = writable(['default']);
+const settingIDs = writable(loadFromStorage(field + 'settingIDs', ['default']));
 
 // [{sID, piano}, {sID, piano}, {sID, piano}, ...]
 const pianoDefault = {
@@ -18,7 +37,7 @@ const pianoDefault = {
 		lastKey: '108'
 	}
 };
-const cPiano = writable([pianoDefault]);
+const cPiano = writable(loadFromStorage(field + 'cPiano', [pianoDefault]));
 
 // [{sID, noteCanvas}, {sID, noteCanvas}, {sID, noteCanvas}, ...]
 const noteCanvasDefault = {
@@ -71,7 +90,7 @@ const ids = {
 };
 
 const piano = {
-	itemField: field + 'cpiano',
+	itemField: field + 'cPiano',
 	store: cPiano
 };
 

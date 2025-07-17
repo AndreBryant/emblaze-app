@@ -105,8 +105,8 @@
 <!-- <pre>{JSON.stringify($idStore, null, 2)}</pre>
 <pre>{JSON.stringify($pianoStore, null, 2)}</pre>
 <pre>{JSON.stringify($colorSchemeStore, null, 2)}</pre>
-<pre>{JSON.stringify($videoStore, null, 2)}</pre> -->
-<!-- <button
+<pre>{JSON.stringify($videoStore, null, 2)}</pre>
+<button
 	type="button"
 	class="border px-4 py-1 bg-yellow-400 text-primary border-primary"
 	on:click={debugLocal}
