@@ -8,7 +8,7 @@
 </script>
 
 <div class="flex-grow">
-	<ul class="flex flex-col justify-center">
+	<ul class="flex flex-col justify-end">
 		{#each items as item}
 			<TabTrigger
 				logo={item.logo}

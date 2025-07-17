@@ -42,7 +42,7 @@
 	class="hidden"
 />
 
-<div class="space-y-4">
+<div class={`space-y-4 ${$isSidebarCollapsed ? ' mr-0' : ' mr-4'}`}>
 	<hr class="border-secondary/10" />
 
 	<!-- For the unload midi file button -->
