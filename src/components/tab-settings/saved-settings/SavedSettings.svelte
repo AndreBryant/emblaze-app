@@ -8,11 +8,12 @@
 	let noteCanvasSettings;
 	onMount(() => {
 		if (browser) {
-			console.log(stores.piano.itemField);
+			// for (let key in stores) {
+			// 	console.log(key);
+			// }
+			console.log(stores.piano.store);
 		}
 	});
 </script>
 
-<div class="flex flex-col gap-8">
-	<div>test</div>
-</div>
+<div class="flex flex-col gap-8"></div>

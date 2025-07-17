@@ -21,7 +21,26 @@ const pianoDefault = {
 const cPiano = writable([pianoDefault]);
 
 // [{sID, noteCanvas}, {sID, noteCanvas}, {sID, noteCanvas}, ...]
-const cNoteCanvas = writable([]);
+const noteCanvasDefault = {
+	sID: 'default',
+	noteCanvas: {
+		noteSizing: 'Tick Based',
+		noteSpeed: '1',
+		noteType: 'No Outline',
+		keyFlare: {
+			enabled: false,
+			type: 'fire',
+			intensity: 0
+		},
+		noteParticle: {
+			enabled: false,
+			turbulence: 0,
+			particleDensity: 0,
+			shootVelocity: 0
+		}
+	}
+};
+const cNoteCanvas = writable([noteCanvasDefault]);
 
 // [{sID, colorScheme}, {sID, colorScheme}, {sID, colorScheme}, ...]
 const colorSchemeDefault = {

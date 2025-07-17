@@ -51,10 +51,7 @@
 	}
 </script>
 
-<li
-	class:ml-2={!$isSidebarCollapsed}
-	class={`relative group text-md items-center p-2 ${bgStyle} ${beforeAfterStyle}`}
->
+<li class={`relative group text-md items-center p-2 ${bgStyle} ${beforeAfterStyle}`}>
 	<button
 		type="button"
 		class="flex gap-2 w-full items-center"
