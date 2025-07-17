@@ -15,8 +15,7 @@
 			if ($isSidebarCollapsed) {
 				bgStyle = 'rounded-lg rounded-l-none  bg-secondary-acc/10';
 			} else {
-				bgStyle =
-					'border-l border-y border-secondary-acc/10 bg-gradient-to-r from-secondary-acc/10 to-transparent/0 to-99%';
+				bgStyle = 'border-l border-y border-secondary-acc/10 border-l-8 border-l-secondary/40';
 			}
 		} else {
 			bgStyle = 'rounded-lg hover:bg-secondary-acc/5';
@@ -28,14 +27,6 @@
 	$: {
 		if (active && !$isSidebarCollapsed) {
 			beforeAfterStyle = `
-				before:content-['']
-				before:absolute
-				before:top-0
-				before:-left-[2px]
-				before:h-full
-				before:w-1
-				before:bg-secondary/40
-
 				after:content-['']
 				after:absolute
 				after:bottom-0
@@ -64,7 +55,12 @@
 	class:ml-2={!$isSidebarCollapsed}
 	class={`relative group text-md items-center p-2 ${bgStyle} ${beforeAfterStyle}`}
 >
-	<button type="button" class="flex gap-2 w-full items-center" on:click={onClick}>
+	<button
+		type="button"
+		class="flex gap-2 w-full items-center"
+		on:click={onClick}
+		class:ml-2={!active && !$isSidebarCollapsed}
+	>
 		<TabTriggerIcon {active} {logo} />
 		<TabTriggerLabel {label} {isSidebarCollapsed} {active} />
 	</button>
