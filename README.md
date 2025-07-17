@@ -1,7 +1,7 @@
 # Emblaze app
 
 It is a browser based MIDI video renderer.
-Inspired by Zenith created by Arduano.
+Inspired by [Zenith-MIDI](https://github.com/arduano/Zenith-MIDI) created by Arduano.
 
 ## Description
 
