@@ -8,7 +8,7 @@
 	</thead>
 	<tbody>
 		{#each data.properties as p}
-			<tr class="hover:opacity-95 opacity-70">
+			<tr class="hover:bg-secondary/10 text-secondary-acc">
 				{#each Object.entries(p) as [k, v]}
 					<td><pre>&gt; {k}</pre></td>
 					<td><pre>{v.toString().length > 0 ? v : 'none'}</pre></td>
