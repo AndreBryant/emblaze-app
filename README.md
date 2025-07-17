@@ -1,4 +1,19 @@
-# create-svelte
+# Emblaze app
+
+It is a browser based MIDI video renderer.
+Inspired by Zenith created by Arduano.
+
+## Description
+
+Basically, I want to use wasm in order to make this perform better with a good UI and UX.
+[Link to my prototype MIDI renderer.](https://andrebryant.github.io/midi-visualizer/public/)
+
+## Logs
+
+1. Development started on August 2024 and stopped for a few months.
+2. Development resumed on July 2025, Now with working UI Features.
+
+<!-- # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
@@ -35,4 +50,4 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment. -->
