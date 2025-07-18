@@ -12,7 +12,7 @@ function loadFromStorage(key, fallback) {
 	try {
 		const raw = localStorage.getItem(key);
 		if (raw) {
-			const parsed = JSON.parsed(raw);
+			const parsed = JSON.parse(raw);
 			return parsed;
 		}
 	} catch (err) {

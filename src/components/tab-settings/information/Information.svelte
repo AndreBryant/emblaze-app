@@ -1,16 +1,20 @@
 <script>
+	import { browser } from '$app/environment';
 	import { midiData, filename } from '$lib/stores/midi-stores.js';
 	import NoFileLoaded from './NoFileLoaded.svelte';
 	import Table from './Table.svelte';
 
 	let fileData = {};
 	let headerData = {};
-	let durationData = {};
+	let tempoEvents = {};
 	let tracksData = {};
 	let noteCount = 0;
 
 	$: {
 		if ($midiData) {
+			if (browser) {
+				console.log($midiData);
+			}
 			fileData.head = 'File Information';
 			fileData.properties = [{ Filename: $filename }];
 
@@ -22,8 +26,11 @@
 				{ PPQ: $midiData.header.ppq }
 			];
 
-			durationData.head = 'Duration';
-			durationData.properties = [{ Value: $midiData.duration + ' seconds' }];
+			tempoEvents.head = 'Tempo Events';
+			const tempoEventLength = $midiData.header.tempos.length;
+			tempoEvents.properties = [
+				{ Count: tempoEventLength + ' tempo event' + (tempoEventLength === 1 ? '' : 's') }
+			];
 
 			noteCount = 0;
 			$midiData.tracks.forEach((track) => {
@@ -55,7 +62,7 @@
 					<Table data={headerData} />
 				</li>
 				<li>
-					<Table data={durationData} />
+					<Table data={tempoEvents} />
 				</li>
 				<li>
 					<Table data={tracksData} />
