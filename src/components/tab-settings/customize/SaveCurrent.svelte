@@ -51,7 +51,7 @@
 			class="bg-primary border border-secondary-acc px-2 py-1 w-full"
 		/>
 	</div>
-	<div>
+	<div class="w-full lg:w-5/12">
 		<input
 			type="text"
 			bind:value={description}
