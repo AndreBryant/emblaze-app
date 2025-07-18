@@ -42,6 +42,7 @@
 			// id
 			let data = localStorage.getItem(idField) || '[]';
 			let dataStr = JSON.parse(data).filter((id) => id !== 'default');
+			console.log(dataStr);
 			$idStore = $idStore
 				.concat(dataStr)
 				.filter(
