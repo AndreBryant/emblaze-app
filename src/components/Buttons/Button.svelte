@@ -7,6 +7,7 @@
 	export let icon = null;
 	export let classes = '';
 	export let title = '';
+	export let animatedIcon = false;
 
 	let style;
 
@@ -65,7 +66,7 @@
 	on:click={onclick}
 >
 	{#if icon}
-		<span class="icon">
+		<span class="icon" class:animate-spin={animatedIcon}>
 			<svelte:component this={icon} size={22} />
 		</span>
 	{/if}
