@@ -30,34 +30,34 @@
 	const fetchDataFromLocalStorage = () => {
 		if (browser) {
 			// id
-			let data = localStorage.getItem(idField) || '[]';
-			let dataStr = JSON.parse(data).filter((id) => id !== 'default');
+			let dataStr = localStorage.getItem(idField) || [];
+			const data = JSON.parse(dataStr);
 			$idStore = $idStore
-				.concat(dataStr)
+				.concat(data)
 				.filter(
 					(value, index, self) =>
 						index === self.findIndex((t) => t.id === value.id && t.desc === value.desc)
-				);
+				); // since they are objects now {id, desc} performing concat then creating a set out of it does not work.
 
-			// piano
-			data = localStorage.getItem(pianoField) || '[]';
-			dataStr = JSON.parse(data).filter((piano) => piano.sID !== 'default');
-			$pianoStore = Array.from(new Set($pianoStore.concat(dataStr)));
+			// // piano
+			// data = localStorage.getItem(pianoField) || '[]';
+			// dataStr = JSON.parse(data).filter((piano) => piano.sID !== 'default');
+			// $pianoStore = Array.from(new Set($pianoStore.concat(dataStr)));
 
-			// note canvas
-			data = localStorage.getItem(noteCanvasField) || '[]';
-			dataStr = JSON.parse(data).filter((noteCanvas) => noteCanvas.sID !== 'default');
-			$noteCanvasStore = Array.from(new Set($noteCanvasStore.concat(dataStr)));
+			// // note canvas
+			// data = localStorage.getItem(noteCanvasField) || '[]';
+			// dataStr = JSON.parse(data).filter((noteCanvas) => noteCanvas.sID !== 'default');
+			// $noteCanvasStore = Array.from(new Set($noteCanvasStore.concat(dataStr)));
 
-			// color scheme
-			data = localStorage.getItem(colorSchemeField) || '[]';
-			dataStr = JSON.parse(data).filter((colorScheme) => colorScheme.sID !== 'default');
-			$colorSchemeStore = Array.from(new Set($colorSchemeStore.concat(dataStr)));
+			// // color scheme
+			// data = localStorage.getItem(colorSchemeField) || '[]';
+			// dataStr = JSON.parse(data).filter((colorScheme) => colorScheme.sID !== 'default');
+			// $colorSchemeStore = Array.from(new Set($colorSchemeStore.concat(dataStr)));
 
-			// video
-			data = localStorage.getItem(videoField) || '[]';
-			dataStr = JSON.parse(data).filter((video) => video.sID !== 'default');
-			$videoStore = Array.from(new Set($videoStore.concat(dataStr)));
+			// // video
+			// data = localStorage.getItem(videoField) || '[]';
+			// dataStr = JSON.parse(data).filter((video) => video.sID !== 'default');
+			// $videoStore = Array.from(new Set($videoStore.concat(dataStr)));
 		}
 	};
 
