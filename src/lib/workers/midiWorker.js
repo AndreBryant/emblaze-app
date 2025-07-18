@@ -1,5 +1,4 @@
-// import { processFile } from '../processMidi.js';
-import * as tm from '@tonejs/midi';
+import { Midi } from '@tonejs/midi';
 
 self.onmessage = async (event) => {
 	try {
@@ -9,7 +8,7 @@ self.onmessage = async (event) => {
 		reader.onload = () => {
 			try {
 				const arrayBuffer = reader.result;
-				const midi = new tm.Midi(new Uint8Array(arrayBuffer));
+				const midi = new Midi(new Uint8Array(arrayBuffer));
 
 				self.postMessage({ success: true, result: midi.toJSON() });
 			} catch (e) {
