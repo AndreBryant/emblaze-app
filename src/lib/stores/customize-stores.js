@@ -79,7 +79,7 @@ const videoDefault = {
 		fps: '30'
 	}
 };
-const cVideo = writable([videoDefault]);
+const cVideo = writable(loadFromStorage(field + 'cVideo', [videoDefault]));
 
 // if null, load default settings
 const cLoadedSetting = writable('default');
@@ -100,12 +100,12 @@ const noteCanvas = {
 };
 
 const colorScheme = {
-	item: field + 'cColorScheme',
+	itemField: field + 'cColorScheme',
 	store: cColorScheme
 };
 
 const video = {
-	item: field + 'cVideo',
+	itemField: field + 'cVideo',
 	store: cVideo
 };
 

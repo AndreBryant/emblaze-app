@@ -3,7 +3,7 @@
 	import { video } from '$lib/stores/customize-stores.js';
 
 	let videoStore;
-	let itemField;
+	let itemField = video.itemField;
 	$: videoStore = video.store;
 
 	const handleSave = (id) => {

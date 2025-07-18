@@ -3,7 +3,7 @@
 	import { colorScheme } from '$lib/stores/customize-stores.js';
 
 	let colorSchemeStore;
-	let itemField;
+	let itemField = colorScheme.itemField;
 	$: colorSchemeStore = colorScheme.store;
 	const handleSave = (id) => {
 		if (browser) {
