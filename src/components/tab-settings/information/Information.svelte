@@ -1,5 +1,4 @@
 <script>
-	import { browser } from '$app/environment';
 	import { midiData, filename } from '$lib/stores/midi-stores.js';
 	import NoFileLoaded from './NoFileLoaded.svelte';
 	import Table from './Table.svelte';
@@ -12,9 +11,6 @@
 
 	$: {
 		if ($midiData) {
-			if (browser) {
-				console.log($midiData);
-			}
 			fileData.head = 'File Information';
 			fileData.properties = [{ Filename: $filename }];
 
