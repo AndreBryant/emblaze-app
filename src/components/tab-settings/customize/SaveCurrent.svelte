@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import { hasError, ids } from '$lib/stores/customize-stores.js';
 	import { createEventDispatcher } from 'svelte';
-	import { Triangle, TriangleAlert } from 'lucide-svelte';
+	import { TriangleAlert } from 'lucide-svelte';
 	import Button from '../../Buttons/Button.svelte';
 
 	let idStore;
@@ -13,12 +13,13 @@
 	const dispatch = createEventDispatcher();
 
 	let name = '';
+	let description = '';
 	const errMsg = 'Error: (Save Settings) Name for a setting cannot be blank.';
 
 	const handleSave = () => {
 		if (browser) {
 			const arr = $idStore.slice();
-			arr.push(name);
+			arr.push({ id: name, desc: description });
 
 			const dataString = JSON.stringify(Array.from(new Set(arr)));
 			localStorage.setItem(itemField, dataString);
@@ -31,6 +32,7 @@
 			});
 
 			name = '';
+			description = '';
 		}
 	};
 </script>
@@ -45,7 +47,15 @@
 		<input
 			type="text"
 			bind:value={name}
-			placeholder="name the setting"
+			placeholder="Name the setting"
+			class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+		/>
+	</div>
+	<div>
+		<input
+			type="text"
+			bind:value={description}
+			placeholder="Add a short description"
 			class="bg-primary border border-secondary-acc px-2 py-1 w-full"
 		/>
 	</div>

@@ -32,7 +32,12 @@
 			// id
 			let data = localStorage.getItem(idField) || '[]';
 			let dataStr = JSON.parse(data).filter((id) => id !== 'default');
-			$idStore = Array.from(new Set($idStore.concat(dataStr)));
+			$idStore = $idStore
+				.concat(dataStr)
+				.filter(
+					(value, index, self) =>
+						index === self.findIndex((t) => t.id === value.id && t.desc === value.desc)
+				);
 
 			// piano
 			data = localStorage.getItem(pianoField) || '[]';
@@ -79,8 +84,8 @@
 				{#each $idStore as id}
 					<tr>
 						<td>c</td>
-						<td>{id}</td>
-						<td>Description here</td>
+						<td>{id.id}</td>
+						<td>{id.desc ? id.desc : 'no description provided'}</td>
 						<td>Delete</td>
 					</tr>
 				{/each}

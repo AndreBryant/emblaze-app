@@ -1,9 +1,9 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 /**
- * TODO: Fetch local storage first then append added settings aside from the default
+ * TODO: Separate Default values
+ *
  */
-
 const field = 'emblaze-';
 
 function loadFromStorage(key, fallback) {
@@ -22,9 +22,9 @@ function loadFromStorage(key, fallback) {
 }
 
 // [
-// ... settingIDs
+// ... {id, desc}
 // ]
-const settingIDs = writable(loadFromStorage(field + 'settingIDs', ['default']));
+const settingIDs = writable(loadFromStorage(field + 'settingIDs', [{ id: 'default', desc: null }]));
 
 // [{sID, piano}, {sID, piano}, {sID, piano}, ...]
 const pianoDefault = {

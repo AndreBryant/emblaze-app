@@ -42,7 +42,12 @@
 			// id
 			let data = localStorage.getItem(idField) || '[]';
 			let dataStr = JSON.parse(data).filter((id) => id !== 'default');
-			$idStore = Array.from(new Set($idStore.concat(dataStr)));
+			$idStore = $idStore
+				.concat(dataStr)
+				.filter(
+					(value, index, self) =>
+						index === self.findIndex((t) => t.id === value.id && t.desc === value.desc)
+				); // since they are objects now {id, desc} performing concat then creating a set out of it does not work.
 
 			// piano
 			data = localStorage.getItem(pianoField) || '[]';
@@ -69,6 +74,8 @@
 	const debugLocal = () => {
 		if (browser) {
 			(() => localStorage.clear())();
+			$idStore = [{ id: 'default', desc: null }];
+			fetchDataFromLocalStorage();
 		}
 	};
 
@@ -83,6 +90,7 @@
 	const handleCustomizeSave = (e) => {
 		if (e.detail.save && !$hasError.value) {
 			const id = e.detail.id;
+			const desc = e.detail.desc;
 			pianoFieldsRef.handleSave(id);
 			noteCanvasFieldsRef.handleSave(id);
 			colorSchemeFieldsRef.handleSave(id);
@@ -102,11 +110,11 @@
 	});
 </script>
 
-<!-- <pre>{JSON.stringify($idStore, null, 2)}</pre>
-<pre>{JSON.stringify($pianoStore, null, 2)}</pre>
-<pre>{JSON.stringify($colorSchemeStore, null, 2)}</pre>
-<pre>{JSON.stringify($videoStore, null, 2)}</pre>
-<button
+<!-- <pre>{JSON.stringify($idStore, null, 2)}</pre> -->
+<!-- <pre>{JSON.stringify($pianoStore, null, 2)}</pre> -->
+<!-- <pre>{JSON.stringify($colorSchemeStore, null, 2)}</pre> -->
+<!-- <pre>{JSON.stringify($videoStore, null, 2)}</pre> -->
+<!-- <button
 	type="button"
 	class="border px-4 py-1 bg-yellow-400 text-primary border-primary"
 	on:click={debugLocal}

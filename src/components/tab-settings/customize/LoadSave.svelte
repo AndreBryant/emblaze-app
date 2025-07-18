@@ -37,8 +37,8 @@
 			bind:value={selected}
 			on:change={handleSelect}
 		>
-			{#each $settings as id, index}
-				<option value={id}>{id}</option>
+			{#each $settings as setting, index}
+				<option value={setting.id}>{setting.id}</option>
 			{/each}
 		</select>
 	</div>
