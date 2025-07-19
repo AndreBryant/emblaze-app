@@ -1,22 +1,20 @@
 <script>
-	import { browser } from '$app/environment';
 	import { hasError, ids, loadedSetting } from '$lib/stores/customize-stores.js';
 	import { createEventDispatcher } from 'svelte';
 	import { TriangleAlert } from 'lucide-svelte';
+	import { browser } from '$app/environment';
+
 	import Button from '../../Buttons/Button.svelte';
 	import ErrorFields from './fields/ErrorFields.svelte';
 
-	const field = 'save-current';
-
-	let idStore;
-	let itemField = ids.itemField;
-
-	$: idStore = ids.store;
-
 	const dispatch = createEventDispatcher();
+	const field = 'save-current';
 
 	let name = '';
 	let description = '';
+
+	let itemField = ids.itemField;
+	let idStore = ids.store;
 
 	const handleSave = () => {
 		if (!name.length) {
@@ -41,28 +39,30 @@
 			localStorage.setItem(itemField, dataString);
 			$idStore = JSON.parse(localStorage.getItem(itemField));
 
+			$hasError[field].value = false;
+			$hasError[field].errors = [];
+
+			loadedSetting.store.set(name);
+
 			dispatch('customizeSave', {
 				save: true,
 				id: name,
 				overwrite: true // TODO: handle this later
 			});
 
-			$hasError[field].value = false;
-			$hasError[field].errors = [];
-
-			loadedSetting.store.set(name);
-
 			name = '';
 			description = '';
 		}
 	};
 
-	function checkForErrors(data) {
+	const checkForErrors = (data) => {
 		for (let key in data) {
 			if (data[key].value && key !== field) return true;
 		}
 		return false;
-	}
+	};
+
+	$: idStore = ids.store;
 </script>
 
 <!-- Save current Setting -->

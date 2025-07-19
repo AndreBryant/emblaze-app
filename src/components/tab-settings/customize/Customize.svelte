@@ -40,7 +40,6 @@
 		if (browser) {
 			(() => localStorage.clear())();
 			$idStore = [{ id: 'default', desc: null }];
-			fetchDataFromLocalStorage();
 		}
 	};
 
@@ -55,7 +54,6 @@
 	const handleCustomizeSave = (e) => {
 		if (e.detail.save && !$hasError.value) {
 			const id = e.detail.id;
-			const desc = e.detail.desc;
 			pianoFieldsRef.handleSave(id);
 			noteCanvasFieldsRef.handleSave(id);
 			colorSchemeFieldsRef.handleSave(id);

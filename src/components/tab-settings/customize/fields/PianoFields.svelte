@@ -1,7 +1,16 @@
 <script>
-	import { browser } from '$app/environment';
 	import { piano, hasError } from '$lib/stores/customize-stores.js';
+	import { browser } from '$app/environment';
+
 	import ErrorFields from './ErrorFields.svelte';
+
+	let pianoRimColor = '#C27803';
+	let pianoBlazeColor = '#C27803';
+	let numOfKeys = '88';
+	let startKey = '21';
+	let lastKey = '108';
+	let pianoStore = piano.store;
+	let itemField = piano.itemField;
 
 	const handleSave = (id) => {
 		if (browser) {
@@ -36,14 +45,6 @@
 			lastKey = data.lastKey;
 		}
 	};
-
-	let pianoRimColor = '#C27803';
-	let pianoBlazeColor = '#C27803';
-	let numOfKeys = '88';
-	let startKey = '21';
-	let lastKey = '108';
-	let pianoStore;
-	let itemField = piano.itemField;
 
 	$: pianoStore = piano.store;
 
