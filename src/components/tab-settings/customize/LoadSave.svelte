@@ -1,5 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { ids, loadedSetting } from '$lib/stores/customize-stores.js';
 
 	const dispatch = createEventDispatcher();
@@ -7,12 +7,13 @@
 	let settings;
 	$: settings = ids.store;
 
-	let selected = 'default';
-	let loadedSettingStore;
-	$: loadedSettingStore = loadedSetting.store;
+	let selected;
+	$: selected = $loadedSettingStore;
+
+	const loadedSettingStore = loadedSetting.store;
 
 	const handleSelect = () => {
-		$loadedSettingStore = selected;
+		loadedSettingStore.set(selected);
 		dispatch('loadSave', {
 			id: selected
 		});
@@ -21,6 +22,12 @@
 	const setSelected = (id) => {
 		selected = id;
 	};
+
+	onMount(() => {
+		dispatch('loadSave', {
+			id: selected
+		});
+	});
 
 	export { setSelected };
 </script>
@@ -37,7 +44,7 @@
 			bind:value={selected}
 			on:change={handleSelect}
 		>
-			{#each $settings as setting, index}
+			{#each $settings as setting}
 				<option value={setting.id}>{setting.id}</option>
 			{/each}
 		</select>

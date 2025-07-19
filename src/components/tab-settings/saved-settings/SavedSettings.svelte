@@ -1,5 +1,12 @@
 <script>
-	import { ids, piano, noteCanvas, colorScheme, video } from '$lib/stores/customize-stores.js';
+	import {
+		ids,
+		piano,
+		noteCanvas,
+		colorScheme,
+		video,
+		loadedSetting
+	} from '$lib/stores/customize-stores.js';
 	let pianoSettings;
 	let videoSettings;
 	let colorSettings;
@@ -24,9 +31,13 @@
 	let videoStore;
 	let videoField = video.itemField;
 	$: videoStore = video.store;
+
+	let loaded;
+	$: loaded = loadedSetting.store;
 </script>
 
 <div class="flex flex-col gap-8">
+	<p>{$loaded}</p>
 	<div class="w-full lg:w-[50vw]">
 		<h4>Manage Saved Customizations</h4>
 
