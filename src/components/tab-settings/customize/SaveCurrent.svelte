@@ -1,6 +1,6 @@
 <script>
 	import { browser } from '$app/environment';
-	import { hasError, ids } from '$lib/stores/customize-stores.js';
+	import { hasError, ids, loadedSetting } from '$lib/stores/customize-stores.js';
 	import { createEventDispatcher } from 'svelte';
 	import { TriangleAlert } from 'lucide-svelte';
 	import Button from '../../Buttons/Button.svelte';
@@ -49,6 +49,8 @@
 
 			$hasError[field].value = false;
 			$hasError[field].errors = [];
+
+			loadedSetting.store.set(name);
 
 			name = '';
 			description = '';
