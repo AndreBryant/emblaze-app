@@ -1,85 +1,23 @@
 import { writable } from 'svelte/store';
-import { browser } from '$app/environment';
-/**
- * TODO: Separate Default values
- *
- */
+import { loadFromStorage } from './load-from-storage.js';
+import {
+	defaultSettingIDs,
+	defaultPianoFields,
+	defaultNoteCanvas,
+	defaultColorScheme,
+	defaultVideoFields
+} from './customize-default.js';
 const field = 'emblaze-';
 
-function loadFromStorage(key, fallback) {
-	if (!browser) return fallback;
+const settingIDs = writable(loadFromStorage(field + 'settingIDs', defaultSettingIDs));
 
-	try {
-		const raw = localStorage.getItem(key);
-		if (raw) {
-			const parsed = JSON.parse(raw);
-			return parsed;
-		}
-	} catch (err) {
-		console.error(`Failed to load ${key} from local storage`, err);
-	}
-	return fallback;
-}
+const cPiano = writable(loadFromStorage(field + 'cPiano', defaultPianoFields));
 
-// [
-// ... {id, desc}
-// ]
-const settingIDs = writable(loadFromStorage(field + 'settingIDs', [{ id: 'default', desc: null }]));
+const cNoteCanvas = writable(loadFromStorage(field + 'cNoteCanvas', defaultNoteCanvas));
 
-// [{sID, piano}, {sID, piano}, {sID, piano}, ...]
-const pianoDefault = {
-	sID: 'default',
-	piano: {
-		pianoRimColor: '#C27803',
-		pianoBlazeColor: '#C27803',
-		numOfKeys: '88',
-		startKey: '21',
-		lastKey: '108'
-	}
-};
-const cPiano = writable(loadFromStorage(field + 'cPiano', [pianoDefault]));
+const cColorScheme = writable(loadFromStorage(field + 'cColorScheme', defaultColorScheme));
 
-// [{sID, noteCanvas}, {sID, noteCanvas}, {sID, noteCanvas}, ...]
-const noteCanvasDefault = {
-	sID: 'default',
-	noteCanvas: {
-		noteSizing: 'Tick Based',
-		noteSpeed: '1',
-		noteType: 'No Outline',
-		keyFlare: {
-			enabled: false,
-			type: 'fire',
-			intensity: 0
-		},
-		noteParticle: {
-			enabled: false,
-			turbulence: 0,
-			particleDensity: 0,
-			shootVelocity: 0
-		}
-	}
-};
-const cNoteCanvas = writable([noteCanvasDefault]);
-
-// [{sID, colorScheme}, {sID, colorScheme}, {sID, colorScheme}, ...]
-const colorSchemeDefault = {
-	sID: 'default',
-	colorScheme: {
-		colorBy: 'track',
-		colorGeneration: 'random'
-	}
-};
-const cColorScheme = writable([colorSchemeDefault]);
-
-// [{sID, video}, {sID, video}, {sID, video}, ...]
-const videoDefault = {
-	sID: 'default',
-	video: {
-		quality: '360p',
-		fps: '30'
-	}
-};
-const cVideo = writable(loadFromStorage(field + 'cVideo', [videoDefault]));
+const cVideo = writable(loadFromStorage(field + 'cVideo', defaultVideoFields));
 
 // if null, load default settings
 const cLoadedSetting = writable('default');
