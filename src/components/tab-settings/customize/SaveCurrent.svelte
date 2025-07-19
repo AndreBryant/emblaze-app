@@ -4,6 +4,9 @@
 	import { createEventDispatcher } from 'svelte';
 	import { TriangleAlert } from 'lucide-svelte';
 	import Button from '../../Buttons/Button.svelte';
+	import ErrorFields from './fields/ErrorFields.svelte';
+
+	const field = 'save-current';
 
 	let idStore;
 	let itemField = ids.itemField;
@@ -14,9 +17,22 @@
 
 	let name = '';
 	let description = '';
-	const errMsg = 'Error: (Save Settings) Name for a setting cannot be blank.';
 
 	const handleSave = () => {
+		if (!name.length) {
+			const errMsg = 'Error: Name for a setting cannot be blank.';
+			$hasError[field].value = true;
+			$hasError[field].errors = [];
+			$hasError[field].errors.push(errMsg);
+			return;
+		} else if (checkForErrors($hasError)) {
+			const errMsg = 'Error: Unable to save as there are error in other fields.';
+			$hasError[field].value = true;
+			$hasError[field].errors = [];
+			$hasError[field].errors.push(errMsg);
+			return;
+		}
+
 		if (browser) {
 			const arr = $idStore.slice();
 			arr.push({ id: name, desc: description });
@@ -31,10 +47,20 @@
 				overwrite: true // TODO: handle this later
 			});
 
+			$hasError[field].value = false;
+			$hasError[field].errors = [];
+
 			name = '';
 			description = '';
 		}
 	};
+
+	function checkForErrors(data) {
+		for (let key in data) {
+			if (data[key].value && key !== field) return true;
+		}
+		return false;
+	}
 </script>
 
 <!-- Save current Setting -->
@@ -62,13 +88,8 @@
 	<div>
 		<p class="opacity-60 text-sm flex items-center gap-2">
 			<TriangleAlert size={20} />
-			Saving overwrites existing setting with the same name.
+			For now, configurations can be set with same names. I haven't implemented the overwriting yet T_,T
 		</p>
 	</div>
-	<!-- Error Fields -->
-	{#if $hasError.errors.includes(errMsg)}
-		<div>
-			<p class="text-red-600">{errMsg}</p>
-		</div>
-	{/if}
+	<ErrorFields field="save-current" />
 </div>

@@ -1,6 +1,7 @@
 <script>
 	import { browser } from '$app/environment';
 	import { piano, hasError } from '$lib/stores/customize-stores.js';
+	import ErrorFields from './ErrorFields.svelte';
 
 	const handleSave = (id) => {
 		if (browser) {
@@ -46,42 +47,45 @@
 
 	$: pianoStore = piano.store;
 
-	// TODO: Or you can trun this into an object and get error type. ex: type 1, type 2
-	const errMsg =
-		'Error: (Piano Settings) The number of keys must be between at least 2 and at most 128.';
 	$: {
+		const field = 'piano-fields';
 		if (numOfKeys === 'custom') {
-			const keys = Number(lastKey) - Number(startKey) + 1;
-			if (keys <= 1 || keys > 128) {
-				$hasError.value = true;
-				if (!$hasError.errors.includes(errMsg)) {
-					$hasError.errors.push(errMsg);
-				}
+			const start = Number(startKey);
+			const last = Number(lastKey);
+
+			let errorMsg;
+			if (start < 0 || last < 0) {
+				errorMsg = `Start key or last key indices cannot be negative value. (startkey: ${start}, lastKey: ${last})`;
+				$hasError[field].value = true;
+				$hasError[field].errors = [];
+				$hasError[field].errors.push(errorMsg);
+			} else if (start > last) {
+				errorMsg = `Start key cannot be larger than the last key index. (startkey: ${start}, lastKey: ${last})`;
+				$hasError[field].value = true;
+				$hasError[field].errors = [];
+				$hasError[field].errors.push(errorMsg);
 			} else {
-				$hasError.value = false;
-				$hasError.errors = $hasError.errors.filter((error) => error !== errMsg);
+				$hasError[field].value = false;
+				$hasError[field].errors = [];
 			}
 		} else {
 			switch (numOfKeys) {
 				case '61':
-					$hasError.value = false;
-					$hasError.errors = $hasError.errors.filter((error) => error !== errMsg);
 					startKey = '36';
 					lastKey = '96';
 					break;
 				case '88':
-					$hasError.value = false;
-					$hasError.errors = $hasError.errors.filter((error) => error !== errMsg);
 					startKey = '21';
 					lastKey = '108';
 					break;
 				case '128':
-					$hasError.value = false;
-					$hasError.errors = $hasError.errors.filter((error) => error !== errMsg);
 					startKey = '0';
 					lastKey = '127';
 					break;
 			}
+
+			$hasError[field].value = false;
+			$hasError[field].errors = [];
 		}
 	}
 
@@ -171,9 +175,5 @@
 	</table>
 
 	<!-- Error Fields -->
-	{#if $hasError.errors.includes(errMsg)}
-		<div>
-			<p class="text-red-600">{errMsg}</p>
-		</div>
-	{/if}
+	<ErrorFields field="piano-fields" />
 </div>

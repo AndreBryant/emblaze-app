@@ -114,6 +114,12 @@ const loadedSetting = {
 	store: cLoadedSetting
 };
 
-const hasError = writable({ value: false, errors: [] });
+const hasError = writable({
+	'save-current': { value: false, errors: [] },
+	'piano-fields': { value: false, errors: [] },
+	'note-canvas': { value: false, errors: [] },
+	'color-scheme': { value: false, errors: [] },
+	'video-fields': { value: false, errors: [] }
+});
 
 export { ids, piano, noteCanvas, colorScheme, video, loadedSetting, hasError };

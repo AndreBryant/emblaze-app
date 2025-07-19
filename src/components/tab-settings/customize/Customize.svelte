@@ -8,7 +8,6 @@
 		colorScheme,
 		video
 	} from '$lib/stores/customize-stores.js';
-	import { onMount } from 'svelte';
 
 	import LoadSave from './LoadSave.svelte';
 	import SaveCurrent from './SaveCurrent.svelte';
@@ -36,42 +35,6 @@
 	let videoStore;
 	let videoField = video.itemField;
 	$: videoStore = video.store;
-
-	const fetchDataFromLocalStorage = () => {
-		if (browser) {
-			// id
-			let dataStr = localStorage.getItem(idField) || [];
-			const data = JSON.parse(dataStr);
-			console.log('json:', data);
-			$idStore = $idStore
-				.concat(data)
-				.filter(
-					(value, index, self) =>
-						index === self.findIndex((t) => t.id === value.id && t.desc === value.desc)
-				); // since they are objects now {id, desc} performing concat then creating a set out of it does not work.
-			console.log('idStore', $idStore);
-
-			// // piano
-			// data = localStorage.getItem(pianoField) || '[]';
-			// dataStr = JSON.parse(data).filter((piano) => piano.sID !== 'default');
-			// $pianoStore = Array.from(new Set($pianoStore.concat(dataStr)));
-
-			// // note canvas
-			// data = localStorage.getItem(noteCanvasField) || '[]';
-			// dataStr = JSON.parse(data).filter((noteCanvas) => noteCanvas.sID !== 'default');
-			// $noteCanvasStore = Array.from(new Set($noteCanvasStore.concat(dataStr)));
-
-			// // color scheme
-			// data = localStorage.getItem(colorSchemeField) || '[]';
-			// dataStr = JSON.parse(data).filter((colorScheme) => colorScheme.sID !== 'default');
-			// $colorSchemeStore = Array.from(new Set($colorSchemeStore.concat(dataStr)));
-
-			// // video
-			// data = localStorage.getItem(videoField) || '[]';
-			// dataStr = JSON.parse(data).filter((video) => video.sID !== 'default');
-			// $videoStore = Array.from(new Set($videoStore.concat(dataStr)));
-		}
-	};
 
 	const debugLocal = () => {
 		if (browser) {
@@ -106,10 +69,6 @@
 	let colorSchemeFieldsRef;
 	let videoFieldsRef;
 	let loadSaveRef;
-
-	onMount(() => {
-		fetchDataFromLocalStorage();
-	});
 </script>
 
 <!-- <pre>{JSON.stringify($idStore, null, 2)}</pre> -->
