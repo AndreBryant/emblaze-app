@@ -2,8 +2,13 @@
 	import { noteCanvas } from '$lib/stores/customize-stores.js';
 	import { browser } from '$app/environment';
 
+	import ErrorFields from './ErrorFields.svelte';
+
+	const noteSpeedMin = 1;
+	const noteSpeedMax = 4000;
+
 	let noteSizing = 'tick-based';
-	let noteSpeed = '10';
+	let noteSpeed = '5';
 	let noteType = 'no-outline';
 
 	let keyFlareEnabled = false;
@@ -16,13 +21,13 @@
 	let noteParticleShootVelocity = '0';
 
 	let noteCanvasStore = noteCanvas.store;
-	let itemField = noteCanvas.field;
+	let itemField = noteCanvas.itemField;
 
 	const handleSave = (id) => {
 		if (browser) {
 			const noteCanvasData = {
 				sID: id,
-				noteCanvasData: {
+				noteCanvas: {
 					noteSizing,
 					noteSpeed,
 					noteType,
@@ -66,6 +71,11 @@
 		}
 	};
 
+	$: {
+		if (Number(noteSpeed) < noteSpeedMin) noteSpeed = '' + noteSpeedMin;
+		if (Number(noteSpeed) > noteSpeedMax) noteSpeed = '' + noteSpeedMax;
+	}
+
 	export { handleSave, handleLoadSetting };
 </script>
 
@@ -94,14 +104,22 @@
 		<tr>
 			<td class="py-1">
 				<div class="flex items-center">
-					<pre>Note Speed: {noteSpeed} </pre>
+					<pre>Note Speed:</pre>
 				</div>
 			</td>
 			<td>
 				<div class="flex gap-4">
-					<input type="range" class="flex-grow" bind:value={noteSpeed} />
+					<input
+						type="range"
+						min={noteSpeedMin}
+						max={noteSpeedMax}
+						class="flex-grow"
+						bind:value={noteSpeed}
+					/>
 					<input
 						type="number"
+						min={noteSpeedMin}
+						max={noteSpeedMax}
 						class="w-32 bg-primary border border-secondary-acc"
 						bind:value={noteSpeed}
 					/>
@@ -225,4 +243,7 @@
 			</td>
 		</tr>
 	</table>
+
+	<!-- Error fields -->
+	<ErrorFields field="note-canvas" />
 </div>
