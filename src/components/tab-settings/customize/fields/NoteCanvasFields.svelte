@@ -6,6 +6,14 @@
 
 	const noteSpeedMin = 1;
 	const noteSpeedMax = 4000;
+	const intensityMin = 0.1;
+	const intensityMax = 1;
+	const turbulenceMin = 0.1;
+	const turbulenceMax = 1;
+	const densityMin = 1;
+	const densityMax = 10;
+	const shootVelocityMin = 0.1;
+	const shootVelocityMax = 1;
 
 	let noteSizing = 'tick-based';
 	let noteSpeed = '5';
@@ -71,9 +79,30 @@
 		}
 	};
 
+	const clamp = (min, max, curr) => {
+		if (curr < min) return min;
+		if (curr > max) return max;
+		return curr;
+	};
+
 	$: {
-		if (Number(noteSpeed) < noteSpeedMin) noteSpeed = '' + noteSpeedMin;
-		if (Number(noteSpeed) > noteSpeedMax) noteSpeed = '' + noteSpeedMax;
+		// Just making sure these do not go outside the range
+		// note speed
+		noteSpeed = clamp(noteSpeedMin, noteSpeedMax, Number(noteSpeed)) + '';
+
+		// intensity
+		keyFlareIntensity = clamp(intensityMin, intensityMax, Number(keyFlareIntensity)) + '';
+
+		// turbulence
+		noteParticleTurbulence =
+			clamp(turbulenceMin, turbulenceMax, Number(noteParticleTurbulence)) + '';
+
+		// density
+		noteParticleDensity = clamp(densityMin, densityMax, Number(noteParticleDensity)) + '';
+
+		// shoot velocity
+		noteParticleShootVelocity =
+			clamp(shootVelocityMin, shootVelocityMax, Number(noteParticleShootVelocity)) + '';
 	}
 
 	export { handleSave, handleLoadSetting };
@@ -174,9 +203,19 @@
 			</td>
 			<td>
 				<div class="flex gap-4">
-					<input type="range" class="flex-grow" bind:value={keyFlareIntensity} />
+					<input
+						type="range"
+						min={intensityMin}
+						max={intensityMax}
+						step={0.01}
+						class="flex-grow"
+						bind:value={keyFlareIntensity}
+					/>
 					<input
 						type="number"
+						min={intensityMin}
+						max={intensityMax}
+						step={0.01}
 						class="w-32 bg-primary border border-secondary-acc"
 						bind:value={keyFlareIntensity}
 					/>
@@ -199,9 +238,19 @@
 			</td>
 			<td>
 				<div class="flex gap-4">
-					<input type="range" class="flex-grow" bind:value={noteParticleTurbulence} />
+					<input
+						type="range"
+						min={turbulenceMin}
+						max={turbulenceMax}
+						step={0.01}
+						class="flex-grow"
+						bind:value={noteParticleTurbulence}
+					/>
 					<input
 						type="number"
+						min={turbulenceMin}
+						max={turbulenceMax}
+						step={0.01}
 						class="w-32 bg-primary border border-secondary-acc"
 						bind:value={noteParticleTurbulence}
 					/>
@@ -216,9 +265,17 @@
 			</td>
 			<td>
 				<div class="flex gap-4">
-					<input type="range" class="flex-grow" bind:value={noteParticleDensity} />
+					<input
+						type="range"
+						min={densityMin}
+						max={densityMax}
+						class="flex-grow"
+						bind:value={noteParticleDensity}
+					/>
 					<input
 						type="number"
+						min={densityMin}
+						max={densityMax}
 						class="w-32 bg-primary border border-secondary-acc"
 						bind:value={noteParticleDensity}
 					/>
@@ -233,9 +290,19 @@
 			</td>
 			<td>
 				<div class="flex gap-4">
-					<input type="range" class="flex-grow" bind:value={noteParticleShootVelocity} />
+					<input
+						type="range"
+						min={shootVelocityMin}
+						max={shootVelocityMax}
+						step={0.01}
+						class="flex-grow"
+						bind:value={noteParticleShootVelocity}
+					/>
 					<input
 						type="number"
+						min={shootVelocityMin}
+						max={shootVelocityMax}
+						step={0.01}
 						class="w-32 bg-primary border border-secondary-acc"
 						bind:value={noteParticleShootVelocity}
 					/>
