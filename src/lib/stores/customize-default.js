@@ -16,9 +16,9 @@ const defaultNoteCanvas = [
 	{
 		sID: 'default',
 		noteCanvas: {
-			noteSizing: 'Tick Based',
+			noteSizing: '0',
 			noteSpeed: '1',
-			noteType: 'No Outline',
+			noteType: '2',
 			keyFlare: {
 				enabled: false,
 				type: 'fire',
