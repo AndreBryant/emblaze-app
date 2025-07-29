@@ -1,28 +1,26 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
+	import { Play, Pause, ChevronsRight, ChevronLeft, Boxes } from 'lucide-svelte';
+
 	import { filename, paused } from '$lib/stores/midi-stores.js';
 	import Button from '../../Buttons/Button.svelte';
 
-	import { Play, Pause, ChevronsRight, ChevronLeft, Boxes } from 'lucide-svelte';
-
-	let p5Sketch;
+	let pixiSketch;
 
 	onMount(async () => {
 		if (typeof window !== 'undefined') {
-			const p5 = await import('p5');
+			const PIXI = await import('pixi.js');
 
-			const { createSketch } = await import('$lib/midi-video');
+			const { createPixiSketch } = await import('$lib/midi-video');
 
 			let parent = document.getElementById('sketch-holder');
-			p5Sketch = createSketch(p5.default, parent);
-
-			// p5Sketch.currentTick|currentTime <-- modify these here but remember to pause then play again when changing ticks
+			pixiSketch = createPixiSketch(PIXI, parent);
 		}
 	});
 
 	onDestroy(() => {
-		if (p5Sketch && p5Sketch.remove) {
-			p5Sketch.remove();
+		if (pixiSketch) {
+			console.log('remove pixi sketch here');
 		}
 	});
 
