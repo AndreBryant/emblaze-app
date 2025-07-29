@@ -33,6 +33,7 @@ const defaultNoteCanvas = [
 		}
 	}
 ];
+
 const defaultColorScheme = [
 	{
 		sID: 'default',
@@ -42,6 +43,7 @@ const defaultColorScheme = [
 		}
 	}
 ];
+
 const defaultVideoFields = [
 	{
 		sID: 'default',

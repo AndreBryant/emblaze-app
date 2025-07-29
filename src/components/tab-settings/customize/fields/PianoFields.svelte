@@ -14,6 +14,9 @@
 
 	const handleSave = (id) => {
 		if (browser) {
+			startKey = startKey || '0';
+			lastKey = lastKey || '127';
+
 			const pianoData = {
 				sID: id,
 				piano: {
