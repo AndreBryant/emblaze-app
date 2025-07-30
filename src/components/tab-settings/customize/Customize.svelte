@@ -73,13 +73,13 @@
 <!-- <pre>{JSON.stringify($pianoStore, null, 2)}</pre> -->
 <!-- <pre>{JSON.stringify($colorSchemeStore, null, 2)}</pre> -->
 <!-- <pre>{JSON.stringify($videoStore, null, 2)}</pre> -->
-<button
+<!-- <button
 	type="button"
 	class="border px-4 py-1 bg-yellow-400 text-primary border-primary"
 	on:click={debugLocal}
 >
 	debug Reset LocalStorage
-</button>
+</button> -->
 
 <div class="flex flex-col gap-8 pb-8 backdrop-blur-sm">
 	<div class="flex flex-col gap-4">
