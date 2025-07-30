@@ -1,4 +1,4 @@
-import { Piano } from './classes/piano';
+import { Piano, PixiPiano } from './classes/piano';
 
 export const createSketch = (p5, parent) => {
 	const sketch = (p) => {
@@ -19,24 +19,19 @@ export const createSketch = (p5, parent) => {
 	return new p5(sketch, parent);
 };
 
-export const createPixiSketch = async (PIXI, parent) => {
+export const createPixiSketch = async (PIXI, canvas) => {
 	// console.log(PIXI, parent);
 	const app = new PIXI.Application();
 
 	await app.init({
+		canvas: canvas,
 		width: 1280,
-		height: 720
+		height: 720,
+		backgroundAlpha: 0.25,
+		background: 0x000000
 	});
 
-	// Cnavas  Setup
-	const canvas = app.canvas;
-	canvas.style.width = '100%';
-	canvas.style.height = '100%';
-	canvas.style.display = 'block';
-	canvas.style.maxWidth = '100%';
+	const piano = new PixiPiano(app, 0, 128, 0x550055, null);
 
-	parent.appendChild(app.canvas);
-
-	// Draw Piano
-	// const piano = new Piano(PIXI, 0, 128, [85, 0, 85], null);
+	app.ticker.add((delta) => {});
 };
