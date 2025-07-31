@@ -33,5 +33,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 	const piano = new PixiPiano(app, 0, 128, 0x550055, null);
 
-	app.ticker.add((delta) => {});
+	app.ticker.add((ticker) => {
+		// piano.updateKey(index, channel, ) //something like this
+	});
 };

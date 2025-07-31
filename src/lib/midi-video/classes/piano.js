@@ -261,6 +261,28 @@ export class PixiPiano {
 		this.blackKeyHeight = this.whiteKeyHeight / 1.5;
 	}
 
+	keyKeyDown(keyIndex, color = null) {
+		// Check if black or white key
+		const type = this.#checkType(keyIndex);
+
+		// Get references to stored data according to key type (black or white)
+		const keyIndices = type ? this.bk : this.wk;
+		const graphicsArray = type ? this.pianoGraphics.blackKeys : this.pianoGraphics.whiteKeys;
+
+		// Get index and the reference to the graphics object
+		const i = keyIndices.findIndex((k) => k.i === keyIndex);
+		const g = graphicsArray[i];
+
+		// Determine what the color will be
+		const c = !color ? (type ? 0x123123 : 0xaaaaaa) : color;
+
+		g.clear();
+		g.fill(c);
+		// console.log(type, keyIndex, i, g, this.bk);
+	}
+
+	keyKeyRelease(keyIndex, color) {}
+
 	show() {
 		console.log('Showing piano');
 		// this.#drawKeys(0);
