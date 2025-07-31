@@ -1,4 +1,8 @@
+import { get } from 'svelte/store';
 import { Piano, PixiPiano } from './classes/piano';
+import { Conductor } from './classes/conductor';
+
+import { midiData, filename, midiLoaded, paused } from '../stores/midi-stores';
 
 export const createSketch = (p5, parent) => {
 	const sketch = (p) => {
@@ -32,8 +36,14 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	});
 
 	const piano = new PixiPiano(app, 0, 128, 0x550055, null);
+	const conductor = new Conductor(get(midiData), piano);
+
+	paused.subscribe(() => {
+		conductor.setPause(get(paused));
+	});
 
 	app.ticker.add((ticker) => {
-		// piano.updateKey(index, channel, ) //something like this
+		if (!get(midiLoaded)) return;
+		conductor.update(ticker.deltaTime);
 	});
 };

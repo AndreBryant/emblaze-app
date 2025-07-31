@@ -286,7 +286,7 @@ export class PixiPiano {
 
 	updateDimensions() {
 		this.keyWidth = this.app.canvas.width / this.wk.length;
-		this.blackKeyWidth = this.keyWidth * 0.75;
+		this.blackKeyWidth = this.keyWidth * 0.5;
 		this.whiteKeyHeight = this.app.canvas.height / 5;
 		this.blackKeyHeight = this.whiteKeyHeight / 1.5;
 	}
