@@ -20,15 +20,15 @@ export const createSketch = (p5, parent) => {
 };
 
 export const createPixiSketch = async (PIXI, canvas) => {
-	// console.log(PIXI, parent);
 	const app = new PIXI.Application();
 
 	await app.init({
 		canvas: canvas,
 		width: 1280,
 		height: 720,
-		backgroundAlpha: 0.25,
-		background: 0x000000
+		backgroundAlpha: 0.5,
+		background: 0x111111,
+		preferWebGL: true
 	});
 
 	const piano = new PixiPiano(app, 0, 128, 0x550055, null);
