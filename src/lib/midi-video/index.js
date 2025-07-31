@@ -42,6 +42,14 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		conductor.setPause(get(paused));
 	});
 
+	midiData.subscribe(() => {
+		if (!get(midiData)) {
+			conductor.reset();
+			return;
+		}
+		conductor.changeMidiData(get(midiData));
+	});
+
 	app.ticker.add((ticker) => {
 		if (!get(midiLoaded)) return;
 		conductor.update(ticker.deltaTime);

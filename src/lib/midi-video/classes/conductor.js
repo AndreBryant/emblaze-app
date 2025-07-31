@@ -1,6 +1,8 @@
 // Control this on midi-video/index.js
 // This conductor controls the timing
 
+import { paused } from '../../stores/midi-stores';
+
 export class Conductor {
 	constructor(midiData, piano, startTime = 0, startOffset = 5) {
 		this.midiData = midiData | null;
@@ -14,13 +16,23 @@ export class Conductor {
 		this.midiLoaded = false;
 	}
 
+	reset() {
+		this.midiData = null;
+		this.tempoEvents = null;
+		this.pointerTime = this.startTime - this.startOffset;
+		paused.set(true);
+	}
+
 	movePointer(deltaTime) {
 		this.pointerTime += deltaTime;
 	}
 
 	changeMidiData(midiData) {
+		this.reset();
 		this.midiData = midiData;
 		this.tempoEvents = midiData.header.tempos;
+
+		console.log('changed midi Data');
 	}
 
 	setPause(paused) {
