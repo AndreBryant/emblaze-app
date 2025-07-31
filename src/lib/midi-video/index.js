@@ -20,7 +20,6 @@ export const createSketch = (p5, parent) => {
 };
 
 export const createPixiSketch = async (PIXI, canvas) => {
-	// console.log(PIXI, parent);
 	const app = new PIXI.Application();
 
 	await app.init({
