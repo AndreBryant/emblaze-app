@@ -47,7 +47,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 			conductor.reset();
 			return;
 		}
-		conductor.changeMidiData(get(midiData));
+		conductor.updateMidiData();
 	});
 
 	app.ticker.add((ticker) => {

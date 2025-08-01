@@ -10,7 +10,6 @@
 	onMount(async () => {
 		if (typeof window !== 'undefined') {
 			const PIXI = await import('pixi.js');
-
 			const { createPixiSketch } = await import('$lib/midi-video');
 
 			let canvas = document.getElementById('pixi-canvas');
