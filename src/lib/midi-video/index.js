@@ -36,7 +36,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	});
 
 	const piano = new PixiPiano(app, 0, 128, 0x550055, null);
-	const conductor = new Conductor(get(midiData), piano);
+	const conductor = new Conductor(piano);
 
 	paused.subscribe(() => {
 		conductor.setPause(get(paused));
@@ -50,8 +50,12 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		conductor.updateMidiData();
 	});
 
+	app.ticker.maxFPS = 60; //change this dynamically later
+
 	app.ticker.add((ticker) => {
 		if (!get(midiLoaded)) return;
-		conductor.update(ticker.deltaTime);
+		const deltaTimeMs = ticker.deltaTime * (1000 / ticker.maxFPS);
+
+		conductor.update(deltaTimeMs);
 	});
 };
