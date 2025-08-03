@@ -3,6 +3,7 @@
 	import { FileX2, FileCheck2, File, LoaderCircle } from 'lucide-svelte';
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	import { midiData, filename, midiLoaded } from '$lib/stores/midi-stores.js';
+	import { createEventDispatcher } from 'svelte';
 
 	let isLoading = false;
 	let worker;
@@ -21,6 +22,7 @@
 				const { success, result, error } = event.data;
 
 				if (success) {
+					console.log('FileInput.svelte', result);
 					$midiData = result;
 					$filename = midiFile.name;
 					$midiLoaded = true;

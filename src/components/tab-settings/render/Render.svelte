@@ -10,17 +10,16 @@
 	onMount(async () => {
 		if (typeof window !== 'undefined') {
 			const PIXI = await import('pixi.js');
-
 			const { createPixiSketch } = await import('$lib/midi-video');
 
-			let parent = document.getElementById('sketch-holder');
-			pixiSketch = createPixiSketch(PIXI, parent);
+			let canvas = document.getElementById('pixi-canvas');
+			pixiSketch = createPixiSketch(PIXI, canvas);
 		}
 	});
 
 	onDestroy(() => {
 		if (pixiSketch) {
-			console.log('remove pixi sketch here');
+			console.log('OnDestroy: remove pixi sketch here');
 		}
 	});
 
@@ -34,7 +33,9 @@
 			<div
 				id="sketch-holder"
 				class="w-full lg:w-3/5 aspect-video backdrop-blur-sm border border-black"
-			></div>
+			>
+				<canvas id="pixi-canvas" class="h-full w-full block max-w-full"></canvas>
+			</div>
 
 			<!-- PLAY CONTROLS -->
 			<div class="w-full flex flex-col justify-center items-center gap-2">

@@ -1,4 +1,8 @@
-import { Piano } from './classes/piano';
+import { get } from 'svelte/store';
+import { Piano, PixiPiano } from './classes/piano';
+import { Conductor } from './classes/conductor';
+
+import { midiData, filename, midiLoaded, paused } from '../stores/midi-stores';
 
 export const createSketch = (p5, parent) => {
 	const sketch = (p) => {
@@ -19,24 +23,39 @@ export const createSketch = (p5, parent) => {
 	return new p5(sketch, parent);
 };
 
-export const createPixiSketch = async (PIXI, parent) => {
-	// console.log(PIXI, parent);
+export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();
 
 	await app.init({
+		canvas: canvas,
 		width: 1280,
-		height: 720
+		height: 720,
+		backgroundAlpha: 0.5,
+		background: 0x111111,
+		preferWebGL: true
 	});
 
-	// Cnavas  Setup
-	const canvas = app.canvas;
-	canvas.style.width = '100%';
-	canvas.style.height = '100%';
-	canvas.style.display = 'block';
-	canvas.style.maxWidth = '100%';
+	const piano = new PixiPiano(app, 0, 128, 0x550055, null);
+	const conductor = new Conductor(piano);
 
-	parent.appendChild(app.canvas);
+	paused.subscribe(() => {
+		conductor.setPause(get(paused));
+	});
 
-	// Draw Piano
-	// const piano = new Piano(PIXI, 0, 128, [85, 0, 85], null);
+	midiData.subscribe(() => {
+		if (!get(midiData)) {
+			conductor.reset();
+			return;
+		}
+		conductor.updateMidiData();
+	});
+
+	app.ticker.maxFPS = 60; //change this dynamically later
+
+	app.ticker.add((ticker) => {
+		if (!get(midiLoaded)) return;
+		const deltaTimeMs = ticker.deltaTime * (1000 / ticker.maxFPS);
+
+		conductor.update(deltaTimeMs);
+	});
 };
