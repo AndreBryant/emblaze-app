@@ -11,6 +11,8 @@ export class PixiPiano {
 	bk = [];
 	pianoGraphics = {};
 
+	activeNotes = [];
+
 	BLACK = 0x000000;
 	WHITE = 0xffffff;
 
@@ -25,6 +27,9 @@ export class PixiPiano {
 		this.keyRimColor = keyRimColor;
 		this.scheme = scheme;
 		this.#initializeColorScheme();
+
+		//TODO: Record in such a way that only start key to last keys are considered
+		this.activeNotes = Array.from({ length: 128 }, () => []);
 
 		for (let i = this.startKey; i <= this.lastKey; i++) {
 			if (this.#checkType(i)) {
@@ -90,6 +95,16 @@ export class PixiPiano {
 		// this.pianoGraphics.keys[5].tint = 0x123123;
 	}
 
+	reset() {
+		this.activeNotes = Array.from({ length: 128 }, () => []);
+
+		// reset Piano graphics.keys
+		for (let i = 0; i < this.pianoGraphics.keys.length; i++) {
+			const key = this.pianoGraphics.keys[i];
+			key.tint = this.#checkType(i) ? this.BLACK : this.WHITE;
+		}
+	}
+
 	updateDimensions() {
 		this.keyWidth = this.app.canvas.width / this.wk.length;
 		this.blackKeyWidth = this.keyWidth * 0.5;
@@ -126,6 +141,36 @@ export class PixiPiano {
 		}
 
 		this.#colorKey(keyIndex, color);
+	}
+
+	playNote(keyIndex, start, duration, track, id) {
+		const note = { start: start, duration: duration, track: track, id: id };
+		this.activeNotes[keyIndex].push(note);
+		this.activeNotes[keyIndex].sort((a, b) => b.track - a.track);
+
+		this.#colorKey(keyIndex, this.#getColor(track));
+	}
+
+	checkExpired(currentTick) {
+		for (let i = 0; i < this.activeNotes.length; i++) {
+			const keys = this.activeNotes[i];
+
+			for (let j = 0; j < keys.length; j++) {
+				const note = keys[j];
+
+				if (note.start + note.duration <= currentTick) {
+					keys.splice(j, 1);
+
+					const color = keys.length
+						? this.#getColor(keys[0].track)
+						: this.#checkType(i)
+							? this.BLACK
+							: this.WHITE;
+
+					this.#colorKey(i, color);
+				}
+			}
+		}
 	}
 
 	#colorKey(keyIndex, color) {

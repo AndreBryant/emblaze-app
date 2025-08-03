@@ -24,6 +24,7 @@ export class Conductor {
 		this.tempoEvents = [];
 		this.keySignatures = [];
 		this.timeSignatures = [];
+		this.lastTick = 0;
 
 		// Tracks and notes
 		this.tracks = [];
@@ -52,9 +53,7 @@ export class Conductor {
 		this.ppq = this.midiData.header.ppq;
 		this.tracks = this.midiData.tracks;
 		this.#processNotes();
-
-		console.log(this.notes);
-		// console.log(get(midiData));
+		this.#getLastTick();
 	}
 
 	reset() {
@@ -71,6 +70,7 @@ export class Conductor {
 		this.tracks = [];
 		this.notes = [];
 
+		this.piano.reset();
 		paused.set(paused); // I explicitly set paused store here
 	}
 
@@ -80,6 +80,10 @@ export class Conductor {
 		this.updateTempo();
 		this.updatePiano();
 		this.#movePointer(deltaTime);
+
+		if (this.currentTick >= this.lastTick) {
+			paused.set(true);
+		}
 	}
 
 	updatePiano() {
@@ -87,10 +91,11 @@ export class Conductor {
 			this.currentNoteIndex < this.notes.length &&
 			this.notes[this.currentNoteIndex].ticks <= this.currentTick
 		) {
-			const { midi, duration, track } = this.notes[this.currentNoteIndex];
-			this.piano.keyKeyDown(midi, duration, track);
+			const { midi, durationTicks, track, ticks } = this.notes[this.currentNoteIndex];
+			this.piano.playNote(midi, ticks, durationTicks, track, Date.now().toString());
 			this.currentNoteIndex++;
 		}
+		this.piano.checkExpired(this.currentTick);
 	}
 
 	updateTempo() {
@@ -113,6 +118,7 @@ export class Conductor {
 			 * then each beat should be divided by how many ticks are in a quarter note(beat)
 			 * = 60000 / n / ppq
 			 *
+			 * i think i did the calculations correctly (pls let me know if i did it wrong, if ever anyone can see this)
 			 */
 		}
 	}
@@ -142,5 +148,13 @@ export class Conductor {
 			notes.sort((a, b) => a.ticks - b.ticks);
 		}
 		this.notes = notes;
+	}
+
+	#getLastTick() {
+		let max = 0;
+		for (const t of this.tracks) {
+			if (t.endOfTrackTicks > max) max = t.endOfTrackTicks;
+		}
+		this.lastTick = max;
 	}
 }
