@@ -55,9 +55,6 @@ export class Conductor {
 		this.tracks = this.midiData.tracks;
 		this.#processNotes();
 		this.#getLastTick();
-
-		console.log(this.currentTick);
-		console.log(this.lastTick);
 	}
 
 	reset() {
@@ -70,6 +67,7 @@ export class Conductor {
 		this.tickDuration = 0;
 
 		this.currentTick = 0;
+		this.currentNoteIndex = 0;
 
 		this.tracks = [];
 		this.notes = [];
@@ -86,6 +84,7 @@ export class Conductor {
 		this.#movePointer(deltaTime);
 
 		if (this.currentTick >= this.lastTick) {
+			this.updateMidiData();
 			paused.set(true);
 		}
 	}
