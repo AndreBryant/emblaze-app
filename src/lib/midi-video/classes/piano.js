@@ -9,7 +9,7 @@ export class PixiPiano {
 	scheme = [];
 	wk = [];
 	bk = [];
-	pianoGraphics = {};
+	graphics = {};
 
 	activeNotes = [];
 
@@ -19,14 +19,12 @@ export class PixiPiano {
 	constructor(app, startKey, numOfKeys, keyRimColor = 0x550055, scheme) {
 		this.app = app;
 		this.stage = app.stage;
-		this.graphics = new PIXI.Graphics();
 
 		this.startKey = startKey;
 		this.numOfKeys = numOfKeys;
 		this.lastKey = this.startKey + this.numOfKeys - 1;
 		this.keyRimColor = keyRimColor;
 		this.scheme = scheme;
-		this.#initializeColorScheme();
 		this.#updateDimensions();
 
 		this.activeNotes = Array.from({ length: 128 }).map((_, i) => ({
@@ -34,17 +32,17 @@ export class PixiPiano {
 			key: i
 		}));
 
-		this.pianoGraphics = {
+		this.graphics = {
 			keyRim: new PIXI.Graphics(),
 			keyContainer: new PIXI.Container(),
 			keys: []
 		};
 
-		this.pianoGraphics.keyContainer.sortableChildren = true;
+		this.graphics.keyContainer.sortableChildren = true;
 
-		this.stage.addChild(this.pianoGraphics.keyContainer);
+		this.stage.addChild(this.graphics.keyContainer);
 
-		this.pianoGraphics.keys = Array.from({ length: 128 }, (_, index) => {
+		this.graphics.keys = Array.from({ length: 128 }, (_, index) => {
 			const midiKey = index;
 			const isBlack = this.#checkType(midiKey);
 			const whiteCount = this.#countWhite(midiKey);
@@ -59,7 +57,7 @@ export class PixiPiano {
 				sprite.x = whiteCount * this.keyWidth - this.blackKeyWidth / 2;
 				sprite.y = this.app.canvas.height - this.whiteKeyHeight;
 
-				sprite.zIndex = 1;
+				sprite.zIndex = 11;
 			} else {
 				// For White Key
 				sprite.tint = this.WHITE;
@@ -69,7 +67,7 @@ export class PixiPiano {
 				sprite.x = (whiteCount - 1) * this.keyWidth;
 				sprite.y = this.app.canvas.height - this.whiteKeyHeight;
 
-				sprite.zIndex = 0;
+				sprite.zIndex = 10;
 			}
 
 			const outline = new PF.OutlineFilter({ thickness: 1, color: 0x444444 });
@@ -88,7 +86,7 @@ export class PixiPiano {
 		}));
 
 		// reset Piano graphics.keys
-		for (const key of this.pianoGraphics.keys) {
+		for (const key of this.graphics.keys) {
 			key.sprite.tint = this.#checkType(key.key) ? this.BLACK : this.WHITE;
 		}
 	}
@@ -135,28 +133,32 @@ export class PixiPiano {
 		}
 	}
 
+	updateColorScheme(scheme) {
+		this.scheme = scheme;
+	}
+
 	#colorKey(midiKey, color) {
-		this.pianoGraphics.keys[midiKey].sprite.tint = color;
+		this.graphics.keys[midiKey].sprite.tint = color;
 	}
 
 	#getColor(track) {
-		return this.colorScheme[track];
+		return this.scheme[track];
 	}
 
-	#randomColor() {
-		// FOr nw return this but make sure PixiPiano has a color mapping maybe
-		return Math.floor(Math.random() * 16777215);
-	}
+	// #randomColor() {
+	// 	// FOr nw return this but make sure PixiPiano has a color mapping maybe
+	// 	return Math.floor(Math.random() * 16777215);
+	// }
 
 	#drawKeys() {
-		const keys = this.pianoGraphics.keys;
+		const keys = this.graphics.keys;
 
 		for (let i = this.startKey; i <= this.lastKey; i++) {
 			const key = keys[i];
-			this.pianoGraphics.keyContainer.addChild(key.sprite);
+			this.graphics.keyContainer.addChild(key.sprite);
 		}
 
-		this.pianoGraphics.keyContainer.sortChildren();
+		this.graphics.keyContainer.sortChildren();
 	}
 
 	#countWhite(index) {
@@ -168,7 +170,7 @@ export class PixiPiano {
 	}
 
 	#drawKeyRim() {
-		const g = this.pianoGraphics.keyRim;
+		const g = this.graphics.keyRim;
 		const app = this.app;
 
 		const y1 = app.renderer.height - this.whiteKeyHeight - 4;
@@ -192,13 +194,13 @@ export class PixiPiano {
 		return MOD_KEY_MAPPING[keyIndex % 12];
 	}
 
-	#initializeColorScheme() {
-		this.colorScheme = [];
+	// #initializeColorScheme() {
+	// 	this.colorScheme = [];
 
-		for (let i = 0; i < 128; i++) {
-			this.colorScheme[i] = this.#randomColor();
-		}
-	}
+	// 	for (let i = 0; i < 128; i++) {
+	// 		this.colorScheme[i] = this.#randomColor();
+	// 	}
+	// }
 }
 
 /**

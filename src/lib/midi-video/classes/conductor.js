@@ -12,10 +12,12 @@ import { get } from 'svelte/store';
 import { paused, midiData } from '../../stores/midi-stores';
 
 export class Conductor {
-	constructor(piano, startTick = 0, startOffset = 5) {
+	constructor(piano, noteCanvas, startTick = 0, startOffset = 5) {
+		this.debug = 0;
 		// To be controlled by the conductor
 		this.midiData = null;
 		this.piano = piano;
+		this.noteCanvas = noteCanvas;
 
 		// Header
 		this.headerName = '';
@@ -30,6 +32,7 @@ export class Conductor {
 		this.tracks = [];
 		this.#processNotes();
 		this.currentNoteIndex = 0;
+		this.advancedNoteIndex = 0;
 
 		// Position in MIDI File
 		this.currentTick = 0;
@@ -77,6 +80,7 @@ export class Conductor {
 	}
 
 	update(deltaTime) {
+		this.updateNoteCanvas();
 		if (this.isPaused || !this.midiData) return;
 
 		this.updateTempo();
@@ -87,6 +91,25 @@ export class Conductor {
 			this.updateMidiData();
 			paused.set(true);
 		}
+	}
+
+	updateNoteCanvas() {
+		// while (
+		// 	this.advancedNoteIndex < this.notes.length &&
+		// 	this.notes[this.advancedNoteIndex].ticks <= this.currentTick
+		// ) {
+		// 	const { midi, durationTicks, track, ticks } = this.notes[this.currentNoteIndex];
+		// 	this.noteCanvas.playNote(midi, ticks, durationTicks, track);
+		// 	this.advancedNoteIndex++;
+		// }
+		// this.noteCanvas.checkExpired(this.currentTick);
+		console.log('updating note canvas');
+		if (this.debug % 120 === 0) {
+			this.noteCanvas.startNote(64, 0, 120, 8);
+			this.noteCanvas.startNote(72, 0, 108, 1);
+		}
+		this.noteCanvas.updatePositions();
+		this.debug++;
 	}
 
 	updatePiano() {
@@ -124,6 +147,11 @@ export class Conductor {
 			this.currentTempo = this.tempoEvents[this.currentTempoIndex].bpm;
 			this.tickDuration = 60000 / this.currentTempo / this.ppq;
 		}
+	}
+
+	updateColorScheme(scheme) {
+		this.piano.updateColorScheme(scheme);
+		this.noteCanvas.updateColorScheme(scheme);
 	}
 
 	// called from outside (for formality)

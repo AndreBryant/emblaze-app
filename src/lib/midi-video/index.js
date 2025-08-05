@@ -1,5 +1,6 @@
 import { get } from 'svelte/store';
 import { PixiPiano } from './classes/piano';
+import { NoteCanvas } from './classes/noteCanvas';
 import { Conductor } from './classes/conductor';
 
 import { midiData, filename, midiLoaded, paused } from '../stores/midi-stores';
@@ -16,8 +17,10 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		preferWebGL: true
 	});
 
-	const piano = new PixiPiano(app, 0, 128, 0x550055, null);
-	const conductor = new Conductor(piano);
+	let scheme = [];
+	const noteCanvas = new NoteCanvas(app, 0, 128, 0, 0, scheme);
+	const piano = new PixiPiano(app, 0, 128, 0x550055, scheme);
+	const conductor = new Conductor(piano, noteCanvas);
 
 	paused.subscribe(() => {
 		conductor.setPause(get(paused));
@@ -28,13 +31,19 @@ export const createPixiSketch = async (PIXI, canvas) => {
 			conductor.reset();
 			return;
 		}
+
+		scheme = Array.from({ length: get(midiData).tracks.length }, () =>
+			Math.floor(Math.random() * 16777215)
+		);
+
 		conductor.updateMidiData();
+		conductor.updateColorScheme(scheme);
 	});
 
 	app.ticker.maxFPS = 60; //change this dynamically later
 
 	app.ticker.add((ticker) => {
-		if (!get(midiLoaded)) return;
+		// if (!get(midiLoaded)) return;
 		const deltaTimeMs = ticker.deltaTime * (1000 / ticker.maxFPS);
 
 		conductor.update(deltaTimeMs);
