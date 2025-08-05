@@ -35,6 +35,7 @@ export class Conductor {
 		this.currentTick = 0;
 		this.startTime = startTick;
 		this.startOffset = startOffset;
+		this.fallingNotesOffset = this.ppq * 8;
 
 		// Flags (and other user controlled values)
 		this.isPaused = true;
@@ -54,6 +55,9 @@ export class Conductor {
 		this.tracks = this.midiData.tracks;
 		this.#processNotes();
 		this.#getLastTick();
+
+		console.log(this.currentTick);
+		console.log(this.lastTick);
 	}
 
 	reset() {
@@ -92,13 +96,27 @@ export class Conductor {
 			this.notes[this.currentNoteIndex].ticks <= this.currentTick
 		) {
 			const { midi, durationTicks, track, ticks } = this.notes[this.currentNoteIndex];
-			this.piano.playNote(midi, ticks, durationTicks, track, Date.now().toString());
+			this.piano.playNote(midi, ticks, durationTicks, track);
 			this.currentNoteIndex++;
 		}
 		this.piano.checkExpired(this.currentTick);
 	}
 
 	updateTempo() {
+		/**
+		 * n tempo is n beat per minute
+		 * get the reciprocal: 1 min passes per n beats
+		 * this means we get 60 seconds per n beats
+		 * this further implies that 60000ms per n beats
+		 *
+		 * now, we get the ppq which is how many ticks in a beat
+		 * to get the tick duration:
+		 * first, get how many ms per beat: 60000/n
+		 * then each beat should be divided by how many ticks are in a quarter note(beat)
+		 * = 60000 / n / ppq
+		 *
+		 * i think i did the calculations correctly (pls let me know if i did it wrong, if ever anyone can see this)
+		 */
 		if (
 			this.currentTempoIndex < this.tempoEvents.length - 1 &&
 			this.currentTick >= this.tempoEvents[this.currentTempoIndex + 1].ticks
@@ -106,20 +124,6 @@ export class Conductor {
 			this.currentTempoIndex++;
 			this.currentTempo = this.tempoEvents[this.currentTempoIndex].bpm;
 			this.tickDuration = 60000 / this.currentTempo / this.ppq;
-			/**
-			 * n tempo is n beat per minute
-			 * get the reciprocal: 1 min passes per n beats
-			 * this means we get 60 seconds per n beats
-			 * this further implies that 60000ms per n beats
-			 *
-			 * now, we get the ppq which is how many ticks in a beat
-			 * to get the tick duration:
-			 * first, get how many ms per beat: 60000/n
-			 * then each beat should be divided by how many ticks are in a quarter note(beat)
-			 * = 60000 / n / ppq
-			 *
-			 * i think i did the calculations correctly (pls let me know if i did it wrong, if ever anyone can see this)
-			 */
 		}
 	}
 

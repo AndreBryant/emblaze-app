@@ -1,27 +1,8 @@
 import { get } from 'svelte/store';
-import { Piano, PixiPiano } from './classes/piano';
+import { PixiPiano } from './classes/piano';
 import { Conductor } from './classes/conductor';
 
 import { midiData, filename, midiLoaded, paused } from '../stores/midi-stores';
-
-export const createSketch = (p5, parent) => {
-	const sketch = (p) => {
-		p.piano;
-
-		p.setup = () => {
-			p.createCanvas(1280, 720);
-			p.piano = new Piano(p, 0, 128, [85, 0, 85], null);
-			p.canvas.style.height = '100%';
-			p.canvas.style.width = '100%';
-		};
-
-		p.draw = () => {
-			p.piano.show();
-		};
-	};
-
-	return new p5(sketch, parent);
-};
 
 export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();
@@ -30,7 +11,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		canvas: canvas,
 		width: 1280,
 		height: 720,
-		backgroundAlpha: 0.5,
+		backgroundAlpha: 0.95,
 		background: 0x111111,
 		preferWebGL: true
 	});
@@ -59,3 +40,22 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		conductor.update(deltaTimeMs);
 	});
 };
+
+// export const createSketch = (p5, parent) => {
+// 	const sketch = (p) => {
+// 		p.piano;
+
+// 		p.setup = () => {
+// 			p.createCanvas(1280, 720);
+// 			p.piano = new Piano(p, 0, 128, [85, 0, 85], null);
+// 			p.canvas.style.height = '100%';
+// 			p.canvas.style.width = '100%';
+// 		};
+
+// 		p.draw = () => {
+// 			p.piano.show();
+// 		};
+// 	};
+
+// 	return new p5(sketch, parent);
+// };
