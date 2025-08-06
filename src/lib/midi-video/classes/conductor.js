@@ -1,19 +1,14 @@
-// Control this on midi-video/index.js
-// This conductor controls the timing
-
-/**
- * TODO:
- * 	1. Implement Updating Tempo depending on the current Tick
- *  2. Implement Playing notes on keyboard (go to PixiPiano to implement keyKeyDown and keyKeyReleased)
- *
- */
-
+import * as PIXI from 'pixi.js';
 import { get } from 'svelte/store';
 import { paused, midiData } from '../../stores/midi-stores';
 
 export class Conductor {
-	constructor(piano, noteCanvas, startTick = 0, startOffset = 5) {
+	constructor(app, piano, noteCanvas, startTick = 0, startOffset = 5) {
 		this.debug = 0;
+
+		this.app = app;
+		this.stage = app.stage;
+
 		// To be controlled by the conductor
 		this.midiData = null;
 		this.piano = piano;
@@ -48,6 +43,11 @@ export class Conductor {
 		this.currentTempo = 0;
 		this.currentTempoIndex = 0;
 		this.tickDuration = 0;
+
+		// Visuals
+		this.container = new PIXI.Container();
+		this.container.sortableChildren = true;
+		this.#addContainersToStage();
 	}
 
 	updateMidiData() {
@@ -58,6 +58,10 @@ export class Conductor {
 		this.tracks = this.midiData.tracks;
 		this.#processNotes();
 		this.#getLastTick();
+		this.container = new PIXI.Container();
+		this.container.sortableChildren = true;
+
+		this.#addContainersToStage();
 	}
 
 	reset() {
@@ -152,6 +156,13 @@ export class Conductor {
 	updateColorScheme(scheme) {
 		this.piano.updateColorScheme(scheme);
 		this.noteCanvas.updateColorScheme(scheme);
+	}
+
+	#addContainersToStage() {
+		this.container.addChild(this.noteCanvas.getContainer());
+		this.container.addChild(this.piano.getContainer());
+		this.container.sortChildren();
+		this.stage.addChild(this.container);
 	}
 
 	// called from outside (for formality)

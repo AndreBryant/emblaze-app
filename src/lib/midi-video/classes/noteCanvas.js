@@ -18,6 +18,11 @@ export class NoteCanvas {
 		this.lastKey = this.startKey + this.numOfKeys - 1;
 		this.#updateDimensions();
 		this.#initActiveNotes();
+
+		this.noteSpeed = 10;
+
+		this.container = new PIXI.Container();
+		this.container.sortableChildren = true;
 	}
 
 	reset() {}
@@ -26,12 +31,11 @@ export class NoteCanvas {
 		if (midiKey < this.startKey || midiKey > this.lastKey) return;
 
 		const xCoord = this.activeNotes[midiKey].x;
-		const yCoord = this.d - durationTicks;
 
 		const note = new PIXI.Sprite(PIXI.Texture.WHITE);
 		note.x = xCoord;
 		note.y = -durationTicks;
-		note.zIndex = 0;
+		note.zIndex = this.#checkType(midiKey);
 
 		note.width = this.noteWidth;
 		note.height = durationTicks;
@@ -39,14 +43,15 @@ export class NoteCanvas {
 		note.tint = this.#getColor(track);
 
 		this.activeNotes[midiKey].notes.push(note);
-		this.stage.addChild(note);
-		console.log(this.activeNotes[midiKey].notes.length);
+		this.container.addChild(note);
+		// this.stage.addChild(note);
+		// console.log(this.activeNotes[midiKey].notes.length);
 	}
 
 	updatePositions() {
 		for (const key of this.activeNotes) {
 			for (const [i, note] of key.notes.entries()) {
-				note.y += 10;
+				note.y += this.noteSpeed;
 				if (note.y > this.d) {
 					note.texture = PIXI.Texture.EMPTY;
 					key.notes.splice(i, 1);
@@ -63,6 +68,10 @@ export class NoteCanvas {
 
 	#getColor(track) {
 		return this.scheme[track];
+	}
+
+	getContainer() {
+		return this.container;
 	}
 
 	#initActiveNotes() {
