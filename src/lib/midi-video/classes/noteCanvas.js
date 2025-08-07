@@ -19,13 +19,19 @@ export class NoteCanvas {
 		this.#updateDimensions();
 		this.#initActiveNotes();
 
-		this.noteSpeed = 10;
+		this.noteSpeed = 40;
+		this.currentTempo = 0;
+		this.ppq = 0;
+		this.scale = 1;
 
 		this.container = new PIXI.Container();
 		this.container.sortableChildren = true;
 	}
 
-	reset() {}
+	reset() {
+		this.container.removeChildren();
+		this.container.sortableChildren = true;
+	}
 
 	startNote(midiKey, ticks, durationTicks, track) {
 		if (midiKey < this.startKey || midiKey > this.lastKey) return;
@@ -37,8 +43,8 @@ export class NoteCanvas {
 		note.y = -durationTicks;
 		note.zIndex = this.#checkType(midiKey);
 
-		note.width = this.noteWidth;
-		note.height = durationTicks;
+		note.width = this.noteWidth * (this.#checkType(midiKey) ? 0.5 : 1);
+		note.height = durationTicks * this.scale;
 
 		note.tint = this.#getColor(track);
 
@@ -50,17 +56,19 @@ export class NoteCanvas {
 
 	updatePositions() {
 		for (const key of this.activeNotes) {
-			for (const [i, note] of key.notes.entries()) {
+			for (let i = key.notes.length - 1; i >= 0; i--) {
+				const note = key.notes[i];
 				note.y += this.noteSpeed;
+
 				if (note.y > this.d) {
-					note.texture = PIXI.Texture.EMPTY;
+					this.container.removeChild(note);
 					key.notes.splice(i, 1);
 				}
 			}
 		}
 	}
 
-	checkExpired(currentTick) {}
+	// checkExpired(currentTick) {}
 
 	updateColorScheme(scheme) {
 		this.scheme = scheme;
@@ -72,6 +80,19 @@ export class NoteCanvas {
 
 	getContainer() {
 		return this.container;
+	}
+
+	setNoteSpeed(deltaTicks) {
+		this.noteSpeed = deltaTicks * this.scale;
+	}
+
+	updateTempo(tempo) {
+		this.tempo = tempo;
+		this.noteSpeed = (this.tempo * this.ppq) / 6000;
+	}
+
+	setPpq(ppq) {
+		this.ppq = ppq;
 	}
 
 	#initActiveNotes() {

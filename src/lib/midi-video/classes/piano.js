@@ -131,6 +131,10 @@ export class PixiPiano {
 		}
 	}
 
+	getKeyboardHeight() {
+		return this.whiteKeyHeight;
+	}
+
 	updateColorScheme(scheme) {
 		this.scheme = scheme;
 	}
