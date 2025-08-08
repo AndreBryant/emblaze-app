@@ -10,14 +10,16 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 	await app.init({
 		canvas: canvas,
-		width: 1280,
-		height: 720,
+		width: 640,
+		height: 360,
 		backgroundAlpha: 0.95,
 		background: 0x111111,
+		antialias: false,
 		preferWebGL: true
 	});
 
 	let scheme = [];
+	let loaded = false;
 	const noteCanvas = new NoteCanvas(app, 0, 128, 0, 0, scheme);
 	const piano = new PixiPiano(app, 0, 128, 0x550055, scheme);
 	const conductor = new Conductor(app, piano, noteCanvas);
@@ -28,6 +30,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 	midiData.subscribe(() => {
 		if (!get(midiData)) {
+			loaded = false;
 			conductor.reset();
 			return;
 		}
@@ -46,14 +49,15 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 		conductor.updateMidiData();
 		conductor.updateColorScheme(scheme);
+		loaded = true;
 	});
 
-	app.ticker.maxFPS = 60; //change this dynamically later
+	app.ticker.maxFPS = 60;
 
 	app.ticker.add((ticker) => {
-		if (!get(midiLoaded)) return;
-		const deltaTimeMs = ticker.deltaTime * (1000 / ticker.maxFPS);
-
-		conductor.update(deltaTimeMs);
+		if (!loaded) return;
+		conductor.update(ticker.deltaTime * (1000 / ticker.maxFPS));
 	});
+
+	return conductor;
 };

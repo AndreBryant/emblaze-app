@@ -39,3 +39,50 @@ body {
 #main-content-icon-bg {
 	transition: 0.15s;
 }
+
+.custom-slider {
+	-webkit-appearance: none;
+	background: transparent;
+}
+
+/* Track */
+.custom-slider::-webkit-slider-runnable-track {
+	height: 6px;
+	background: #ccc; /* fallback */
+	border-radius: 4px;
+}
+
+.custom-slider::-moz-range-track {
+	height: 6px;
+	background: #ccc;
+	border-radius: 4px;
+}
+
+/* Thumb */
+.custom-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	height: 16px;
+	width: 16px;
+	background: #057a55;
+	border-radius: 50%;
+	cursor: pointer;
+	margin-top: -5px; /* Align thumb with track */
+}
+
+.custom-slider::-moz-range-thumb {
+	height: 16px;
+	width: 16px;
+	background: #057a55;
+	border-radius: 50%;
+	cursor: pointer;
+	border: none;
+}
+
+/* Optional: accent-color for newer support */
+.custom-slider {
+	accent-color: #03543f;
+}
+
+canvas {
+	image-rendering: pixelated;
+}
