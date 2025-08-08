@@ -32,9 +32,17 @@ export const createPixiSketch = async (PIXI, canvas) => {
 			return;
 		}
 
-		scheme = Array.from({ length: get(midiData).tracks.length }, () =>
-			Math.floor(Math.random() * 16777215)
-		);
+		scheme = Array.from({ length: get(midiData).tracks.length }, () => {
+			const min = 0x11;
+			const max = 0xaa;
+
+			const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+			const r = randRange(min, max) << (4 * 0);
+			const g = randRange(min, max) << (4 * 2);
+			const b = randRange(min, max) << (4 * 4);
+
+			return r | g | b;
+		});
 
 		conductor.updateMidiData();
 		conductor.updateColorScheme(scheme);

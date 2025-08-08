@@ -26,6 +26,8 @@ export class NoteCanvas {
 
 		this.container = new PIXI.Container();
 		this.container.sortableChildren = true;
+
+		this.outlineFilter = new PF.OutlineFilter({ thickness: 1, color: 0x999999 });
 	}
 
 	reset() {
@@ -33,25 +35,23 @@ export class NoteCanvas {
 		this.container.sortableChildren = true;
 	}
 
-	startNote(midiKey, ticks, durationTicks, track) {
+	startNote(midiKey, durationTicks, track, offset) {
 		if (midiKey < this.startKey || midiKey > this.lastKey) return;
 
 		const xCoord = this.activeNotes[midiKey].x;
 
 		const note = new PIXI.Sprite(PIXI.Texture.WHITE);
 		note.x = xCoord;
-		note.y = -durationTicks;
+		note.y = -durationTicks - offset;
 		note.zIndex = this.#checkType(midiKey);
 
 		note.width = this.noteWidth * (this.#checkType(midiKey) ? 0.5 : 1);
 		note.height = durationTicks * this.scale;
 
-		note.tint = this.#getColor(track);
-
+		note.tint = this.#getColor(track) + (this.#checkType(midiKey) ? -0x101010 : 0x0f0f0f);
+		note.filters = [this.outlineFilter];
 		this.activeNotes[midiKey].notes.push(note);
 		this.container.addChild(note);
-		// this.stage.addChild(note);
-		// console.log(this.activeNotes[midiKey].notes.length);
 	}
 
 	updatePositions() {
@@ -67,8 +67,6 @@ export class NoteCanvas {
 			}
 		}
 	}
-
-	// checkExpired(currentTick) {}
 
 	updateColorScheme(scheme) {
 		this.scheme = scheme;

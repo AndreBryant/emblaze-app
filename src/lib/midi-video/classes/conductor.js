@@ -48,22 +48,6 @@ export class Conductor {
 		this.#addContainersToStage();
 	}
 
-	updateMidiData() {
-		this.reset();
-		this.midiData = get(midiData);
-		this.tempoEvents = this.midiData.header.tempos;
-		this.ppq = this.midiData.header.ppq;
-		this.tracks = this.midiData.tracks;
-		this.#processNotes();
-		this.#getLastTick();
-		this.container = new PIXI.Container();
-		this.container.sortableChildren = true;
-
-		this.noteCanvas.setPpq(this.ppq);
-
-		this.#addContainersToStage();
-	}
-
 	reset() {
 		this.midiData = null;
 
@@ -85,11 +69,27 @@ export class Conductor {
 		paused.set(paused); // I explicitly set paused store here
 	}
 
+	updateMidiData() {
+		this.reset();
+		this.midiData = get(midiData);
+		this.tempoEvents = this.midiData.header.tempos;
+		this.ppq = this.midiData.header.ppq;
+		this.tracks = this.midiData.tracks;
+		this.#processNotes();
+		this.#getLastTick();
+		this.container = new PIXI.Container();
+		this.container.sortableChildren = true;
+
+		this.noteCanvas.setPpq(this.ppq);
+
+		this.#addContainersToStage();
+	}
+
 	update(deltaTime) {
-		this.updateNoteCanvas();
 		if (this.isPaused || !this.midiData) return;
 
 		this.updateTempo();
+		this.updateNoteCanvas();
 		this.updatePiano();
 		this.#movePointer(deltaTime);
 
@@ -97,33 +97,6 @@ export class Conductor {
 			this.updateMidiData();
 			paused.set(true);
 		}
-	}
-
-	updateNoteCanvas() {
-		while (
-			this.advancedNoteIndex < this.notes.length &&
-			this.notes[this.advancedNoteIndex].ticks <= this.currentTick + this.fallingNotesOffset
-		) {
-			const { midi, durationTicks, track, ticks } = this.notes[this.advancedNoteIndex];
-			this.noteCanvas.startNote(midi, ticks, durationTicks, track);
-			this.advancedNoteIndex++;
-		}
-
-		if (!this.isPaused) {
-			this.noteCanvas.updatePositions();
-		}
-	}
-
-	updatePiano() {
-		while (
-			this.currentNoteIndex < this.notes.length &&
-			this.notes[this.currentNoteIndex].ticks <= this.currentTick
-		) {
-			const { midi, durationTicks, track, ticks } = this.notes[this.currentNoteIndex];
-			this.piano.playNote(midi, ticks, durationTicks, track);
-			this.currentNoteIndex++;
-		}
-		this.piano.checkExpired(this.currentTick);
 	}
 
 	updateTempo() {
@@ -151,6 +124,34 @@ export class Conductor {
 
 			// this.noteCanvas.updateTempo(this.currentTempo);
 		}
+	}
+
+	updateNoteCanvas() {
+		while (
+			this.advancedNoteIndex < this.notes.length &&
+			this.notes[this.advancedNoteIndex].ticks <= this.currentTick + this.fallingNotesOffset
+		) {
+			const { midi, durationTicks, track, ticks } = this.notes[this.advancedNoteIndex];
+			const offset = this.currentTick + this.fallingNotesOffset - ticks;
+			this.noteCanvas.startNote(midi, durationTicks, track, offset);
+			this.advancedNoteIndex++;
+		}
+
+		if (!this.isPaused) {
+			this.noteCanvas.updatePositions();
+		}
+	}
+
+	updatePiano() {
+		while (
+			this.currentNoteIndex < this.notes.length &&
+			this.notes[this.currentNoteIndex].ticks <= this.currentTick
+		) {
+			const { midi, durationTicks, track, ticks } = this.notes[this.currentNoteIndex];
+			this.piano.playNote(midi, ticks, durationTicks, track);
+			this.currentNoteIndex++;
+		}
+		this.piano.checkExpired(this.currentTick);
 	}
 
 	updateColorScheme(scheme) {
