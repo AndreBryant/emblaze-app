@@ -72,8 +72,9 @@ export class NoteCanvas {
 		this.scheme = scheme;
 	}
 
-	#getColor(track) {
-		return this.scheme[track];
+	updateTempo(tempo) {
+		this.tempo = tempo;
+		this.noteSpeed = (this.tempo * this.ppq) / 6000;
 	}
 
 	getContainer() {
@@ -82,11 +83,6 @@ export class NoteCanvas {
 
 	setNoteSpeed(deltaTicks) {
 		this.noteSpeed = deltaTicks * this.scale;
-	}
-
-	updateTempo(tempo) {
-		this.tempo = tempo;
-		this.noteSpeed = (this.tempo * this.ppq) / 6000;
 	}
 
 	setPpq(ppq) {
@@ -127,5 +123,9 @@ export class NoteCanvas {
 
 	#checkType(keyIndex) {
 		return MOD_KEY_MAPPING[keyIndex % 12];
+	}
+
+	#getColor(track) {
+		return this.scheme[track];
 	}
 }

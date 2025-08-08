@@ -159,13 +159,6 @@ export class Conductor {
 		this.noteCanvas.updateColorScheme(scheme);
 	}
 
-	#addContainersToStage() {
-		this.container.addChild(this.noteCanvas.getContainer());
-		this.container.addChild(this.piano.getContainer());
-		this.container.sortChildren();
-		this.stage.addChild(this.container);
-	}
-
 	// called from outside (for formality)
 	setPause(paused) {
 		this.isPaused = paused;
@@ -201,5 +194,12 @@ export class Conductor {
 			if (t.endOfTrackTicks > max) max = t.endOfTrackTicks;
 		}
 		this.lastTick = max;
+	}
+
+	#addContainersToStage() {
+		this.container.addChild(this.noteCanvas.getContainer());
+		this.container.addChild(this.piano.getContainer());
+		this.container.sortChildren();
+		this.stage.addChild(this.container);
 	}
 }

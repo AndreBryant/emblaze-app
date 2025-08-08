@@ -51,7 +51,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	app.ticker.maxFPS = 60; //change this dynamically later
 
 	app.ticker.add((ticker) => {
-		// if (!get(midiLoaded)) return;
+		if (!get(midiLoaded)) return;
 		const deltaTimeMs = ticker.deltaTime * (1000 / ticker.maxFPS);
 
 		conductor.update(deltaTimeMs);

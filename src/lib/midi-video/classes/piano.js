@@ -89,13 +89,6 @@ export class PixiPiano {
 		}
 	}
 
-	#updateDimensions() {
-		this.keyWidth = this.app.canvas.width / this.#countWhite(this.lastKey);
-		this.blackKeyWidth = this.keyWidth * 0.5;
-		this.whiteKeyHeight = this.app.canvas.height / 5;
-		this.blackKeyHeight = this.whiteKeyHeight / 1.5;
-	}
-
 	playNote(keyIndex, start, duration, track) {
 		// play note if midikey is only within the range [startKey, lastKey]
 		if (keyIndex > this.lastKey || keyIndex < this.startKey) return;
@@ -139,16 +132,16 @@ export class PixiPiano {
 		this.scheme = scheme;
 	}
 
+	getContainer() {
+		return this.graphics.keyContainer;
+	}
+
 	#colorKey(midiKey, color) {
 		this.graphics.keys[midiKey].sprite.tint = color;
 	}
 
 	#getColor(track) {
 		return this.scheme[track];
-	}
-
-	getContainer() {
-		return this.graphics.keyContainer;
 	}
 
 	#addKeysToContainer() {
@@ -193,5 +186,12 @@ export class PixiPiano {
 
 	#checkType(keyIndex) {
 		return MOD_KEY_MAPPING[keyIndex % 12];
+	}
+
+	#updateDimensions() {
+		this.keyWidth = this.app.canvas.width / this.#countWhite(this.lastKey);
+		this.blackKeyWidth = this.keyWidth * 0.5;
+		this.whiteKeyHeight = this.app.canvas.height / 5;
+		this.blackKeyHeight = this.whiteKeyHeight / 1.5;
 	}
 }
