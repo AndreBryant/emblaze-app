@@ -43,7 +43,7 @@ export class NoteCanvas {
 		const note = new PIXI.Sprite(PIXI.Texture.WHITE);
 		note.x = this.activeNotes[midiKey].x;
 		note.y = -durationTicks + offset;
-		note.zIndex = 2 * track + this.#checkType(midiKey);
+		note.zIndex = this.#checkType(midiKey);
 
 		note.width = this.noteWidth * (this.#checkType(midiKey) ? 0.5 : 1);
 		note.height = durationTicks * this.scale;
