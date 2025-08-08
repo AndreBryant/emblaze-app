@@ -170,6 +170,16 @@ export class Conductor {
 		if (!wasPaused) paused.set(true);
 		await delay(100);
 		this.#movePointer(-500);
+		this.currentNoteIndex = 0;
+		this.advancedNoteIndex = 0;
+
+		this.updateTempo();
+
+		this.noteCanvas.reset();
+		this.updateNoteCanvas();
+
+		this.piano.reset();
+		this.updatePiano();
 		if (!wasPaused) paused.set(false);
 	}
 
@@ -180,6 +190,16 @@ export class Conductor {
 		if (!wasPaused) paused.set(true);
 		await delay(100);
 		this.#movePointer(1000);
+		this.currentNoteIndex = 0;
+		this.advancedNoteIndex = 0;
+
+		this.updateTempo();
+
+		this.noteCanvas.reset();
+		this.updateNoteCanvas();
+
+		this.piano.reset();
+		this.updatePiano();
 		if (!wasPaused) paused.set(false);
 	}
 

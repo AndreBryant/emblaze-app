@@ -68,7 +68,7 @@ export class PixiPiano {
 				sprite.zIndex = 10;
 			}
 
-			const outline = new PF.OutlineFilter({ thickness: 1, color: 0x444444 });
+			const outline = new PF.OutlineFilter({ thickness: 1, color: 0x111111 });
 			sprite.filters = [outline];
 			return { key: midiKey, sprite: sprite };
 		});
@@ -174,12 +174,12 @@ export class PixiPiano {
 		// First line
 		g.moveTo(0, y1);
 		g.lineTo(width, y1);
-		g.stroke({ width: 2, color: 0x000000 });
+		g.stroke({ width: 1, color: 0x000000 });
 
 		// Second line
 		g.moveTo(0, y2);
 		g.lineTo(width, y2);
-		g.stroke({ width: 2, color: this.keyRimColor });
+		g.stroke({ width: 1, color: this.keyRimColor });
 
 		this.stage.addChild(g);
 	}

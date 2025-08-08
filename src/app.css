@@ -82,3 +82,7 @@ body {
 .custom-slider {
 	accent-color: #03543f;
 }
+
+canvas {
+	image-rendering: pixelated;
+}
