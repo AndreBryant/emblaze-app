@@ -41,7 +41,11 @@
 			<div class="w-full flex flex-col justify-center items-center gap-2">
 				<!-- Progess Bar -->
 				<div class="w-full lg:w-3/5">
-					<input type="range" class="w-full h-1 accent-acc-2-light pointer-events-none" value="0" />
+					<input
+						type="range"
+						class="custom-slider w-full h-1 pointer-events-none accent-acc-2-light"
+						value="0"
+					/>
 				</div>
 
 				<!-- Buttons -->
