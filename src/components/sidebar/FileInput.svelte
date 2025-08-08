@@ -22,7 +22,6 @@
 				const { success, result, error } = event.data;
 
 				if (success) {
-					console.log('FileInput.svelte', result);
 					$midiData = result;
 					$filename = midiFile.name;
 					$midiLoaded = true;

@@ -56,4 +56,6 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 		conductor.update(deltaTimeMs);
 	});
+
+	return conductor;
 };

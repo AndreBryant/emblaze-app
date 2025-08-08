@@ -1,6 +1,9 @@
 import * as PIXI from 'pixi.js';
-import { get } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { paused, midiData } from '../../stores/midi-stores';
+
+export const currentTick = writable(0);
+export const lastTick = writable(1);
 
 export class Conductor {
 	constructor(app, piano, noteCanvas, startTick = 0, startOffset = 5) {
@@ -58,6 +61,7 @@ export class Conductor {
 		this.tickDuration = 0;
 
 		this.currentTick = 0;
+		currentTick.set(0);
 		this.currentNoteIndex = 0;
 		this.advancedNoteIndex = this.ppq * 8;
 
@@ -159,6 +163,26 @@ export class Conductor {
 		this.noteCanvas.updateColorScheme(scheme);
 	}
 
+	async seekLeft() {
+		if (!this.midiData) return;
+		const wasPaused = this.isPaused;
+
+		if (!wasPaused) paused.set(true);
+		await delay(100);
+		this.#movePointer(-500);
+		if (!wasPaused) paused.set(false);
+	}
+
+	async seekRight() {
+		if (!this.midiData) return;
+
+		const wasPaused = this.isPaused;
+		if (!wasPaused) paused.set(true);
+		await delay(100);
+		this.#movePointer(1000);
+		if (!wasPaused) paused.set(false);
+	}
+
 	// called from outside (for formality)
 	setPause(paused) {
 		this.isPaused = paused;
@@ -167,9 +191,11 @@ export class Conductor {
 	#movePointer(deltaTime) {
 		const deltaTicks = deltaTime / this.tickDuration;
 		this.currentTick += deltaTicks;
+		currentTick.set(this.currentTick);
 
-		this.noteCanvas.setNoteSpeed(deltaTicks);
-		// console.log(this.currentTick, this.tickDuration, this.currentTempo);
+		if (deltaTicks > 0) {
+			this.noteCanvas.setNoteSpeed(deltaTicks);
+		}
 	}
 
 	#processNotes() {
@@ -194,6 +220,7 @@ export class Conductor {
 			if (t.endOfTrackTicks > max) max = t.endOfTrackTicks;
 		}
 		this.lastTick = max;
+		lastTick.set(max);
 	}
 
 	#addContainersToStage() {
@@ -202,4 +229,8 @@ export class Conductor {
 		this.container.sortChildren();
 		this.stage.addChild(this.container);
 	}
+}
+
+function delay(ms) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
