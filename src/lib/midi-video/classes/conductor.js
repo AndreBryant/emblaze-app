@@ -118,16 +118,6 @@ export class Conductor {
 		 *
 		 * i think i did the calculations correctly (pls let me know if i did it wrong, if ever anyone can see this)
 		 */
-		// if (
-		// 	this.currentTempoIndex < this.tempoEvents.length - 1 &&
-		// 	this.currentTick >= this.tempoEvents[this.currentTempoIndex + 1].ticks
-		// ) {
-		// 	this.currentTempoIndex++;
-		// 	this.currentTempo = this.tempoEvents[this.currentTempoIndex].bpm;
-		// 	this.tickDuration = 60000 / this.currentTempo / this.ppq;
-
-		// 	// this.noteCanvas.updateTempo(this.currentTempo);
-		// }
 
 		if (!this.tempoEvents || this.tempoEvents.length === 0) return;
 

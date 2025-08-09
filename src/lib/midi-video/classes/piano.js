@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js';
-import * as PF from 'pixi-filters';
 
 const MOD_KEY_MAPPING = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
+const WHITE_KEY_URL = '/sprites/white-key.png';
+const BLACK_KEY_URL = '/sprites/black-key.png';
 
 export class PixiPiano {
 	keyboardState = [];
@@ -13,8 +14,8 @@ export class PixiPiano {
 
 	activeNotes = [];
 
-	BLACK = 0x000000;
-	WHITE = 0xffffff;
+	BLACK = 0x333333;
+	WHITE = 0xeeeeee;
 
 	constructor(app, startKey, numOfKeys, keyRimColor = 0x550055, scheme) {
 		this.app = app;
@@ -39,42 +40,6 @@ export class PixiPiano {
 		};
 
 		this.graphics.keyContainer.sortableChildren = true;
-
-		this.graphics.keys = Array.from({ length: 128 }, (_, index) => {
-			const midiKey = index;
-			const isBlack = this.#checkType(midiKey);
-			const whiteCount = this.#countWhite(midiKey);
-			const sprite = new PIXI.Sprite(PIXI.Texture.WHITE);
-
-			if (isBlack) {
-				// For Black Key
-				sprite.tint = this.BLACK;
-				sprite.width = this.blackKeyWidth;
-				sprite.height = this.blackKeyHeight;
-
-				sprite.x = whiteCount * this.keyWidth - this.blackKeyWidth / 2;
-				sprite.y = this.app.canvas.height - this.whiteKeyHeight;
-
-				sprite.zIndex = 11;
-			} else {
-				// For White Key
-				sprite.tint = this.WHITE;
-				sprite.width = this.keyWidth;
-				sprite.height = this.whiteKeyHeight;
-
-				sprite.x = (whiteCount - 1) * this.keyWidth;
-				sprite.y = this.app.canvas.height - this.whiteKeyHeight;
-
-				sprite.zIndex = 10;
-			}
-
-			const outline = new PF.OutlineFilter({ thickness: 1, color: 0x111111 });
-			sprite.filters = [outline];
-			return { key: midiKey, sprite: sprite };
-		});
-
-		this.#drawKeyRim();
-		this.#addKeysToContainer();
 	}
 
 	reset() {
@@ -89,6 +54,47 @@ export class PixiPiano {
 		}
 	}
 
+	async initKeys() {
+		let whiteTex, blackTex;
+		await PIXI.Assets.load([WHITE_KEY_URL, BLACK_KEY_URL]).then(() => {
+			whiteTex = PIXI.Texture.from(WHITE_KEY_URL);
+			blackTex = PIXI.Texture.from(BLACK_KEY_URL);
+		});
+		this.graphics.keys = Array.from({ length: 128 }, (_, index) => {
+			const midiKey = index;
+			const isBlack = this.#checkType(midiKey);
+			const whiteCount = this.#countWhite(midiKey);
+
+			const texture = isBlack ? blackTex : whiteTex;
+			const sprite = new PIXI.Sprite(texture);
+
+			if (isBlack) {
+				sprite.tint = this.BLACK;
+				sprite.width = this.blackKeyWidth;
+				sprite.height = this.blackKeyHeight;
+
+				sprite.x = whiteCount * this.keyWidth - this.blackKeyWidth / 2;
+				sprite.y = this.app.canvas.height - this.whiteKeyHeight;
+
+				sprite.zIndex = 11;
+			} else {
+				sprite.tint = this.WHITE;
+				sprite.width = this.keyWidth;
+				sprite.height = this.whiteKeyHeight;
+
+				sprite.x = (whiteCount - 1) * this.keyWidth;
+				sprite.y = this.app.canvas.height - this.whiteKeyHeight;
+
+				sprite.zIndex = 10;
+			}
+
+			return { key: midiKey, sprite: sprite };
+		});
+
+		this.#drawKeyRim();
+		this.#addKeysToContainer();
+	}
+
 	playNote(keyIndex, start, duration, track) {
 		// play note if midikey is only within the range [startKey, lastKey]
 		if (keyIndex > this.lastKey || keyIndex < this.startKey) return;
@@ -97,7 +103,10 @@ export class PixiPiano {
 		this.activeNotes[keyIndex].notes.push(note);
 		this.activeNotes[keyIndex].notes.sort((a, b) => b.track - a.track);
 
-		this.#colorKey(keyIndex, this.#getColor(track));
+		this.#colorKey(
+			keyIndex,
+			this.#getColor(track) + (this.#checkType(keyIndex) ? -0x101010 : 0x0f0f0f)
+		);
 	}
 
 	checkExpired(currentTick) {
@@ -190,7 +199,7 @@ export class PixiPiano {
 
 	#updateDimensions() {
 		this.keyWidth = this.app.canvas.width / this.#countWhite(this.lastKey);
-		this.blackKeyWidth = this.keyWidth * 0.5;
+		this.blackKeyWidth = this.keyWidth * 0.6;
 		this.whiteKeyHeight = this.app.canvas.height / 5;
 		this.blackKeyHeight = this.whiteKeyHeight / 1.5;
 	}
