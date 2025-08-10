@@ -7,11 +7,12 @@ import { midiData, filename, midiLoaded, paused } from '../stores/midi-stores';
 
 export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();
-
+	const ch = 360;
+	const cw = (ch * 16) / 9;
 	await app.init({
 		canvas: canvas,
-		width: 640,
-		height: 360,
+		width: cw,
+		height: ch,
 		backgroundAlpha: 0.95,
 		background: 0x111111,
 		antialias: false,
@@ -20,8 +21,13 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 	let scheme = [];
 	let loaded = false;
-	const noteCanvas = new NoteCanvas(app, 0, 128, 0, 0, scheme);
-	const piano = new PixiPiano(app, 0, 128, 0x550055, scheme);
+
+	const noteCanvas = new NoteCanvas(app, 21, 88, 0, 0, scheme);
+	await noteCanvas.loadTexture();
+
+	const piano = new PixiPiano(app, 21, 88, 0x550055, scheme);
+	await piano.initKeys();
+
 	const conductor = new Conductor(app, piano, noteCanvas);
 
 	paused.subscribe(() => {

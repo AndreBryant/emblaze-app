@@ -118,16 +118,23 @@ export class Conductor {
 		 *
 		 * i think i did the calculations correctly (pls let me know if i did it wrong, if ever anyone can see this)
 		 */
-		if (
-			this.currentTempoIndex < this.tempoEvents.length - 1 &&
-			this.currentTick >= this.tempoEvents[this.currentTempoIndex + 1].ticks
-		) {
-			this.currentTempoIndex++;
-			this.currentTempo = this.tempoEvents[this.currentTempoIndex].bpm;
-			this.tickDuration = 60000 / this.currentTempo / this.ppq;
 
-			// this.noteCanvas.updateTempo(this.currentTempo);
+		if (!this.tempoEvents || this.tempoEvents.length === 0) return;
+
+		// Find latest tempo event BEFORE or AT currentTick
+		for (let i = this.tempoEvents.length - 1; i >= 0; i--) {
+			if (this.currentTick >= this.tempoEvents[i].ticks) {
+				this.currentTempoIndex = i;
+				this.currentTempo = this.tempoEvents[i].bpm;
+				this.tickDuration = 60000 / this.currentTempo / this.ppq;
+				return;
+			}
 		}
+
+		// If none found, default to the first
+		this.currentTempoIndex = 0;
+		this.currentTempo = this.tempoEvents[0].bpm;
+		this.tickDuration = 60000 / this.currentTempo / this.ppq;
 	}
 
 	updateNoteCanvas() {
@@ -172,6 +179,7 @@ export class Conductor {
 		this.#movePointer(-500);
 		this.currentNoteIndex = 0;
 		this.advancedNoteIndex = 0;
+		this.currentTempoIndex = 0;
 
 		this.updateTempo();
 
@@ -190,8 +198,9 @@ export class Conductor {
 		if (!wasPaused) paused.set(true);
 		await delay(100);
 		this.#movePointer(1000);
-		this.currentNoteIndex = 0;
-		this.advancedNoteIndex = 0;
+		// this.currentNoteIndex = 0;
+		// this.advancedNoteIndex = 0;
+		// this.currentTempoIndex = 0;
 
 		this.updateTempo();
 

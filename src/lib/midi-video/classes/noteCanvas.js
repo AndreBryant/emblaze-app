@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-import * as PF from 'pixi-filters';
 
 const MOD_KEY_MAPPING = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 
@@ -27,7 +26,7 @@ export class NoteCanvas {
 		this.container = new PIXI.Container();
 		this.container.sortableChildren = true;
 
-		// this.outlineFilter = new PF.OutlineFilter({ thickness: 1, color: 0x999999 });
+		this.noteTexture = null;
 	}
 
 	reset() {
@@ -37,19 +36,25 @@ export class NoteCanvas {
 		this.#initActiveNotes();
 	}
 
+	async loadTexture() {
+		const texture = '/sprites/note-texture.png';
+		await PIXI.Assets.load([texture]).then(() => {
+			this.noteTexture = PIXI.Texture.from(texture);
+		});
+	}
+
 	startNote(midiKey, durationTicks, track, offset) {
 		if (midiKey < this.startKey || midiKey > this.lastKey) return;
 
-		const note = new PIXI.Sprite(PIXI.Texture.WHITE);
+		const note = new PIXI.Sprite(this.noteTexture);
 		note.x = this.activeNotes[midiKey].x;
 		note.y = -durationTicks + offset;
-		note.zIndex = 2 * track + this.#checkType(midiKey);
+		note.zIndex = this.#checkType(midiKey);
 
 		note.width = this.noteWidth * (this.#checkType(midiKey) ? 0.5 : 1);
 		note.height = durationTicks * this.scale;
 
 		note.tint = this.#getColor(track) + (this.#checkType(midiKey) ? -0x101010 : 0x0f0f0f);
-		// note.filters = [this.outlineFilter];
 		this.activeNotes[midiKey].notes.push(note);
 		this.container.addChild(note);
 	}

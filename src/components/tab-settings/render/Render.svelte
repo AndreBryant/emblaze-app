@@ -44,7 +44,7 @@
 			<!-- P5 SKETCH CONTAINER  -->
 			<div
 				id="sketch-holder"
-				class="w-full lg:w-3/5 aspect-video backdrop-blur-sm border border-black"
+				class="w-full lg:w-8/12 aspect-video backdrop-blur-sm border border-black"
 			>
 				<canvas id="pixi-canvas" class="h-full w-full block max-w-full"></canvas>
 			</div>
@@ -98,6 +98,6 @@
 	</div>
 
 	<pre class="text-sm opacity-70">&gt; {$filename
-			? 'filename: ' + $filename
+			? 'Now playing: ' + $filename
 			: 'No MIDI File Loaded'}</pre>
 </div>
