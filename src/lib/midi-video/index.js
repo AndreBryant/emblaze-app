@@ -21,9 +21,13 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 	let scheme = [];
 	let loaded = false;
+
 	const noteCanvas = new NoteCanvas(app, 21, 88, 0, 0, scheme);
+	await noteCanvas.loadTexture();
+
 	const piano = new PixiPiano(app, 21, 88, 0x550055, scheme);
-	piano.initKeys();
+	await piano.initKeys();
+
 	const conductor = new Conductor(app, piano, noteCanvas);
 
 	paused.subscribe(() => {
