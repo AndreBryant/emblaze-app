@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-import * as PF from 'pixi-filters';
 
 const MOD_KEY_MAPPING = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 
@@ -26,8 +25,6 @@ export class NoteCanvas {
 
 		this.container = new PIXI.Container();
 		this.container.sortableChildren = true;
-
-		// this.outlineFilter = new PF.OutlineFilter({ thickness: 1, color: 0x999999 });
 	}
 
 	reset() {
@@ -49,7 +46,6 @@ export class NoteCanvas {
 		note.height = durationTicks * this.scale;
 
 		note.tint = this.#getColor(track) + (this.#checkType(midiKey) ? -0x101010 : 0x0f0f0f);
-		// note.filters = [this.outlineFilter];
 		this.activeNotes[midiKey].notes.push(note);
 		this.container.addChild(note);
 	}
