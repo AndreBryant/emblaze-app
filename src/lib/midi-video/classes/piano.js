@@ -119,7 +119,7 @@ export class PixiPiano {
 		);
 
 		const rim = this.graphics.keyRim;
-		rim.startParticle(keyIndex, track);
+		// rim.startParticle(keyIndex, track);
 	}
 
 	checkExpired(currentTick) {
@@ -143,7 +143,7 @@ export class PixiPiano {
 							: this.WHITE;
 
 					this.#colorKey(i, color);
-					rim.stopParticle(i, note.track);
+					// rim.stopParticle(i, note.track);
 				}
 			}
 		}

@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Play, Pause, ChevronsRight, ChevronLeft, Boxes } from 'lucide-svelte';
 
-	import { midiData, filename, paused } from '$lib/stores/midi-stores.js';
+	import { midiData, isRecording, filename, paused } from '$lib/stores/midi-stores.js';
 	import { currentTick, lastTick } from '$lib/midi-video/classes/conductor.js';
 	import Button from '../../Buttons/Button.svelte';
 
@@ -68,6 +68,12 @@
 							type="button"
 							class="flex items-center justify-center gap-2 rounded-lg border border-secondary-acc/40 bg-secondary-acc/40 pl-2 pr-3 transition hover:bg-secondary-acc"
 							title="Render"
+							on:click={() => {
+								if ($midiData) {
+									$isRecording = !$isRecording;
+								}
+								console.log($isRecording);
+							}}
 						>
 							<Boxes /> <span class="font-mono text-sm font-semibold">Render</span>
 						</button>

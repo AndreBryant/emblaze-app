@@ -2,8 +2,9 @@ import { get } from 'svelte/store';
 import { PixiPiano } from './classes/piano';
 import { NoteCanvas } from './classes/noteCanvas';
 import { Conductor } from './classes/conductor';
+import { CCapture } from 'ccapture.js-npmfixed';
 
-import { midiData, paused } from '../stores/midi-stores';
+import { midiData, paused, isRecording } from '../stores/midi-stores';
 
 export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();
@@ -22,8 +23,8 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	let scheme = [];
 	let loaded = false;
 
-	const startKey = 0;
-	const numOfKeys = 128;
+	const startKey = 21;
+	const numOfKeys = 88;
 	const noteCanvas = new NoteCanvas(app, startKey, numOfKeys, 0, 0, scheme);
 	await noteCanvas.loadTexture();
 
@@ -31,6 +32,19 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	await piano.initKeys();
 
 	const conductor = new Conductor(app, piano, noteCanvas);
+
+	const capturer = new CCapture({ format: 'webm', frameRate: 60 });
+	let recording = get(isRecording);
+	let recordingStarted = false;
+
+	isRecording.subscribe((value) => {
+		if (!loaded) return;
+		recording = value;
+
+		if (value) {
+			recordingStarted = false;
+		}
+	});
 
 	paused.subscribe(() => {
 		conductor.setPause(get(paused));
@@ -60,12 +74,29 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		loaded = true;
 	});
 
-	app.ticker.maxFPS = 60;
+	setInterval(() => {
+		if (loaded) {
+			if (recording && !recordingStarted) {
+				capturer.start();
+				recordingStarted = true;
+			}
 
-	app.ticker.add((ticker) => {
-		if (!loaded) return;
-		conductor.update(1 / (60 / 1000));
-	});
+			if (recording && recordingStarted) {
+				app.renderer.render(app.stage);
+				capturer.capture(app.canvas);
+			}
+
+			if (!recording && recordingStarted) {
+				capturer.stop();
+				capturer.save();
+
+				recordingStarted = false;
+				isRecording.set(false);
+			}
+
+			conductor.update(1000 / 60);
+		}
+	}, 1000 / 60);
 
 	return conductor;
 };
