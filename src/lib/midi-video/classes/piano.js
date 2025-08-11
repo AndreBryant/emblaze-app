@@ -59,6 +59,8 @@ export class PixiPiano {
 		for (const key of this.graphics.keys) {
 			key.sprite.tint = this.#checkType(key.key) ? this.BLACK : this.WHITE;
 		}
+
+		this.graphics.keyRim.reset();
 	}
 
 	async initKeys() {
@@ -115,9 +117,14 @@ export class PixiPiano {
 			keyIndex,
 			this.#getColor(track) + (this.#checkType(keyIndex) ? -0x101010 : 0x0f0f0f)
 		);
+
+		const rim = this.graphics.keyRim;
+		rim.startParticle(keyIndex, track);
 	}
 
 	checkExpired(currentTick) {
+		const rim = this.graphics.keyRim;
+
 		for (let i = 0; i < this.activeNotes.length; i++) {
 			if (i > this.lastKey || i < this.startKey) continue;
 
@@ -136,6 +143,7 @@ export class PixiPiano {
 							: this.WHITE;
 
 					this.#colorKey(i, color);
+					rim.stopParticle(i, note.track);
 				}
 			}
 		}
@@ -181,27 +189,6 @@ export class PixiPiano {
 			wkp += Math.abs(this.#checkType(i) - 1);
 		}
 		return wkp;
-	}
-
-	#drawKeyRim() {
-		const g = this.graphics.keyRim;
-		const app = this.app;
-
-		const y1 = app.renderer.height - this.whiteKeyHeight - 4;
-		const y2 = y1 + 2;
-		const width = app.renderer.width;
-
-		// First line
-		g.moveTo(0, y1);
-		g.lineTo(width, y1);
-		g.stroke({ width: 1, color: 0x000000 });
-
-		// Second line
-		g.moveTo(0, y2);
-		g.lineTo(width, y2);
-		g.stroke({ width: 1, color: this.keyRimColor });
-
-		this.stage.addChild(g);
 	}
 
 	#checkType(keyIndex) {
