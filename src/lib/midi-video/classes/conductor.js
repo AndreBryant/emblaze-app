@@ -31,8 +31,8 @@ export class Conductor {
 		this.advancedNoteIndex = 0;
 
 		// Position in MIDI File
-		this.fallingNotesOffset = this.app.canvas.height - this.piano.getKeyboardHeight();
 		this.currentTick = this.fallingNotesOffset * -1;
+		this.fallingNotesOffset = this.app.canvas.height - this.piano.getKeyboardHeight();
 
 		// Flags (and other user controlled values)
 		this.isPaused = true;

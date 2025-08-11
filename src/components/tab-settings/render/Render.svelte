@@ -7,6 +7,7 @@
 	import { currentTick, lastTick } from '$lib/midi-video/classes/conductor.js';
 	import Button from '../../Buttons/Button.svelte';
 
+	let app = null;
 	let conductor = null;
 	let progress = 0;
 
@@ -16,14 +17,13 @@
 			const { createPixiSketch } = await import('$lib/midi-video');
 
 			let canvas = document.getElementById('pixi-canvas');
-			conductor = await createPixiSketch(PIXI, canvas);
+			({ app, conductor } = await createPixiSketch(PIXI, canvas));
 		}
-	});
 
-	onDestroy(() => {
-		if (conductor) {
-			console.log('OnDestroy: remove conductor pixi sketch here');
-		}
+		return () => {
+			app = null;
+			conductor = null;
+		};
 	});
 
 	const togglePlay = () => ($paused = !$paused);

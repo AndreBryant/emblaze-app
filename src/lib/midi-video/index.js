@@ -7,7 +7,7 @@ import { midiData, filename, midiLoaded, paused } from '../stores/midi-stores';
 
 export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();
-	const ch = 360;
+	const ch = 720;
 	const cw = (ch * 16) / 9;
 	await app.init({
 		canvas: canvas,
@@ -42,7 +42,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		}
 
 		scheme = Array.from({ length: get(midiData).tracks.length }, () => {
-			const min = 0x11;
+			const min = 0x22;
 			const max = 0xaa;
 
 			const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -62,8 +62,8 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 	app.ticker.add((ticker) => {
 		if (!loaded) return;
-		conductor.update(ticker.deltaTime * (1000 / ticker.maxFPS));
+		conductor.update(1 / (60 / 1000));
 	});
 
-	return conductor;
+	return { conductor, app };
 };
