@@ -1,13 +1,11 @@
 <script>
-	import { onDestroy, onMount } from 'svelte';
-	import { derived } from 'svelte/store';
+	import { onMount } from 'svelte';
 	import { Play, Pause, ChevronsRight, ChevronLeft, Boxes } from 'lucide-svelte';
 
 	import { midiData, filename, paused } from '$lib/stores/midi-stores.js';
 	import { currentTick, lastTick } from '$lib/midi-video/classes/conductor.js';
 	import Button from '../../Buttons/Button.svelte';
 
-	let app = null;
 	let conductor = null;
 	let progress = 0;
 
@@ -17,11 +15,10 @@
 			const { createPixiSketch } = await import('$lib/midi-video');
 
 			let canvas = document.getElementById('pixi-canvas');
-			({ app, conductor } = await createPixiSketch(PIXI, canvas));
+			conductor = await createPixiSketch(PIXI, canvas);
 		}
 
 		return () => {
-			app = null;
 			conductor = null;
 		};
 	});

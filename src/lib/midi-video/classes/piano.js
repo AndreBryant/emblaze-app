@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { PianoRim } from './pianoRim';
 
 const MOD_KEY_MAPPING = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 const WHITE_KEY_URL = '/sprites/white-key.png';
@@ -34,7 +35,14 @@ export class PixiPiano {
 		}));
 
 		this.graphics = {
-			keyRim: new PIXI.Graphics(),
+			keyRim: new PianoRim(
+				keyRimColor,
+				this.whiteKeyHeight,
+				this.app.canvas.height,
+				this.app.canvas.width,
+				this.startKey,
+				this.lastKey
+			),
 			keyContainer: new PIXI.Container(),
 			keys: []
 		};
@@ -48,7 +56,6 @@ export class PixiPiano {
 			key: i
 		}));
 
-		// reset Piano graphics.keys
 		for (const key of this.graphics.keys) {
 			key.sprite.tint = this.#checkType(key.key) ? this.BLACK : this.WHITE;
 		}
@@ -60,6 +67,7 @@ export class PixiPiano {
 			whiteTex = PIXI.Texture.from(WHITE_KEY_URL);
 			blackTex = PIXI.Texture.from(BLACK_KEY_URL);
 		});
+
 		this.graphics.keys = Array.from({ length: 128 }, (_, index) => {
 			const midiKey = index;
 			const isBlack = this.#checkType(midiKey);
@@ -91,8 +99,8 @@ export class PixiPiano {
 			return { key: midiKey, sprite: sprite };
 		});
 
-		this.#drawKeyRim();
-		this.#addKeysToContainer();
+		// this.#drawKeyRim();
+		this.#addToContainer();
 	}
 
 	playNote(keyIndex, start, duration, track) {
@@ -153,13 +161,16 @@ export class PixiPiano {
 		return this.scheme[track];
 	}
 
-	#addKeysToContainer() {
+	#addToContainer() {
 		const keys = this.graphics.keys;
 
 		for (let i = this.startKey; i <= this.lastKey; i++) {
 			const key = keys[i];
 			this.graphics.keyContainer.addChild(key.sprite);
 		}
+
+		const pianoRim = this.graphics.keyRim.getContainer();
+		this.graphics.keyContainer.addChild(pianoRim);
 
 		this.graphics.keyContainer.sortChildren();
 	}

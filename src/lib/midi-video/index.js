@@ -65,5 +65,5 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		conductor.update(1 / (60 / 1000));
 	});
 
-	return { conductor, app };
+	return conductor;
 };
