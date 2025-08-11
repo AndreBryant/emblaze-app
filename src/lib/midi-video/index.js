@@ -3,7 +3,7 @@ import { PixiPiano } from './classes/piano';
 import { NoteCanvas } from './classes/noteCanvas';
 import { Conductor } from './classes/conductor';
 
-import { midiData, filename, midiLoaded, paused } from '../stores/midi-stores';
+import { midiData, paused } from '../stores/midi-stores';
 
 export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();

@@ -242,12 +242,14 @@ export class Conductor {
 	}
 
 	#getLastTick() {
+		const endPadding = this.ppq * 16;
 		let max = 0;
 		for (const t of this.tracks) {
 			if (t.endOfTrackTicks > max) max = t.endOfTrackTicks;
 		}
-		this.lastTick = max;
-		lastTick.set(max);
+
+		this.lastTick = max + endPadding;
+		lastTick.set(max) + endPadding;
 	}
 
 	#addContainersToStage() {
