@@ -6,7 +6,7 @@ export const currentTick = writable(0);
 export const lastTick = writable(1);
 
 export class Conductor {
-	constructor(app, piano, noteCanvas, startTick = 0, startOffset = 5) {
+	constructor(app, piano, noteCanvas) {
 		this.app = app;
 		this.stage = app.stage;
 
@@ -28,13 +28,11 @@ export class Conductor {
 		this.tracks = [];
 		this.#processNotes();
 		this.currentNoteIndex = 0;
-		this.advancedNoteIndex = this.ppq * 8;
+		this.advancedNoteIndex = 0;
 
 		// Position in MIDI File
-		this.currentTick = 0;
-		this.startTime = startTick;
-		this.startOffset = startOffset;
 		this.fallingNotesOffset = this.app.canvas.height - this.piano.getKeyboardHeight();
+		this.currentTick = this.fallingNotesOffset * -1;
 
 		// Flags (and other user controlled values)
 		this.isPaused = true;
@@ -60,10 +58,10 @@ export class Conductor {
 		this.currentTempoIndex = -1;
 		this.tickDuration = 0;
 
-		this.currentTick = 0;
+		this.currentTick = this.fallingNotesOffset * -1;
 		currentTick.set(0);
 		this.currentNoteIndex = 0;
-		this.advancedNoteIndex = this.ppq * 8;
+		this.advancedNoteIndex = 0;
 
 		this.tracks = [];
 		this.notes = [];
