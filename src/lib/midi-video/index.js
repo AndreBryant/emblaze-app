@@ -22,10 +22,12 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	let scheme = [];
 	let loaded = false;
 
-	const noteCanvas = new NoteCanvas(app, 21, 88, 0, 0, scheme);
+	const startKey = 0;
+	const numOfKeys = 128;
+	const noteCanvas = new NoteCanvas(app, startKey, numOfKeys, 0, 0, scheme);
 	await noteCanvas.loadTexture();
 
-	const piano = new PixiPiano(app, 21, 88, 0x550055, scheme);
+	const piano = new PixiPiano(app, startKey, numOfKeys, 0x550055, scheme);
 	await piano.initKeys();
 
 	const conductor = new Conductor(app, piano, noteCanvas);
