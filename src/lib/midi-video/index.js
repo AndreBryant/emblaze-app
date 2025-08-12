@@ -23,8 +23,8 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	let scheme = [];
 	let loaded = false;
 
-	const startKey = 36;
-	const numOfKeys = 61;
+	const startKey = 0;
+	const numOfKeys = 128;
 	const noteCanvas = new NoteCanvas(app, startKey, numOfKeys, 0, 0, scheme);
 	await noteCanvas.loadTexture();
 
@@ -56,13 +56,13 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		}
 
 		scheme = Array.from({ length: get(midiData).tracks.length }, () => {
-			const min = 0x22;
-			const max = 0xaa;
+			const min = 0x55;
+			const max = 0xdd;
 
 			const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-			const r = randRange(min, max) << (4 * 0);
-			const g = randRange(min, max) << (4 * 2);
-			const b = randRange(min, max) << (4 * 4);
+			const r = randRange(min, max) << 16;
+			const g = randRange(min, max) << 8;
+			const b = randRange(min, max);
 
 			return r | g | b;
 		});
