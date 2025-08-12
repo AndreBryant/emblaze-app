@@ -5,11 +5,17 @@
 </script>
 
 <div class="space-y-5">
-	<h1 class="h-12 text-2xl tracking-wide font-bold flex flex-row items-center gap-1 truncate">
+	<h1 class="flex h-12 flex-row items-end gap-1 truncate text-2xl font-bold tracking-wide">
 		<Flame class="text-acc-1 " size={36} />
 		{#if !$isSidebarCollapsed}
-			{label}
+			<span class="hidden lg:block">
+				{label}
+			</span>
 		{/if}
+
+		<span class="lg:hidden">
+			{label}
+		</span>
 	</h1>
-	<hr class="border-secondary/10" />
+	<hr class="hidden border-secondary/10 lg:block" />
 </div>
