@@ -108,9 +108,11 @@
 	export { handleSave, handleLoadSetting };
 </script>
 
-<div class="w-full lg:w-5/12 flex flex-col gap-4">
+<div class="flex w-full flex-col gap-4 lg:w-5/12">
 	<h3 class="text-lg font-semibold">Note Canvas Settings</h3>
-	<table class="table-fixed w-full text-secondary-dark">
+	<table
+		class="w-full table-fixed text-secondary-dark [&>tr]:grid [&>tr]:columns-2 md:[&>tr]:table-row"
+	>
 		<tr>
 			<td class="py-1">
 				<div class="flex items-center">
@@ -120,7 +122,7 @@
 			<td>
 				<div class="flex gap-4">
 					<select
-						class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+						class="w-full border border-secondary-acc bg-primary px-2 py-1"
 						bind:value={noteSizing}
 					>
 						<option value="tick-based" selected>Tick Based</option>
@@ -142,14 +144,14 @@
 						type="range"
 						min={noteSpeedMin}
 						max={noteSpeedMax}
-						class="flex-grow"
+						class="grow"
 						bind:value={noteSpeed}
 					/>
 					<input
 						type="number"
 						min={noteSpeedMin}
 						max={noteSpeedMax}
-						class="w-32 bg-primary border border-secondary-acc"
+						class="flex-1/3 border border-secondary-acc bg-primary"
 						bind:value={noteSpeed}
 					/>
 				</div>
@@ -159,7 +161,7 @@
 			<td class="py-1">
 				<pre>Note Type</pre>
 			</td>
-			<select class="bg-primary border border-secondary-acc px-2 py-1 w-full" bind:value={noteType}>
+			<select class="w-full border border-secondary-acc bg-primary px-2 py-1" bind:value={noteType}>
 				<option value="neon-white-outline" selected>Neon (white outline)</option>
 				<option value="neon-high-contrast">Neon (higher contrast outline)</option>
 				<option value="no-outline">No outline</option>
@@ -167,7 +169,7 @@
 			</select>
 		</tr>
 		<tr>
-			<td class="pt-8 pb-1" colspan="2">
+			<td class="pb-1 pt-8" colspan="2">
 				<div class="flex gap-2">
 					<pre>Key Flare: </pre>
 					<input type="checkbox" name="" id="" bind:checked={keyFlareEnabled} />
@@ -175,7 +177,7 @@
 			</td>
 		</tr>
 		<!-- Disable (opacity-30, pointer events none) this if key flare is not checked  -->
-		<tr class={`${!keyFlareEnabled ? 'pointer-events-none opacity-40 select-none' : ''}`}>
+		<tr class={`${!keyFlareEnabled ? 'pointer-events-none select-none opacity-40' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Type: </pre>
@@ -186,7 +188,7 @@
 					<select
 						name=""
 						id=""
-						class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+						class="w-full border border-secondary-acc bg-primary px-2 py-1"
 						bind:value={keyFlareType}
 					>
 						<option value="fire" selected>Fire</option>
@@ -195,7 +197,7 @@
 				</div>
 			</td>
 		</tr>
-		<tr class={`${!keyFlareEnabled ? 'pointer-events-none opacity-40 select-none' : ''}`}>
+		<tr class={`${!keyFlareEnabled ? 'pointer-events-none select-none opacity-40' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Intensity: </pre>
@@ -216,21 +218,21 @@
 						min={intensityMin}
 						max={intensityMax}
 						step={0.01}
-						class="w-32 bg-primary border border-secondary-acc"
+						class="w-32 border border-secondary-acc bg-primary"
 						bind:value={keyFlareIntensity}
 					/>
 				</div>
 			</td>
 		</tr>
 		<tr>
-			<td class="pt-8 pb-1" colspan="2">
+			<td class="pb-1 pt-8" colspan="2">
 				<div class="flex gap-2">
 					<pre>Note Particle: </pre>
 					<input type="checkbox" name="" id="" bind:checked={noteParticleEnabled} />
 				</div>
 			</td>
 		</tr>
-		<tr class={`${!noteParticleEnabled ? 'pointer-events-none opacity-40 select-none' : ''}`}>
+		<tr class={`${!noteParticleEnabled ? 'pointer-events-none select-none opacity-40' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Turbulence: </pre>
@@ -251,13 +253,13 @@
 						min={turbulenceMin}
 						max={turbulenceMax}
 						step={0.01}
-						class="w-32 bg-primary border border-secondary-acc"
+						class="w-32 border border-secondary-acc bg-primary"
 						bind:value={noteParticleTurbulence}
 					/>
 				</div>
 			</td>
 		</tr>
-		<tr class={`${!noteParticleEnabled ? 'pointer-events-none opacity-40 select-none' : ''}`}>
+		<tr class={`${!noteParticleEnabled ? 'pointer-events-none select-none opacity-40' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Number of Particles per Note: </pre>
@@ -276,13 +278,13 @@
 						type="number"
 						min={densityMin}
 						max={densityMax}
-						class="w-32 bg-primary border border-secondary-acc"
+						class="w-32 border border-secondary-acc bg-primary"
 						bind:value={noteParticleDensity}
 					/>
 				</div>
 			</td>
 		</tr>
-		<tr class={`${!noteParticleEnabled ? 'pointer-events-none opacity-40 select-none' : ''}`}>
+		<tr class={`${!noteParticleEnabled ? 'pointer-events-none select-none opacity-40' : ''}`}>
 			<td class="py-1">
 				<div>
 					<pre>Shoot Velocity: </pre>
@@ -303,7 +305,7 @@
 						min={shootVelocityMin}
 						max={shootVelocityMax}
 						step={0.01}
-						class="w-32 bg-primary border border-secondary-acc"
+						class="w-32 border border-secondary-acc bg-primary"
 						bind:value={noteParticleShootVelocity}
 					/>
 				</div>

@@ -45,9 +45,11 @@
 	export { handleSave, handleLoadSetting };
 </script>
 
-<div class="w-full lg:w-5/12 flex flex-col gap-4">
+<div class="flex w-full flex-col gap-4 lg:w-5/12">
 	<h3 class="text-lg font-semibold">Video Settings</h3>
-	<table class="table-fixed w-full text-secondary-dark">
+	<table
+		class="w-full table-fixed text-secondary-dark [&>tr]:grid [&>tr]:columns-2 md:[&>tr]:table-row"
+	>
 		<tr>
 			<td class="py-1">
 				<div>
@@ -58,7 +60,7 @@
 				<div class="flex gap-4">
 					<select
 						bind:value={quality}
-						class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+						class="w-full border border-secondary-acc bg-primary px-2 py-1"
 					>
 						<option value="360p">360p</option>
 						<option value="720p">720p</option>
@@ -79,7 +81,7 @@
 				<div class="flex gap-4">
 					<input
 						type="number"
-						class=" bg-primary border border-secondary-acc w-full px-3"
+						class=" w-full border border-secondary-acc bg-primary px-3"
 						bind:value={fps}
 						min="0"
 						max="60"
