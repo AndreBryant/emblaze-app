@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { get, writable } from 'svelte/store';
-import { paused, midiData } from '../../stores/midi-stores';
+import { paused, midiData, isRecording } from '../../stores/midi-stores';
 
 export const currentTick = writable(0);
 export const lastTick = writable(1);
@@ -98,6 +98,10 @@ export class Conductor {
 		if (this.currentTick >= this.lastTick) {
 			this.updateMidiData();
 			paused.set(true);
+
+			if (get(isRecording)) {
+				isRecording.set(false);
+			}
 		}
 	}
 

@@ -76,7 +76,11 @@
 								if ($midiData) {
 									$isRecording = !$isRecording;
 								}
-								console.log($isRecording);
+								console.log(
+									$isRecording
+										? 'Recording started... ' + Date.now()
+										: 'Recording Stopped... ' + Date.now()
+								);
 							}}
 						>
 							<Boxes />
