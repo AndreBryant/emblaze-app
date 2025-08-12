@@ -11,7 +11,7 @@
 	export let items = [];
 
 	const appTitle = 'Emblaze-MIDI';
-	let expanded = true;
+	let expanded = false;
 	let isFullScreen = false;
 
 	function toggleFullScreen() {
@@ -83,7 +83,7 @@
 					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 					<li
 						on:click={() => ($activeTabValue = item.value)}
-						class={`h-full w-full cursor-pointer rounded-lg border border-secondary-acc/50 px-8 py-4 text-center text-lg ${$activeTabValue === item.value ? 'bg-secondary-acc/40 font-normal' : 'bg-primary/5 font-thin'}`}
+						class={`h-full w-full cursor-pointer rounded-lg border border-secondary-acc/50 px-8 py-4 text-center text-lg ${$activeTabValue === item.value ? 'bg-secondary-acc/20 font-normal' : 'bg-primary/5 font-thin hover:bg-secondary-acc/5'}`}
 					>
 						{item.label}
 					</li>

@@ -5,7 +5,7 @@
 </script>
 
 <div class="space-y-5">
-	<h1 class="flex h-12 flex-row items-end gap-1 truncate text-2xl font-bold tracking-wide">
+	<h1 class="flex h-12 flex-row items-end truncate text-2xl font-thin tracking-wide">
 		<Flame class="text-acc-1 " size={36} />
 		{#if !$isSidebarCollapsed}
 			<span class="hidden lg:block">

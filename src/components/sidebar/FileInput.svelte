@@ -3,7 +3,6 @@
 	import { FileX2, FileCheck2, File, LoaderCircle } from 'lucide-svelte';
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	import { midiData, filename, midiLoaded } from '$lib/stores/midi-stores.js';
-	import { createEventDispatcher } from 'svelte';
 
 	let isLoading = false;
 	let worker;
@@ -47,6 +46,8 @@
 		$midiLoaded = false;
 		document.getElementById('midi-file').value = null;
 	};
+
+	$: isLoading;
 </script>
 
 <input
@@ -117,9 +118,9 @@
 	{/if}
 </div>
 
-<div class={`space-y-4 ${$isSidebarCollapsed ? ' mr-0' : ' mr-4'}  block lg:hidden`}>
+<div class={`block space-y-4 lg:hidden`}>
 	<hr class="border-secondary/10" />
-
+	<!-- FIX this: not showing its loading -->
 	{#if isLoading}
 		<Button
 			type="button"
