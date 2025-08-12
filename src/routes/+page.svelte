@@ -57,7 +57,7 @@
 	];
 </script>
 
-<div class="flex h-full w-full flex-row relative">
+<div class="relative flex h-full w-full flex-col lg:flex-row">
 	<Sidebar {items} />
 	<MainContent {items} />
 </div>

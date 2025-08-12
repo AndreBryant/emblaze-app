@@ -10,7 +10,7 @@
 
 <div
 	id="main-content"
-	class={`flex-grow ${$isSidebarCollapsed ? ' ml-24' : ' ml-64'} relative overflow-y-auto`}
+	class={`flex-grow ${$isSidebarCollapsed ? ' lg:ml-24' : ' lg:ml-64'} relative overflow-y-auto`}
 >
 	{#each items as item}
 		{#if $activeTabValue === item.value}

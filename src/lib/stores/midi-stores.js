@@ -11,3 +11,5 @@ export const paused = writable(true);
 export const recording = writable(true);
 
 export const leftSeekSignal = writable(false);
+
+export const isRecording = writable(false);

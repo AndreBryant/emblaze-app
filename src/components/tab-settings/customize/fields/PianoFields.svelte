@@ -96,29 +96,31 @@
 	export { handleSave, handleLoadSetting };
 </script>
 
-<div class="w-full lg:w-5/12 flex flex-col gap-4">
+<div class="flex w-full flex-col gap-4 lg:w-5/12">
 	<h3 class="text-lg font-semibold">Piano Settings</h3>
 
 	<div></div>
-	<table class="table-fixed w-full text-secondary-dark">
+	<table
+		class="w-full table-fixed text-secondary-dark [&>tr]:grid [&>tr]:columns-2 md:[&>tr]:table-row"
+	>
 		<tr>
 			<td class="py-1">
 				<div class="flex items-center">
 					<pre>Piano Rim Color: </pre>
 					<input
 						type="color"
-						class="w-8 h-8 bg-transparent border-secondary-acc border rounded-md"
+						class="h-8 w-8 rounded-md border border-secondary-acc bg-transparent"
 						bind:value={pianoRimColor}
 					/>
 				</div>
 			</td>
 			<td>
-				<div class="flex gap-4 col-span-6">
+				<div class="col-span-6 flex gap-4">
 					<div class="flex items-center">
-						<pre>Piano Blaze Color: </pre>
+						<pre>Piano Aura Color: </pre>
 						<input
 							type="color"
-							class="w-8 h-8 bg-transparent border-secondary-acc border rounded-md"
+							class="h-8 w-8 rounded-md border border-secondary-acc bg-transparent"
 							bind:value={pianoBlazeColor}
 						/>
 					</div>
@@ -133,7 +135,7 @@
 				<select
 					name=""
 					id=""
-					class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+					class="w-full border border-secondary-acc bg-primary px-2 py-1"
 					bind:value={numOfKeys}
 				>
 					<option value="61">61</option>
@@ -148,7 +150,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr class={`${numOfKeys !== 'custom' ? 'opacity-45 pointer-events-none select-none' : ''}`}>
+		<tr class={`${numOfKeys !== 'custom' ? 'pointer-events-none select-none opacity-45' : ''}`}>
 			<td class="py-1">
 				<pre>Start Key: </pre>
 			</td>
@@ -158,11 +160,11 @@
 					bind:value={startKey}
 					min={0}
 					max={lastKey}
-					class="bg-primary border border-secondary-acc px-3 py-1 w-full"
+					class="w-full border border-secondary-acc bg-primary px-3 py-1"
 				/>
 			</td>
 		</tr>
-		<tr class={`${numOfKeys !== 'custom' ? 'opacity-45 pointer-events-none select-none' : ''}`}>
+		<tr class={`${numOfKeys !== 'custom' ? 'pointer-events-none select-none opacity-45' : ''}`}>
 			<td class="py-1">
 				<pre>Last Key: </pre>
 			</td>
@@ -172,7 +174,7 @@
 					bind:value={lastKey}
 					min={startKey}
 					max={127}
-					class="bg-primary border border-secondary-acc px-3 py-1 w-full"
+					class="w-full border border-secondary-acc bg-primary px-3 py-1"
 				/>
 			</td>
 		</tr>

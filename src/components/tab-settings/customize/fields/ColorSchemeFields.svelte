@@ -39,9 +39,11 @@
 	export { handleSave, handleLoadSetting };
 </script>
 
-<div class="w-full lg:w-5/12 flex flex-col gap-4">
+<div class="flex w-full flex-col gap-4 lg:w-5/12">
 	<h3 class="text-lg font-semibold">Color Scheme</h3>
-	<table class="table-fixed w-full text-secondary-dark">
+	<table
+		class="w-full table-fixed text-secondary-dark [&>tr]:grid [&>tr]:columns-2 md:[&>tr]:table-row"
+	>
 		<tr class="pointer-events-none select-none opacity-40">
 			<td class="py-1">
 				<div>
@@ -60,7 +62,7 @@
 			</td>
 			<td>
 				<select
-					class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+					class="w-full border border-secondary-acc bg-primary px-2 py-1"
 					bind:value={colorBy}
 				>
 					<option value="channel">channel</option>
@@ -75,7 +77,7 @@
 			<td>
 				<div class="cursor-not-allowed">
 					<select
-						class="bg-primary border border-secondary-acc px-2 py-1 w-full pointer-events-none"
+						class="pointer-events-none w-full border border-secondary-acc bg-primary px-2 py-1"
 						bind:value={colorGeneration}
 					>
 						<option value="random">random</option>

@@ -1,13 +1,13 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
-	import { derived } from 'svelte/store';
 	import { Play, Pause, ChevronsRight, ChevronLeft, Boxes } from 'lucide-svelte';
 
-	import { midiData, filename, paused } from '$lib/stores/midi-stores.js';
+	import { midiData, isRecording, filename, paused } from '$lib/stores/midi-stores.js';
 	import { currentTick, lastTick } from '$lib/midi-video/classes/conductor.js';
 	import Button from '../../Buttons/Button.svelte';
 
 	let conductor = null;
+	let cleanup = null;
 	let progress = 0;
 
 	onMount(async () => {
@@ -16,14 +16,15 @@
 			const { createPixiSketch } = await import('$lib/midi-video');
 
 			let canvas = document.getElementById('pixi-canvas');
-			conductor = await createPixiSketch(PIXI, canvas);
+			const { conductor: cndctr, cleanup: cln } = await createPixiSketch(PIXI, canvas);
+
+			conductor = cndctr;
+			cleanup = cln;
 		}
 	});
 
 	onDestroy(() => {
-		if (conductor) {
-			console.log('OnDestroy: remove conductor pixi sketch here');
-		}
+		cleanup?.();
 	});
 
 	const togglePlay = () => ($paused = !$paused);
@@ -38,24 +39,24 @@
 	$: progress = ($currentTick / $lastTick) * 100;
 </script>
 
-<div class="flex flex-col gap-1 h-full">
-	<div class="flex-grow flex flex-col gap-8">
-		<div class="w-full h-full flex flex-col flex-grow justify-center items-center gap-2">
+<div class="flex h-full flex-col gap-2">
+	<div class="flex flex-grow flex-col gap-8">
+		<div class="flex h-full w-full flex-grow flex-col items-center justify-center gap-2">
 			<!-- P5 SKETCH CONTAINER  -->
 			<div
 				id="sketch-holder"
-				class="w-full lg:w-8/12 aspect-video backdrop-blur-sm border border-black"
+				class="aspect-video w-full border border-black backdrop-blur-sm lg:w-8/12"
 			>
-				<canvas id="pixi-canvas" class="h-full w-full block max-w-full"></canvas>
+				<canvas id="pixi-canvas" class="block h-full w-full max-w-full"></canvas>
 			</div>
 
 			<!-- PLAY CONTROLS -->
-			<div class="w-full flex flex-col justify-center items-center gap-2">
+			<div class="flex w-full flex-col items-center justify-center gap-4">
 				<!-- Progess Bar -->
-				<div class="w-full lg:w-3/5">
+				<div class="w-full lg:w-8/12">
 					<input
 						type="range"
-						class="custom-slider w-full h-1 pointer-events-none accent-acc-2-light"
+						class="custom-slider pointer-events-none h-1 w-full accent-acc-2-light"
 						min="0"
 						max="100"
 						step="0.10"
@@ -64,19 +65,27 @@
 				</div>
 
 				<!-- Buttons -->
-				<div class="w-full lg:w-3/5 flex justify-between">
+				<div class="flex w-full justify-between lg:w-8/12">
 					<!-- RENDER BUTTON -->
-					<div class="flex gap-4">
+					<div class="flex">
 						<button
 							type="button"
-							class="hover:bg-acc-1-light hover:border-transparent transition aspect-square p-2 rounded-lg border border-opacity-5 flex justify-center items-center"
+							class="flex items-center justify-center gap-2 rounded-lg border border-secondary-acc/40 bg-secondary-acc/40 pl-2 pr-3 transition hover:bg-secondary-acc"
 							title="Render"
+							on:click={() => {
+								if ($midiData) {
+									$isRecording = !$isRecording;
+								}
+							}}
 						>
 							<Boxes />
+							<span class="font-mono text-sm font-semibold"
+								>{$isRecording ? 'Cancel' : 'Render'}</span
+							>
 						</button>
 					</div>
 					<!-- PLAY/PAUSE + SEEK BUTTONS -->
-					<div class="justify-center flex gap-8">
+					<div class="flex justify-center gap-8">
 						<Button variant="ghost" onclick={async () => await conductor.seekLeft()}
 							><ChevronLeft /></Button
 						>

@@ -54,7 +54,7 @@ export class NoteCanvas {
 		note.width = this.noteWidth * (this.#checkType(midiKey) ? 0.5 : 1);
 		note.height = durationTicks * this.scale;
 
-		note.tint = this.#getColor(track) + (this.#checkType(midiKey) ? -0x101010 : 0x0f0f0f);
+		note.tint = this.#getColor(track) + (this.#checkType(midiKey) ? -0x101010 : 0);
 		this.activeNotes[midiKey].notes.push(note);
 		this.container.addChild(note);
 	}

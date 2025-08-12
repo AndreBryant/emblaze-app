@@ -1,12 +1,12 @@
 import * as PIXI from 'pixi.js';
 import { get, writable } from 'svelte/store';
-import { paused, midiData } from '../../stores/midi-stores';
+import { paused, midiData, isRecording } from '../../stores/midi-stores';
 
 export const currentTick = writable(0);
 export const lastTick = writable(1);
 
 export class Conductor {
-	constructor(app, piano, noteCanvas, startTick = 0, startOffset = 5) {
+	constructor(app, piano, noteCanvas) {
 		this.app = app;
 		this.stage = app.stage;
 
@@ -28,12 +28,10 @@ export class Conductor {
 		this.tracks = [];
 		this.#processNotes();
 		this.currentNoteIndex = 0;
-		this.advancedNoteIndex = this.ppq * 8;
+		this.advancedNoteIndex = 0;
 
 		// Position in MIDI File
-		this.currentTick = 0;
-		this.startTime = startTick;
-		this.startOffset = startOffset;
+		this.currentTick = this.fallingNotesOffset * -1;
 		this.fallingNotesOffset = this.app.canvas.height - this.piano.getKeyboardHeight();
 
 		// Flags (and other user controlled values)
@@ -60,10 +58,10 @@ export class Conductor {
 		this.currentTempoIndex = -1;
 		this.tickDuration = 0;
 
-		this.currentTick = 0;
+		this.currentTick = this.fallingNotesOffset * -1;
 		currentTick.set(0);
 		this.currentNoteIndex = 0;
-		this.advancedNoteIndex = this.ppq * 8;
+		this.advancedNoteIndex = 0;
 
 		this.tracks = [];
 		this.notes = [];
@@ -100,6 +98,10 @@ export class Conductor {
 		if (this.currentTick >= this.lastTick) {
 			this.updateMidiData();
 			paused.set(true);
+
+			if (get(isRecording)) {
+				isRecording.set(false);
+			}
 		}
 	}
 
@@ -244,12 +246,14 @@ export class Conductor {
 	}
 
 	#getLastTick() {
+		const endPadding = this.ppq * 16;
 		let max = 0;
 		for (const t of this.tracks) {
 			if (t.endOfTrackTicks > max) max = t.endOfTrackTicks;
 		}
-		this.lastTick = max;
-		lastTick.set(max);
+
+		this.lastTick = max + endPadding;
+		lastTick.set(max) + endPadding;
 	}
 
 	#addContainersToStage() {

@@ -1,8 +1,11 @@
 import * as PIXI from 'pixi.js';
+import { PianoRim } from './pianoRim';
 
 const MOD_KEY_MAPPING = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 const WHITE_KEY_URL = '/sprites/white-key.png';
 const BLACK_KEY_URL = '/sprites/black-key.png';
+const WHITE_KEY_PRESSED_URL = '/sprites/white-key-pressed.png';
+const BLACK_KEY_PRESSED_URL = '/sprites/black-key-pressed.png';
 
 export class PixiPiano {
 	keyboardState = [];
@@ -14,8 +17,8 @@ export class PixiPiano {
 
 	activeNotes = [];
 
-	BLACK = 0x333333;
-	WHITE = 0xeeeeee;
+	BLACK = 0x010203;
+	WHITE = 0xfefdfc;
 
 	constructor(app, startKey, numOfKeys, keyRimColor = 0x550055, scheme) {
 		this.app = app;
@@ -34,7 +37,14 @@ export class PixiPiano {
 		}));
 
 		this.graphics = {
-			keyRim: new PIXI.Graphics(),
+			keyRim: new PianoRim(
+				keyRimColor,
+				this.whiteKeyHeight,
+				this.app.canvas.height,
+				this.app.canvas.width,
+				this.startKey,
+				this.lastKey
+			),
 			keyContainer: new PIXI.Container(),
 			keys: []
 		};
@@ -48,18 +58,27 @@ export class PixiPiano {
 			key: i
 		}));
 
-		// reset Piano graphics.keys
 		for (const key of this.graphics.keys) {
 			key.sprite.tint = this.#checkType(key.key) ? this.BLACK : this.WHITE;
 		}
+
+		this.graphics.keyRim.reset();
 	}
 
 	async initKeys() {
-		let whiteTex, blackTex;
-		await PIXI.Assets.load([WHITE_KEY_URL, BLACK_KEY_URL]).then(() => {
+		let whiteTex, blackTex, whitePressedTex, blackPressedTex;
+		await PIXI.Assets.load([
+			WHITE_KEY_URL,
+			BLACK_KEY_URL,
+			WHITE_KEY_PRESSED_URL,
+			BLACK_KEY_PRESSED_URL
+		]).then(() => {
 			whiteTex = PIXI.Texture.from(WHITE_KEY_URL);
 			blackTex = PIXI.Texture.from(BLACK_KEY_URL);
+			whitePressedTex = PIXI.Texture.from(WHITE_KEY_PRESSED_URL);
+			blackPressedTex = PIXI.Texture.from(BLACK_KEY_PRESSED_URL);
 		});
+
 		this.graphics.keys = Array.from({ length: 128 }, (_, index) => {
 			const midiKey = index;
 			const isBlack = this.#checkType(midiKey);
@@ -88,11 +107,15 @@ export class PixiPiano {
 				sprite.zIndex = 10;
 			}
 
-			return { key: midiKey, sprite: sprite };
+			return {
+				key: midiKey,
+				sprite: sprite,
+				sprites: isBlack ? [blackTex, blackPressedTex] : [whiteTex, whitePressedTex]
+			};
 		});
 
-		this.#drawKeyRim();
-		this.#addKeysToContainer();
+		// this.#drawKeyRim();
+		this.#addToContainer();
 	}
 
 	playNote(keyIndex, start, duration, track) {
@@ -105,11 +128,17 @@ export class PixiPiano {
 
 		this.#colorKey(
 			keyIndex,
-			this.#getColor(track) + (this.#checkType(keyIndex) ? -0x101010 : 0x0f0f0f)
+			this.#getColor(track) + (this.#checkType(keyIndex) ? -0x101010 : 0x0f0f0f),
+			true
 		);
+
+		const rim = this.graphics.keyRim;
+		// rim.startParticle(keyIndex, track);
 	}
 
 	checkExpired(currentTick) {
+		const rim = this.graphics.keyRim;
+
 		for (let i = 0; i < this.activeNotes.length; i++) {
 			if (i > this.lastKey || i < this.startKey) continue;
 
@@ -127,7 +156,8 @@ export class PixiPiano {
 							? this.BLACK
 							: this.WHITE;
 
-					this.#colorKey(i, color);
+					this.#colorKey(i, color, Boolean(keys.length));
+					// rim.stopParticle(i, note.track);
 				}
 			}
 		}
@@ -145,21 +175,26 @@ export class PixiPiano {
 		return this.graphics.keyContainer;
 	}
 
-	#colorKey(midiKey, color) {
-		this.graphics.keys[midiKey].sprite.tint = color;
+	#colorKey(midiKey, color, isPlaying) {
+		const key = this.graphics.keys[midiKey];
+		key.sprite.tint = color;
+		key.sprite.texture = !isPlaying ? key.sprites[0] : key.sprites[1];
 	}
 
 	#getColor(track) {
 		return this.scheme[track];
 	}
 
-	#addKeysToContainer() {
+	#addToContainer() {
 		const keys = this.graphics.keys;
 
 		for (let i = this.startKey; i <= this.lastKey; i++) {
 			const key = keys[i];
 			this.graphics.keyContainer.addChild(key.sprite);
 		}
+
+		const pianoRim = this.graphics.keyRim.getContainer();
+		this.graphics.keyContainer.addChild(pianoRim);
 
 		this.graphics.keyContainer.sortChildren();
 	}
@@ -170,27 +205,6 @@ export class PixiPiano {
 			wkp += Math.abs(this.#checkType(i) - 1);
 		}
 		return wkp;
-	}
-
-	#drawKeyRim() {
-		const g = this.graphics.keyRim;
-		const app = this.app;
-
-		const y1 = app.renderer.height - this.whiteKeyHeight - 4;
-		const y2 = y1 + 2;
-		const width = app.renderer.width;
-
-		// First line
-		g.moveTo(0, y1);
-		g.lineTo(width, y1);
-		g.stroke({ width: 1, color: 0x000000 });
-
-		// Second line
-		g.moveTo(0, y2);
-		g.lineTo(width, y2);
-		g.stroke({ width: 1, color: this.keyRimColor });
-
-		this.stage.addChild(g);
 	}
 
 	#checkType(keyIndex) {

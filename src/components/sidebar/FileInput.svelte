@@ -3,7 +3,6 @@
 	import { FileX2, FileCheck2, File, LoaderCircle } from 'lucide-svelte';
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
 	import { midiData, filename, midiLoaded } from '$lib/stores/midi-stores.js';
-	import { createEventDispatcher } from 'svelte';
 
 	let isLoading = false;
 	let worker;
@@ -47,6 +46,8 @@
 		$midiLoaded = false;
 		document.getElementById('midi-file').value = null;
 	};
+
+	$: isLoading;
 </script>
 
 <input
@@ -58,7 +59,7 @@
 	class="hidden"
 />
 
-<div class={`space-y-4 ${$isSidebarCollapsed ? ' mr-0' : ' mr-4'}`}>
+<div class={`space-y-4 ${$isSidebarCollapsed ? ' mr-0' : ' mr-4'} hidden lg:block`}>
 	<hr class="border-secondary/10" />
 
 	{#if isLoading}
@@ -114,5 +115,40 @@
 				value={`${$filename ? $filename : 'Select File'}`}
 			/>
 		{/if}
+	{/if}
+</div>
+
+<div class={`block space-y-4 lg:hidden`}>
+	<hr class="border-secondary/10" />
+	<!-- FIX this: not showing its loading -->
+	{#if isLoading}
+		<Button
+			type="button"
+			variant="primary"
+			wFull={true}
+			value={'Loading File'}
+			icon={LoaderCircle}
+			animatedIcon={true}
+		/>
+	{:else}
+		<!-- For the unload midi file button -->
+		{#if $midiLoaded}
+			<Button
+				type="button"
+				variant="destructive"
+				value="Unload File"
+				wFull={true}
+				icon={FileX2}
+				onclick={unloadFile}
+			/>
+		{/if}
+		<Button
+			type="button"
+			variant="primary"
+			wFull={true}
+			onclick={triggerFileInput}
+			icon={File}
+			value={`${$filename ? $filename : 'Select File'}`}
+		/>
 	{/if}
 </div>
