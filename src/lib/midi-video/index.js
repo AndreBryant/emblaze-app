@@ -23,8 +23,8 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	let scheme = [];
 	let loaded = false;
 
-	const startKey = 21;
-	const numOfKeys = 88;
+	const startKey = 36;
+	const numOfKeys = 61;
 	const noteCanvas = new NoteCanvas(app, startKey, numOfKeys, 0, 0, scheme);
 	await noteCanvas.loadTexture();
 

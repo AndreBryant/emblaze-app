@@ -76,16 +76,11 @@
 								if ($midiData) {
 									$isRecording = !$isRecording;
 								}
-								console.log(
-									$isRecording
-										? 'Recording started... ' + Date.now()
-										: 'Recording Stopped... ' + Date.now()
-								);
 							}}
 						>
 							<Boxes />
 							<span class="font-mono text-sm font-semibold"
-								>{$isRecording ? 'Rendering...' : 'Render'}</span
+								>{$isRecording ? 'Cancel' : 'Render'}</span
 							>
 						</button>
 					</div>
