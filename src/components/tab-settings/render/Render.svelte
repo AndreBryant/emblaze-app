@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { Play, Pause, ChevronsRight, ChevronLeft, Boxes } from 'lucide-svelte';
 
 	import { midiData, isRecording, filename, paused } from '$lib/stores/midi-stores.js';
@@ -7,6 +7,7 @@
 	import Button from '../../Buttons/Button.svelte';
 
 	let conductor = null;
+	let cleanup = null;
 	let progress = 0;
 
 	onMount(async () => {
@@ -15,12 +16,15 @@
 			const { createPixiSketch } = await import('$lib/midi-video');
 
 			let canvas = document.getElementById('pixi-canvas');
-			conductor = await createPixiSketch(PIXI, canvas);
-		}
+			const { conductor: cndctr, cleanup: cln } = await createPixiSketch(PIXI, canvas);
 
-		return () => {
-			conductor = null;
-		};
+			conductor = cndctr;
+			cleanup = cln;
+		}
+	});
+
+	onDestroy(() => {
+		cleanup?.();
 	});
 
 	const togglePlay = () => ($paused = !$paused);
@@ -75,7 +79,10 @@
 								console.log($isRecording);
 							}}
 						>
-							<Boxes /> <span class="font-mono text-sm font-semibold">Render</span>
+							<Boxes />
+							<span class="font-mono text-sm font-semibold"
+								>{$isRecording ? 'Rendering...' : 'Render'}</span
+							>
 						</button>
 					</div>
 					<!-- PLAY/PAUSE + SEEK BUTTONS -->

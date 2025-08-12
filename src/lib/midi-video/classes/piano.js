@@ -15,8 +15,8 @@ export class PixiPiano {
 
 	activeNotes = [];
 
-	BLACK = 0x333333;
-	WHITE = 0xeeeeee;
+	BLACK = 0x010203;
+	WHITE = 0xfefdfc;
 
 	constructor(app, startKey, numOfKeys, keyRimColor = 0x550055, scheme) {
 		this.app = app;

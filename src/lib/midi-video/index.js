@@ -33,17 +33,15 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 	const conductor = new Conductor(app, piano, noteCanvas);
 
-	const capturer = new CCapture({ format: 'webm', frameRate: 60 });
+	let capturer = new CCapture({ format: 'webm', frameRate: 60 });
 	let recording = get(isRecording);
-	let recordingStarted = false;
+	let isCapturing = false;
 
 	isRecording.subscribe((value) => {
 		if (!loaded) return;
 		recording = value;
 
-		if (value) {
-			recordingStarted = false;
-		}
+		paused.set(!value);
 	});
 
 	paused.subscribe(() => {
@@ -74,23 +72,23 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		loaded = true;
 	});
 
-	setInterval(() => {
+	const intervalId = setInterval(() => {
 		if (loaded) {
-			if (recording && !recordingStarted) {
+			if (recording && !isCapturing) {
 				capturer.start();
-				recordingStarted = true;
+				isCapturing = true;
 			}
 
-			if (recording && recordingStarted) {
+			if (recording && isCapturing) {
 				app.renderer.render(app.stage);
 				capturer.capture(app.canvas);
 			}
 
-			if (!recording && recordingStarted) {
+			if (!recording && isCapturing) {
 				capturer.stop();
 				capturer.save();
 
-				recordingStarted = false;
+				isCapturing = false;
 				isRecording.set(false);
 			}
 
@@ -98,5 +96,12 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		}
 	}, 1000 / 60);
 
-	return conductor;
+	const cleanup = () => {
+		clearInterval(intervalId);
+		capturer.stop();
+		capturer = null;
+		app.destroy(true, { children: true });
+	};
+
+	return { conductor, cleanup };
 };
