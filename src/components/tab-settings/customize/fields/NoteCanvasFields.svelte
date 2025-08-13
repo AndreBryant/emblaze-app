@@ -108,7 +108,7 @@
 	export { handleSave, handleLoadSetting };
 </script>
 
-<div class="flex w-full flex-col gap-4 lg:w-5/12">
+<div class="flex w-full flex-col gap-4 lg:w-6/12">
 	<h3 class="text-lg font-semibold">Note Canvas Settings</h3>
 	<table class="w-full table-fixed text-secondary-dark [&>tr]:grid md:[&>tr]:table-row">
 		<tr>

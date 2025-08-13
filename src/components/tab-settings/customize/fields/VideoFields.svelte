@@ -45,7 +45,7 @@
 	export { handleSave, handleLoadSetting };
 </script>
 
-<div class="flex w-full flex-col gap-4 lg:w-5/12">
+<div class="flex w-full flex-col gap-4 lg:w-6/12">
 	<h3 class="text-lg font-semibold">Video Settings</h3>
 	<table
 		class="w-full table-fixed text-secondary-dark [&>tr]:grid [&>tr]:columns-2 md:[&>tr]:table-row"

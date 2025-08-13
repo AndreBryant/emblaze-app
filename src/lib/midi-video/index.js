@@ -37,18 +37,17 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	let recording = get(isRecording);
 	let isCapturing = false;
 
-	isRecording.subscribe((value) => {
+	const unsubIsRecording = isRecording.subscribe((value) => {
 		if (!loaded) return;
 		recording = value;
-
 		paused.set(!value);
 	});
 
-	paused.subscribe(() => {
+	const unsubPaused = paused.subscribe(() => {
 		conductor.setPause(get(paused));
 	});
 
-	midiData.subscribe(() => {
+	const unsubMidiData = midiData.subscribe(() => {
 		if (!get(midiData)) {
 			loaded = false;
 			conductor.reset();
@@ -100,6 +99,10 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		clearInterval(intervalId);
 		capturer.stop();
 		capturer = null;
+
+		unsubIsRecording();
+		unsubPaused();
+		unsubMidiData();
 		app.destroy(true, { children: true });
 	};
 

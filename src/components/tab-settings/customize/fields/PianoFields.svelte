@@ -96,7 +96,7 @@
 	export { handleSave, handleLoadSetting };
 </script>
 
-<div class="flex w-full flex-col gap-4 lg:w-5/12">
+<div class="flex w-full flex-col gap-4 lg:w-6/12">
 	<h3 class="text-lg font-semibold">Piano Settings</h3>
 
 	<div></div>
