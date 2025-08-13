@@ -57,6 +57,11 @@
 	];
 </script>
 
+<svelte:head>
+	<link rel="icon" type="image/png" href="flame.png" />
+	<title>MIDI Renderer</title>
+</svelte:head>
+
 <div class="relative flex h-full w-full flex-col lg:flex-row">
 	<Sidebar {items} />
 	<MainContent {items} />

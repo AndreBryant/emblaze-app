@@ -11,7 +11,7 @@
 	export let items = [];
 
 	const appTitle = 'Emblaze-MIDI';
-	let expanded = false;
+	let expanded = true;
 	let isFullScreen = false;
 
 	function toggleFullScreen() {
@@ -78,16 +78,16 @@
 				{/if}
 			</button>
 		</div>
-		<div></div>
-		<div class="grow">
-			<ul class="flex flex-col items-center gap-2">
+		<div class="flex grow">
+			<ul class="flex flex-col gap-2">
 				{#each items as item}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 					<li
 						on:click={() => ($activeTabValue = item.value)}
-						class={`h-full w-full cursor-pointer rounded-lg border border-secondary-acc/50 px-8 py-4 text-center text-lg ${$activeTabValue === item.value ? 'bg-secondary-acc/20 font-normal' : 'bg-primary/5 font-thin hover:bg-secondary-acc/5'}`}
+						class={`flex border border-secondary-dark/40 ${$activeTabValue === item.value ? 'bg-secondary-acc/10 font-normal' : 'bg-primary/5 font-thin hover:bg-secondary-acc/5'}`}
 					>
+						<svelte:component this={item.logo} size="24" class="text-secondary/60" />
 						{item.label}
 					</li>
 				{/each}

@@ -8,7 +8,7 @@
 
 <div class="space-y-5">
 	<h1 class="flex h-12 flex-row items-end truncate font-thin tracking-wide">
-		<Flame class="text-acc-1 " size={36} />
+		<Flame class="text-acc-1-dark" size={36} />
 		{#if !$isSidebarCollapsed}
 			<div class="hidden gap-2 lg:flex">
 				<span class="text-2xl">
