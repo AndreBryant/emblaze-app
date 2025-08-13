@@ -47,7 +47,7 @@
 	<div class="grow">
 		<AppTitle label={appTitle} />
 	</div>
-	<div>
+	<div class="flex h-full items-end">
 		<button on:click={() => (expanded = true)}>
 			<Menu size={36} />
 		</button>
@@ -60,7 +60,10 @@
 		class="absolute z-10 flex h-screen w-screen flex-col gap-2 bg-primary/75 px-4 pb-16 pt-4 backdrop-blur-lg transition lg:hidden"
 	>
 		<div class="flex">
-			<button on:click={() => (expanded = false)}>
+			<button
+				on:click={() => (expanded = false)}
+				class="rounded-full p-1 transition hover:bg-secondary-acc/10"
+			>
 				<X size={36} />
 			</button>
 			<div class="grow"></div>

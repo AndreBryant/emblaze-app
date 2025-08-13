@@ -60,6 +60,7 @@ export class PixiPiano {
 
 		for (const key of this.graphics.keys) {
 			key.sprite.tint = this.#checkType(key.key) ? this.BLACK : this.WHITE;
+			key.sprite.texture = key.sprites[0];
 		}
 
 		this.graphics.keyRim.reset();
