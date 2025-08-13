@@ -142,7 +142,7 @@
 						type="range"
 						min={noteSpeedMin}
 						max={noteSpeedMax}
-						class="grow"
+						class="custom-slider grow"
 						bind:value={noteSpeed}
 					/>
 					<input
@@ -208,7 +208,7 @@
 						min={intensityMin}
 						max={intensityMax}
 						step={0.01}
-						class="grow"
+						class="custom-slider grow"
 						bind:value={keyFlareIntensity}
 					/>
 					<input
@@ -243,7 +243,7 @@
 						min={turbulenceMin}
 						max={turbulenceMax}
 						step={0.01}
-						class="grow"
+						class="custom-slider grow"
 						bind:value={noteParticleTurbulence}
 					/>
 					<input
@@ -269,7 +269,7 @@
 						type="range"
 						min={densityMin}
 						max={densityMax}
-						class="grow"
+						class="custom-slider grow"
 						bind:value={noteParticleDensity}
 					/>
 					<input
@@ -295,7 +295,7 @@
 						min={shootVelocityMin}
 						max={shootVelocityMax}
 						step={0.01}
-						class="grow"
+						class="custom-slider grow"
 						bind:value={noteParticleShootVelocity}
 					/>
 					<input
