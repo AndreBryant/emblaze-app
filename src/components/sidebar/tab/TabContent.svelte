@@ -18,6 +18,6 @@
 		<pre class="select-none text-center text-sm">{label}</pre>
 	</div>
 </div>
-<div class="z-10 w-full overflow-x-hidden text-wrap px-12 py-8">
+<div class="z-10 w-full overflow-x-hidden text-wrap px-4 py-8 md:px-8 lg:px-12">
 	<svelte:component this={component} {...props} />
 </div>
