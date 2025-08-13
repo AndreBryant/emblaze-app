@@ -110,9 +110,7 @@
 
 <div class="flex w-full flex-col gap-4 lg:w-5/12">
 	<h3 class="text-lg font-semibold">Note Canvas Settings</h3>
-	<table
-		class="w-full table-fixed text-secondary-dark [&>tr]:grid [&>tr]:columns-2 md:[&>tr]:table-row"
-	>
+	<table class="w-full table-fixed text-secondary-dark [&>tr]:grid md:[&>tr]:table-row">
 		<tr>
 			<td class="py-1">
 				<div class="flex items-center">
@@ -210,7 +208,7 @@
 						min={intensityMin}
 						max={intensityMax}
 						step={0.01}
-						class="flex-grow"
+						class="grow"
 						bind:value={keyFlareIntensity}
 					/>
 					<input
@@ -218,7 +216,7 @@
 						min={intensityMin}
 						max={intensityMax}
 						step={0.01}
-						class="w-32 border border-secondary-acc bg-primary"
+						class="flex-1/3 border border-secondary-acc bg-primary"
 						bind:value={keyFlareIntensity}
 					/>
 				</div>
@@ -245,7 +243,7 @@
 						min={turbulenceMin}
 						max={turbulenceMax}
 						step={0.01}
-						class="flex-grow"
+						class="grow"
 						bind:value={noteParticleTurbulence}
 					/>
 					<input
@@ -253,7 +251,7 @@
 						min={turbulenceMin}
 						max={turbulenceMax}
 						step={0.01}
-						class="w-32 border border-secondary-acc bg-primary"
+						class="flex-1/3 border border-secondary-acc bg-primary"
 						bind:value={noteParticleTurbulence}
 					/>
 				</div>
@@ -271,14 +269,14 @@
 						type="range"
 						min={densityMin}
 						max={densityMax}
-						class="flex-grow"
+						class="grow"
 						bind:value={noteParticleDensity}
 					/>
 					<input
 						type="number"
 						min={densityMin}
 						max={densityMax}
-						class="w-32 border border-secondary-acc bg-primary"
+						class="flex-1/3 border border-secondary-acc bg-primary"
 						bind:value={noteParticleDensity}
 					/>
 				</div>
@@ -297,7 +295,7 @@
 						min={shootVelocityMin}
 						max={shootVelocityMax}
 						step={0.01}
-						class="flex-grow"
+						class="grow"
 						bind:value={noteParticleShootVelocity}
 					/>
 					<input
@@ -305,7 +303,7 @@
 						min={shootVelocityMin}
 						max={shootVelocityMax}
 						step={0.01}
-						class="w-32 border border-secondary-acc bg-primary"
+						class="flex-1/3 border border-secondary-acc bg-primary"
 						bind:value={noteParticleShootVelocity}
 					/>
 				</div>

@@ -5,7 +5,7 @@
 	export let subtitle = '';
 </script>
 
-<div class="flex flex-col gap-2 px-12 pt-8">
+<div class="flex flex-col gap-2 px-4 pt-8 md:px-8 lg:px-12">
 	<H2>{title}</H2>
 	<H3>{subtitle}</H3>
 	<hr class="border-secondary/10" />
