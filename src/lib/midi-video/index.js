@@ -5,6 +5,7 @@ import { Conductor } from './classes/conductor';
 import { CCapture } from 'ccapture.js-npmfixed';
 
 import { midiData, paused, isRecording } from '../stores/midi-stores';
+import { sessionSettings } from '../stores/session-store';
 
 export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();
@@ -23,8 +24,11 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	let scheme = [];
 	let loaded = false;
 
-	const startKey = 0;
-	const numOfKeys = 128;
+	const startKey = Number(get(sessionSettings)['customize']['pianoFields'].startKey);
+	const lastKey = Number(get(sessionSettings)['customize']['pianoFields'].lastKey);
+	const keyCountData = Number(get(sessionSettings)['customize']['pianoFields'].numOfKeys);
+	const numOfKeys = keyCountData === -1 ? lastKey - startKey + 1 : keyCountData;
+
 	const noteCanvas = new NoteCanvas(app, startKey, numOfKeys, 0, 0, scheme);
 	await noteCanvas.loadTexture();
 

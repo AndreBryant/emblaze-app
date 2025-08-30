@@ -52,7 +52,7 @@
 	};
 
 	const handleCustomizeSave = (e) => {
-		if (e.detail.save && !$hasError.value) {
+		if (e.detail.save && !checkForErrors($hasError)) {
 			const id = e.detail.id;
 			pianoFieldsRef.handleSave(id);
 			noteCanvasFieldsRef.handleSave(id);
@@ -60,6 +60,13 @@
 			videoFieldsRef.handleSave(id);
 			loadSaveRef.setSelected(id);
 		}
+	};
+
+	const checkForErrors = (data) => {
+		for (let key in data) {
+			if (data[key].value && key !== idField) return true;
+		}
+		return false;
 	};
 
 	let pianoFieldsRef;

@@ -17,7 +17,7 @@
 	let idStore = ids.store;
 
 	const handleSave = () => {
-		if (!name.length) {
+		if (!name.trim().length) {
 			const errMsg = 'Error: Name for a setting cannot be blank.';
 			$hasError[field].value = true;
 			$hasError[field].errors = [];
@@ -66,17 +66,17 @@
 </script>
 
 <!-- Save current Setting -->
-<div class="w-full lg:w--5/12 flex flex-col gap-2">
+<div class="lg:w--5/12 flex w-full flex-col gap-2">
 	<h3 class="text-lg font-semibold">Save Current Settings</h3>
-	<div class="flex gap-2 items-center w-full lg:w-5/12 text-secondary-dark">
-		<div class={`${$hasError.value ? 'opacity-40 pointer-events-none select-none' : ''}`}>
+	<div class="flex w-full items-center gap-2 text-secondary-dark lg:w-5/12">
+		<div class={`${checkForErrors($hasError) ? 'pointer-events-none select-none opacity-40' : ''}`}>
 			<Button variant="primary" onclick={handleSave}>Save</Button>
 		</div>
 		<input
 			type="text"
 			bind:value={name}
 			placeholder="Name the setting"
-			class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+			class="w-full border border-secondary-acc bg-primary px-2 py-1"
 		/>
 	</div>
 	<div class="w-full lg:w-5/12">
@@ -84,11 +84,11 @@
 			type="text"
 			bind:value={description}
 			placeholder="Add a short description"
-			class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+			class="w-full border border-secondary-acc bg-primary px-2 py-1"
 		/>
 	</div>
 	<div>
-		<p class="opacity-60 text-sm flex items-center gap-2">
+		<p class="flex items-center gap-2 text-sm opacity-60">
 			<TriangleAlert size={20} />
 			For now, configurations can be set with same names. I haven't implemented the overwriting yet T_,T
 		</p>

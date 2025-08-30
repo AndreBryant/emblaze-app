@@ -1,16 +1,29 @@
 <script>
-	import { piano, hasError } from '$lib/stores/customize-stores.js';
 	import { browser } from '$app/environment';
+	import { piano, hasError } from '$lib/stores/customize-stores.js';
+	import { sessionSettings } from '$lib/stores/session-store.js';
 
 	import ErrorFields from './ErrorFields.svelte';
 
-	let pianoRimColor = '#C27803';
-	let pianoBlazeColor = '#C27803';
-	let numOfKeys = '88';
-	let startKey = '21';
-	let lastKey = '108';
+	// These variables are global now with the use of sessionSettings Store
+
+	// let pianoRimColor = $sessionSettings['customize']['pianoFields'].pianoRimColor;
+	// let pianoBlazeColor = $sessionSettings['customize']['pianoFields'].pianoBlazeColor;
+	// let numOfKeys = $sessionSettings['customize']['pianoFields'].numOfKeys;
+	// let startKey = $sessionSettings['customize']['pianoFields'].startKey;
+	// let lastKey = $sessionSettings['customize']['pianoFields'].lastKey;
+
+	// $: {
+	// 	pianoRimColor = $sessionSettings['customize']['pianoFields'].pianoRimColor;
+	// 	pianoBlazeColor = $sessionSettings['customize']['pianoFields'].pianoBlazeColor;
+	// 	numOfKeys = $sessionSettings['customize']['pianoFields'].numOfKeys;
+	// 	startKey = $sessionSettings['customize']['pianoFields'].startKey;
+	// 	lastKey = $sessionSettings['customize']['pianoFields'].lastKey;
+	// }
+
 	let pianoStore = piano.store;
 	let itemField = piano.itemField;
+	$: pianoStore = piano.store;
 
 	const handleSave = (id) => {
 		if (browser) {
@@ -41,21 +54,19 @@
 	const handleLoadSetting = (id) => {
 		if (browser) {
 			const data = $pianoStore.filter((piano) => piano.sID === id)[0]['piano'];
-			pianoRimColor = data.pianoRimColor;
-			pianoBlazeColor = data.pianoBlazeColor;
-			numOfKeys = data.numOfKeys;
-			startKey = data.startKey;
-			lastKey = data.lastKey;
+			$sessionSettings['customize']['pianoFields'].pianoRimColor = data.pianoRimColor;
+			$sessionSettings['customize']['pianoFields'].pianoBlazeColor = data.pianoBlazeColor;
+			$sessionSettings['customize']['pianoFields'].numOfKeys = data.numOfKeys;
+			$sessionSettings['customize']['pianoFields'].startKey = data.startKey;
+			$sessionSettings['customize']['pianoFields'].lastKey = data.lastKey;
 		}
 	};
 
-	$: pianoStore = piano.store;
-
 	$: {
 		const field = 'piano-fields';
-		if (numOfKeys === 'custom') {
-			const start = Number(startKey);
-			const last = Number(lastKey);
+		if ($sessionSettings['customize']['pianoFields'].numOfKeys === '-1') {
+			const start = Number($sessionSettings['customize']['pianoFields'].startKey | 0);
+			const last = Number($sessionSettings['customize']['pianoFields'].lastKey | 0);
 
 			let errorMsg;
 			if (start < 0 || last < 0) {
@@ -71,20 +82,23 @@
 			} else {
 				$hasError[field].value = false;
 				$hasError[field].errors = [];
+
+				$sessionSettings['customize']['pianoFields'].startKey = start + '';
+				$sessionSettings['customize']['pianoFields'].lastKey = last + '';
 			}
 		} else {
-			switch (numOfKeys) {
+			switch ($sessionSettings['customize']['pianoFields'].numOfKeys) {
 				case '61':
-					startKey = '36';
-					lastKey = '96';
+					$sessionSettings['customize']['pianoFields'].startKey = '36';
+					$sessionSettings['customize']['pianoFields'].lastKey = '96';
 					break;
 				case '88':
-					startKey = '21';
-					lastKey = '108';
+					$sessionSettings['customize']['pianoFields'].startKey = '21';
+					$sessionSettings['customize']['pianoFields'].lastKey = '108';
 					break;
 				case '128':
-					startKey = '0';
-					lastKey = '127';
+					$sessionSettings['customize']['pianoFields'].startKey = '0';
+					$sessionSettings['customize']['pianoFields'].lastKey = '127';
 					break;
 			}
 
@@ -99,7 +113,6 @@
 <div class="flex w-full flex-col gap-4 lg:w-6/12">
 	<h3 class="text-lg font-semibold">Piano Settings</h3>
 
-	<div></div>
 	<table class="w-full table-fixed text-secondary-dark [&>tr]:grid md:[&>tr]:table-row">
 		<tr>
 			<td class="py-1">
@@ -108,7 +121,7 @@
 					<input
 						type="color"
 						class="h-8 w-8 rounded-md border border-secondary-acc bg-transparent"
-						bind:value={pianoRimColor}
+						bind:value={$sessionSettings.customize.pianoFields.pianoRimColor}
 					/>
 				</div>
 			</td>
@@ -119,7 +132,7 @@
 						<input
 							type="color"
 							class="h-8 w-8 rounded-md border border-secondary-acc bg-transparent"
-							bind:value={pianoBlazeColor}
+							bind:value={$sessionSettings.customize.pianoFields.pianoBlazeColor}
 						/>
 					</div>
 				</div>
@@ -134,43 +147,49 @@
 					name=""
 					id=""
 					class="w-full border border-secondary-acc bg-primary px-2 py-1"
-					bind:value={numOfKeys}
+					bind:value={$sessionSettings.customize.pianoFields.numOfKeys}
 				>
 					<option value="61">61</option>
 					<option value="88">88</option>
 					<option value="128">128</option>
-					<option value="custom"
+					<option value="-1"
 						>Custom
-						{#if numOfKeys === 'custom'}
-							({Number(lastKey) - Number(startKey) + 1} keys)
+						{#if $sessionSettings['customize']['pianoFields'].numOfKeys === '-1'}
+							({Number($sessionSettings['customize']['pianoFields'].lastKey) -
+								Number($sessionSettings['customize']['pianoFields'].startKey) +
+								1} keys)
 						{/if}
 					</option>
 				</select>
 			</td>
 		</tr>
-		<tr class={`${numOfKeys !== 'custom' ? 'pointer-events-none select-none opacity-45' : ''}`}>
+		<tr
+			class={`${$sessionSettings['customize']['pianoFields'].numOfKeys !== '-1' ? 'pointer-events-none select-none opacity-45' : ''}`}
+		>
 			<td class="py-1">
 				<pre>Start Key: </pre>
 			</td>
 			<td>
 				<input
 					type="number"
-					bind:value={startKey}
+					bind:value={$sessionSettings.customize.pianoFields.startKey}
 					min={0}
-					max={lastKey}
+					max={$sessionSettings['customize']['pianoFields'].lastKey}
 					class="w-full border border-secondary-acc bg-primary px-3 py-1"
 				/>
 			</td>
 		</tr>
-		<tr class={`${numOfKeys !== 'custom' ? 'pointer-events-none select-none opacity-45' : ''}`}>
+		<tr
+			class={`${$sessionSettings['customize']['pianoFields'].numOfKeys !== '-1' ? 'pointer-events-none select-none opacity-45' : ''}`}
+		>
 			<td class="py-1">
 				<pre>Last Key: </pre>
 			</td>
 			<td>
 				<input
 					type="number"
-					bind:value={lastKey}
-					min={startKey}
+					bind:value={$sessionSettings.customize.pianoFields.lastKey}
+					min={$sessionSettings['customize']['pianoFields'].startKey}
 					max={127}
 					class="w-full border border-secondary-acc bg-primary px-3 py-1"
 				/>

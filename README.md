@@ -5,7 +5,7 @@ Inspired by [Zenith-MIDI](https://github.com/arduano/Zenith-MIDI) created by Ard
 
 ## Description
 
-Basically, I want to use wasm in order to make this perform better with a good UI and UX.
+Basically, I want to this perform better with a good UI and UX ->
 [Link to my prototype MIDI renderer.](https://andrebryant.github.io/midi-visualizer/public/)
 
 ## Logs

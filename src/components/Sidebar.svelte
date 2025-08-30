@@ -12,7 +12,7 @@
 	export let items = [];
 
 	const appTitle = 'Emblaze-MIDI';
-	let expanded = true;
+	let expanded = false;
 	let isFullScreen = false;
 
 	function toggleFullScreen() {

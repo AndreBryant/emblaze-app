@@ -1,6 +1,15 @@
 <script>
 	import { browser } from '$app/environment';
 	import { video } from '$lib/stores/customize-stores.js';
+	import { sessionSettings } from '$lib/stores/session-store.js';
+
+	// let quality = $sessionSettings['customize']['videoFields'].quality;
+	// let fps = $sessionSettings['customize']['videoFields'].fps;
+
+	// $: {
+	// 	quality = $sessionSettings['customize']['videoFields'].quality;
+	// 	fps = $sessionSettings['customize']['videoFields'].fps;
+	// }
 
 	let videoStore;
 	let itemField = video.itemField;
@@ -11,8 +20,8 @@
 			const videoData = {
 				sID: id,
 				video: {
-					quality,
-					fps
+					quality: $sessionSettings['customize']['videoFields'].quality,
+					fps: $sessionSettings['customize']['videoFields'].fps
 				}
 			};
 
@@ -29,18 +38,17 @@
 	const handleLoadSetting = (id) => {
 		if (browser) {
 			const data = $videoStore.filter((video) => video.sID === id)[0]['video'];
-			quality = data.quality;
-			fps = data.fps;
+			$sessionSettings['customize']['videoFields'].quality = data.quality;
+			$sessionSettings['customize']['videoFields'].fps = data.fps;
 		}
 	};
 
-	let quality = '360p';
-	let fps = '30';
-
 	$: {
-		let val = Number(fps);
-		if (val < 0) fps = '0';
-		if (val > 60) fps = '60';
+		let val = Number($sessionSettings['customize']['videoFields'].fps);
+
+		if (val < 0) $sessionSettings['customize']['videoFields'].fps = '1';
+		if (val > 60) $sessionSettings['customize']['videoFields'].fps = '60';
+		if (val === NaN) $sessionSettings['customize']['videoFields'].fps = '30';
 	}
 	export { handleSave, handleLoadSetting };
 </script>
@@ -59,7 +67,7 @@
 			<td>
 				<div class="flex gap-4">
 					<select
-						bind:value={quality}
+						bind:value={$sessionSettings['customize']['videoFields'].quality}
 						class="w-full border border-secondary-acc bg-primary px-2 py-1"
 					>
 						<option value="360p">360p</option>
@@ -82,7 +90,7 @@
 					<input
 						type="number"
 						class=" w-full border border-secondary-acc bg-primary px-3"
-						bind:value={fps}
+						bind:value={$sessionSettings['customize']['videoFields'].fps}
 						min="0"
 						max="60"
 					/>
