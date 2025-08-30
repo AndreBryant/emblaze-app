@@ -1,10 +1,20 @@
 <script>
 	import { browser } from '$app/environment';
 	import { colorScheme } from '$lib/stores/customize-stores.js';
+	import { sessionSettings } from '$lib/stores/session-store.js';
+
+	let colorBy = $sessionSettings['customize']['colorScheme'].colorBy;
+	let colorGeneration = $sessionSettings['customize']['colorScheme'].colorGeneration;
+
+	$: {
+		colorBy = $sessionSettings['customize']['colorScheme'].colorBy;
+		colorGeneration = $sessionSettings['customize']['colorScheme'].colorGeneration;
+	}
 
 	let colorSchemeStore;
 	let itemField = colorScheme.itemField;
 	$: colorSchemeStore = colorScheme.store;
+
 	const handleSave = (id) => {
 		if (browser) {
 			const colorSchemeData = {
@@ -29,13 +39,11 @@
 			const data = $colorSchemeStore.filter((colorScheme) => colorScheme.sID === id)[0][
 				'colorScheme'
 			];
-			colorBy = data.colorBy;
-			colorGeneration = data.colorGeneration;
+			$sessionSettings['customize']['colorScheme'].colorBy = data.colorBy;
+			$sessionSettings['customize']['colorScheme'].colorGeneration = data.colorGeneration;
 		}
 	};
 
-	let colorBy = 'track';
-	let colorGeneration = 'random';
 	export { handleSave, handleLoadSetting };
 </script>
 
@@ -63,7 +71,7 @@
 			<td>
 				<select
 					class="w-full border border-secondary-acc bg-primary px-2 py-1"
-					bind:value={colorBy}
+					bind:value={$sessionSettings['customize']['colorScheme'].colorBy}
 				>
 					<option value="channel">channel</option>
 					<option value="track">track</option>
@@ -78,7 +86,7 @@
 				<div class="cursor-not-allowed">
 					<select
 						class="pointer-events-none w-full border border-secondary-acc bg-primary px-2 py-1"
-						bind:value={colorGeneration}
+						bind:value={$sessionSettings['customize']['colorScheme'].colorGeneration}
 					>
 						<option value="random">random</option>
 						<option value="image">from image</option>

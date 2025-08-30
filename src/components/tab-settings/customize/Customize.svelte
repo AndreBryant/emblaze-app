@@ -52,7 +52,7 @@
 	};
 
 	const handleCustomizeSave = (e) => {
-		if (e.detail.save && checkForErrors($hasError)) {
+		if (e.detail.save && !checkForErrors($hasError)) {
 			const id = e.detail.id;
 			pianoFieldsRef.handleSave(id);
 			noteCanvasFieldsRef.handleSave(id);
@@ -64,7 +64,7 @@
 
 	const checkForErrors = (data) => {
 		for (let key in data) {
-			if (data[key].value && key !== field) return true;
+			if (data[key].value && key !== idField) return true;
 		}
 		return false;
 	};
