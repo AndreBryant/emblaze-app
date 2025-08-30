@@ -27,17 +27,19 @@
 
 	const handleSave = (id) => {
 		if (browser) {
-			startKey = startKey || '0';
-			lastKey = lastKey || '127';
+			$sessionSettings['customize']['pianoFields'].startKey =
+				$sessionSettings['customize']['pianoFields'].startKey || '0';
+			$sessionSettings['customize']['pianoFields'].lastKey =
+				$sessionSettings['customize']['pianoFields'].lastKey || '127';
 
 			const pianoData = {
 				sID: id,
 				piano: {
-					pianoRimColor,
-					pianoBlazeColor,
-					numOfKeys,
-					startKey,
-					lastKey
+					pianoRimColor: $sessionSettings['customize']['pianoFields'].pianoRimColor,
+					pianoBlazeColor: $sessionSettings['customize']['pianoFields'].pianoBlazeColor,
+					numOfKeys: $sessionSettings['customize']['pianoFields'].numOfKeys,
+					startKey: $sessionSettings['customize']['pianoFields'].startKey,
+					lastKey: $sessionSettings['customize']['pianoFields'].lastKey
 				}
 			};
 
