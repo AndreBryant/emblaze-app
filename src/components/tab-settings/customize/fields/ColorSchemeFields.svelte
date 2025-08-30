@@ -3,14 +3,6 @@
 	import { colorScheme } from '$lib/stores/customize-stores.js';
 	import { sessionSettings } from '$lib/stores/session-store.js';
 
-	let colorBy = $sessionSettings['customize']['colorScheme'].colorBy;
-	let colorGeneration = $sessionSettings['customize']['colorScheme'].colorGeneration;
-
-	$: {
-		colorBy = $sessionSettings['customize']['colorScheme'].colorBy;
-		colorGeneration = $sessionSettings['customize']['colorScheme'].colorGeneration;
-	}
-
 	let colorSchemeStore;
 	let itemField = colorScheme.itemField;
 	$: colorSchemeStore = colorScheme.store;
@@ -20,8 +12,8 @@
 			const colorSchemeData = {
 				sID: id,
 				colorScheme: {
-					colorBy,
-					colorGeneration
+					colorBy: $sessionSettings['customize']['colorScheme'].colorBy,
+					colorGeneration: $sessionSettings['customize']['colorScheme'].colorGeneration
 				}
 			};
 
