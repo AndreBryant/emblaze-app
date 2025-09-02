@@ -1,6 +1,4 @@
-<p align="center" style="border:1px solid #00000050; border-radius: 10px;">
-    <img src="./static/flame.png" width="24"/> <span style="font-size:28px; font-weight: bold;">Emblaze-MIDI</span>
-</p>
+# ![fire](./static/flame.png){width=32} Emblaze-MIDI
 
 Emblaze-MIDI is a browser-based MIDI video renderer, inspired by [Zenith-MIDI](https://github.com/arduano/Zenith-MIDI) created by Arduano.
 
