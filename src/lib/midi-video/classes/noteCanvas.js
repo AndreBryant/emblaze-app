@@ -43,7 +43,7 @@ export class NoteCanvas {
 		});
 	}
 
-	startNote(midiKey, durationTicks, track, offset) {
+	startNote(midiKey, durationTicks, colorIndex, offset) {
 		if (midiKey < this.startKey || midiKey > this.lastKey) return;
 
 		const note = new PIXI.NineSliceSprite(this.noteBaseTexture, 6, 6, 6, 6);
@@ -54,7 +54,7 @@ export class NoteCanvas {
 		note.width = this.noteWidth * (this.#checkType(midiKey) ? 0.5 : 1);
 		note.height = durationTicks * this.scale;
 
-		note.tint = this.#getColor(track) + (this.#checkType(midiKey) ? -0x101010 : 0);
+		note.tint = this.#getColor(colorIndex) + (this.#checkType(midiKey) ? -0x101010 : 0);
 		this.activeNotes[midiKey].notes.push(note);
 		this.container.addChild(note);
 	}
@@ -130,7 +130,7 @@ export class NoteCanvas {
 		return MOD_KEY_MAPPING[keyIndex % 12];
 	}
 
-	#getColor(track) {
-		return this.scheme[track];
+	#getColor(index) {
+		return this.scheme[index];
 	}
 }

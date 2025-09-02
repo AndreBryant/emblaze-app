@@ -9,7 +9,27 @@ import { sessionSettings } from '../stores/session-store';
 
 export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();
-	const ch = 720;
+	const { quality, fps } = get(sessionSettings).customize.videoFields;
+	let ch;
+
+	switch (quality) {
+		case '360p':
+			ch = 360;
+			break;
+		case '720p':
+			ch = 720;
+			break;
+		case '1080p':
+			ch = 1080;
+			break;
+		case '4k':
+			ch = 2160;
+			break;
+		case '8k':
+			ch = 4320;
+			break;
+	}
+
 	const cw = (ch * 16) / 9;
 	await app.init({
 		canvas: canvas,
@@ -37,7 +57,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 
 	const conductor = new Conductor(app, piano, noteCanvas);
 
-	let capturer = new CCapture({ format: 'webm', frameRate: 60 });
+	let capturer = new CCapture({ format: 'webm', framerate: fps });
 	let recording = get(isRecording);
 	let isCapturing = false;
 
@@ -58,7 +78,12 @@ export const createPixiSketch = async (PIXI, canvas) => {
 			return;
 		}
 
-		scheme = Array.from({ length: get(midiData).tracks.length }, () => {
+		const count =
+			get(sessionSettings).customize.colorScheme.colorBy === 'track'
+				? get(midiData).tracks.length
+				: 16;
+
+		scheme = Array.from({ length: count }, () => {
 			const min = 0x55;
 			const max = 0xdd;
 
@@ -95,9 +120,9 @@ export const createPixiSketch = async (PIXI, canvas) => {
 				isRecording.set(false);
 			}
 
-			conductor.update(1000 / 60);
+			conductor.update(1000 / fps);
 		}
-	}, 1000 / 60);
+	}, 1000 / fps);
 
 	const cleanup = () => {
 		clearInterval(intervalId);

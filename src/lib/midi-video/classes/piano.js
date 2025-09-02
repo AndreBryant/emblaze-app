@@ -119,17 +119,17 @@ export class PixiPiano {
 		this.#addToContainer();
 	}
 
-	playNote(keyIndex, start, duration, track) {
+	playNote(keyIndex, start, duration, colorIndex) {
 		// play note if midikey is only within the range [startKey, lastKey]
 		if (keyIndex > this.lastKey || keyIndex < this.startKey) return;
 
-		const note = { start: start, duration: duration, track: track };
+		const note = { start: start, duration: duration, track: colorIndex };
 		this.activeNotes[keyIndex].notes.push(note);
 		this.activeNotes[keyIndex].notes.sort((a, b) => b.track - a.track);
 
 		this.#colorKey(
 			keyIndex,
-			this.#getColor(track) + (this.#checkType(keyIndex) ? -0x101010 : 0x0f0f0f),
+			this.#getColor(colorIndex) + (this.#checkType(keyIndex) ? -0x101010 : 0x0f0f0f),
 			true
 		);
 
@@ -182,8 +182,8 @@ export class PixiPiano {
 		key.sprite.texture = !isPlaying ? key.sprites[0] : key.sprites[1];
 	}
 
-	#getColor(track) {
-		return this.scheme[track];
+	#getColor(index) {
+		return this.scheme[index];
 	}
 
 	#addToContainer() {
