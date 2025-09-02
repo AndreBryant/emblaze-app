@@ -1,17 +1,57 @@
-# Emblaze app
+<p align="center" style="border:1px solid #00000050; border-radius: 10px;">
+    <img src="./static/flame.png" width="24"/> <span style="font-size:28px; font-weight: bold;">Emblaze-MIDI</span>
+</p>
 
-It is a browser based MIDI video renderer.
-Inspired by [Zenith-MIDI](https://github.com/arduano/Zenith-MIDI) created by Arduano.
+Emblaze-MIDI is a browser-based MIDI video renderer, inspired by [Zenith-MIDI](https://github.com/arduano/Zenith-MIDI) created by Arduano.
 
-## Description
+This is a revamp project of my [prototype MIDI renderer.](https://andrebryant.github.io/midi-visualizer/public/). This time, it is less laggy during playback and has a proper UI/UX.
 
-Basically, I want to this perform better with a good UI and UX ->
-[Link to my prototype MIDI renderer.](https://andrebryant.github.io/midi-visualizer/public/)
+<hr/>
 
-## Logs
+## Motivation
 
-1. Development started on August 2024 and stopped for a few months.
-2. Development resumed on July 2025, Now with working UI Features.
+I built Emblaze-MIDI for people who are passionate about sharing their musical arrangements online, but don’t have access to a powerful PC. With this browser-based renderer, anyone can create and export MIDI videos directly from their devices even on mobile, no desktop setup required, without complex `termux` configurations. Everything is on the browser, whatever they are currently using. However, please take note of the current limitations.
+
+### Demo
+
+Try it here: [Emblaze-MIDI Live Demo](https://emblaze-midi.vercel.app)
+
+## Features
+
+- Customizable **MIDI rendering** settings (number of keys, piano rim color, etc.)
+- **MIDI parsing** with `ToneJS`
+- **MIDI visualization** with `PixiJS`
+- **Exports video** in `webm` format using `CCaptureJS`
+- **Clean and intuitive UI/UX** built with `SvelteKit` and `TailwindCSS`
+
+## Limitations
+
+- MIDI paprsing of some files with dense events (i.e. millions of notes or black MIDIs) may take a long time to load.
+- For best experience, the recommended MIDIs to render here are playable arrangements and small impossible arrangements that are not more than 750,000 notes.
+
+## Some stuff
+
+<details>
+  <summary><b>Logs</b> <span style="font-size:12px">(Click to Expand)</span></summary>
+  <blockquote>
+    <ol>
+      <li>Development started on August 2024 and stopped for a few months.</li>
+      <li>Development resumed on July 2025, now with working UI features.</li>
+    </ol>
+  </blockquote>
+</details>
+
+<details>
+    <summary><b>Screenshots</b> <span style="font-size:12px">(Click to Expand)</span></summary>
+    <p align="center">
+        <img src="./emblaze-readme/emblaze-1.png" width="512" />
+        <img src="./emblaze-readme/emblaze-2.png" width="512" />
+        <img src="./emblaze-readme/emblaze-3.png" width="512" />
+        <img src="./emblaze-readme/emblaze-4.png" width="512" /> <br/>
+        <img src="./emblaze-readme/emblaze-5.png" width="512" />
+        <img src="./emblaze-readme/emblaze-6.png" width="512" />
+    </p>
+</details>
 
 <!-- # create-svelte
 
