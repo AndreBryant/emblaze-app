@@ -26,7 +26,7 @@ export class NoteCanvas {
 		this.container = new PIXI.Container();
 		this.container.sortableChildren = true;
 
-		this.noteTexture = null;
+		this.noteBaseTexture = null;
 	}
 
 	reset() {
@@ -39,14 +39,14 @@ export class NoteCanvas {
 	async loadTexture() {
 		const texture = '/sprites/note-texture.png';
 		await PIXI.Assets.load([texture]).then(() => {
-			this.noteTexture = PIXI.Texture.from(texture);
+			this.noteBaseTexture = PIXI.Texture.from(texture);
 		});
 	}
 
 	startNote(midiKey, durationTicks, track, offset) {
 		if (midiKey < this.startKey || midiKey > this.lastKey) return;
 
-		const note = new PIXI.Sprite(this.noteTexture);
+		const note = new PIXI.NineSliceSprite(this.noteBaseTexture, 6, 6, 6, 6);
 		note.x = this.activeNotes[midiKey].x;
 		note.y = -durationTicks + offset;
 		note.zIndex = this.#checkType(midiKey);
