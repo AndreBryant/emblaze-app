@@ -149,7 +149,8 @@ export class Conductor {
 		) {
 			const { midi, durationTicks, track, ticks, channel } = this.notes[this.advancedNoteIndex];
 			const offset = this.currentTick + this.fallingNotesOffset - ticks;
-			const colorIndex = this.colorBy === 'tracks' ? track : channel;
+			const colorIndex = this.colorBy === 'track' ? track : channel;
+
 			this.noteCanvas.startNote(midi, durationTicks, colorIndex, offset);
 			this.advancedNoteIndex++;
 		}
@@ -165,7 +166,8 @@ export class Conductor {
 			this.notes[this.currentNoteIndex].ticks <= this.currentTick
 		) {
 			const { midi, durationTicks, track, ticks, channel } = this.notes[this.currentNoteIndex];
-			const colorIndex = this.colorBy === 'tracks' ? track : channel;
+			const colorIndex = this.colorBy === 'track' ? track : channel;
+
 			this.piano.playNote(midi, ticks, durationTicks, colorIndex);
 			this.currentNoteIndex++;
 		}

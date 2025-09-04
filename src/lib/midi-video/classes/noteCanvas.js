@@ -1,4 +1,6 @@
 import * as PIXI from 'pixi.js';
+import { sessionSettings } from '../../stores/session-store';
+import { get } from 'svelte/store';
 
 const MOD_KEY_MAPPING = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 
