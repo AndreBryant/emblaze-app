@@ -48,11 +48,14 @@ export const createPixiSketch = async (PIXI, canvas) => {
 	const lastKey = Number(get(sessionSettings)['customize']['pianoFields'].lastKey);
 	const keyCountData = Number(get(sessionSettings)['customize']['pianoFields'].numOfKeys);
 	const numOfKeys = keyCountData === -1 ? lastKey - startKey + 1 : keyCountData;
+	const rimColor = Number(
+		get(sessionSettings).customize.pianoFields.pianoRimColor.replace('#', '0x')
+	);
 
 	const noteCanvas = new NoteCanvas(app, startKey, numOfKeys, 0, 0, scheme);
 	await noteCanvas.loadTexture();
 
-	const piano = new PixiPiano(app, startKey, numOfKeys, 0x550055, scheme);
+	const piano = new PixiPiano(app, startKey, numOfKeys, rimColor, scheme);
 	await piano.initKeys();
 
 	const conductor = new Conductor(app, piano, noteCanvas);

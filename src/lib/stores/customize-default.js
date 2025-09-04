@@ -48,8 +48,8 @@ const defaultVideoFields = [
 	{
 		sID: 'default',
 		video: {
-			quality: '1080p',
-			fps: '60'
+			quality: '360p',
+			fps: '30'
 		}
 	}
 ];
