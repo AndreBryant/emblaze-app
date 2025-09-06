@@ -3,7 +3,7 @@
 	import { Flame } from 'lucide-svelte';
 	export let label;
 
-	let version = 'v0.1';
+	let { version } = PKG;
 </script>
 
 <div class="space-y-5">
