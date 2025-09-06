@@ -8,23 +8,25 @@
 </script>
 
 <section class="flex flex-col gap-16 text-slate-50/80 backdrop-blur-sm">
-	<div class="flex flex-col gap-4 border-b border-slate-50/20 pb-4">
-		<h2 class="text-xl font-thin">Select Version Update</h2>
-		<select
-			bind:value={v}
-			class="peer max-w-80 cursor-pointer appearance-none overflow-ellipsis rounded-lg border border-secondary-dark/20 bg-secondary-acc/10 px-2 py-1 text-secondary-dark hover:bg-secondary-acc/20"
-		>
-			{#each Object.entries(changelogs) as data}
-				<option
-					value={data[0]}
-					selected={data[0] === v}
-					class="flex cursor-pointer gap-4 bg-primary/80 py-2"
-				>
-					v{data[0]}: {data[1].name}
-				</option>
-			{/each}
-		</select>
-		<span class="peer pointer-events-none absolute left-72 top-12 opacity-80"><ChevronDown /></span>
+	<div class="flex gap-4 border-b border-slate-50/20 pb-4">
+		<h2 class="text-xl font-thin">Select Version Update:</h2>
+		<div class="relative max-w-96">
+			<select
+				bind:value={v}
+				class="w-80 cursor-pointer appearance-none overflow-ellipsis rounded-sm border border-secondary-dark/20 bg-secondary-acc/10 px-2 py-1 text-secondary-dark hover:bg-secondary-acc/20"
+			>
+				{#each Object.entries(changelogs) as data}
+					<option
+						value={data[0]}
+						selected={data[0] === v}
+						class="flex cursor-pointer gap-4 bg-primary/80 py-2"
+					>
+						v{data[0]}: {data[1].name}
+					</option>
+				{/each}
+			</select>
+			<span class="pointer-events-none absolute right-1 top-1 opacity-80"><ChevronDown /></span>
+		</div>
 	</div>
 	<!-- Header Title -->
 	<div class="">
