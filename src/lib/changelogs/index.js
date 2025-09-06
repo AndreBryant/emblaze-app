@@ -2,7 +2,7 @@ export const changelogs = {
 	0.1: {
 		name: 'Custom Piano Canvas Update',
 		desc: 'Link all the settings from the customize tab to the MIDI Visualizer canvas',
-		status: 'integrating the settings to the MIDI Piano canvas renderer',
+		status: 'Integrating the settings to the MIDI Piano canvas renderer...',
 		additions: [
 			'Linked up "Number of keys field"',
 			'Linked up "Video settings"',
