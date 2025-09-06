@@ -8,7 +8,8 @@
 	import Audio from '../components/tab-settings/audio/Audio.svelte';
 	import Render from '../components/tab-settings/render/Render.svelte';
 	import SavedSettings from '../components/tab-settings/saved-settings/SavedSettings.svelte';
-	import { Info, Settings, Sparkles, Music, Video, Save } from 'lucide-svelte';
+	import { Info, Settings, Sparkles, Music, Video, Save, History } from 'lucide-svelte';
+	import Changelog from '../components/tab-settings/changelog/Changelog.svelte';
 
 	let items = [
 		{
@@ -53,6 +54,13 @@
 				'Here are your saved settings (these are stored in the local storage of the browser)',
 			value: 5,
 			component: SavedSettings
+		},
+		{
+			logo: History,
+			label: 'Changelog',
+			subtitle: 'Browse update changelogs',
+			value: 6,
+			component: Changelog
 		}
 	];
 </script>

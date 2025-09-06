@@ -1,4 +1,6 @@
 import * as PIXI from 'pixi.js';
+import { sessionSettings } from '../../stores/session-store';
+import { get } from 'svelte/store';
 
 const MOD_KEY_MAPPING = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 
@@ -26,7 +28,7 @@ export class NoteCanvas {
 		this.container = new PIXI.Container();
 		this.container.sortableChildren = true;
 
-		this.noteTexture = null;
+		this.noteBaseTexture = null;
 	}
 
 	reset() {
@@ -39,14 +41,14 @@ export class NoteCanvas {
 	async loadTexture() {
 		const texture = '/sprites/note-texture.png';
 		await PIXI.Assets.load([texture]).then(() => {
-			this.noteTexture = PIXI.Texture.from(texture);
+			this.noteBaseTexture = PIXI.Texture.from(texture);
 		});
 	}
 
-	startNote(midiKey, durationTicks, track, offset) {
+	startNote(midiKey, durationTicks, colorIndex, offset) {
 		if (midiKey < this.startKey || midiKey > this.lastKey) return;
 
-		const note = new PIXI.Sprite(this.noteTexture);
+		const note = new PIXI.NineSliceSprite(this.noteBaseTexture, 6, 6, 6, 6);
 		note.x = this.activeNotes[midiKey].x;
 		note.y = -durationTicks + offset;
 		note.zIndex = this.#checkType(midiKey);
@@ -54,7 +56,7 @@ export class NoteCanvas {
 		note.width = this.noteWidth * (this.#checkType(midiKey) ? 0.5 : 1);
 		note.height = durationTicks * this.scale;
 
-		note.tint = this.#getColor(track) + (this.#checkType(midiKey) ? -0x101010 : 0);
+		note.tint = this.#getColor(colorIndex) + (this.#checkType(midiKey) ? -0x101010 : 0);
 		this.activeNotes[midiKey].notes.push(note);
 		this.container.addChild(note);
 	}
@@ -130,7 +132,7 @@ export class NoteCanvas {
 		return MOD_KEY_MAPPING[keyIndex % 12];
 	}
 
-	#getColor(track) {
-		return this.scheme[track];
+	#getColor(index) {
+		return this.scheme[index];
 	}
 }

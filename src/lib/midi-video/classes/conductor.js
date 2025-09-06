@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { get, writable } from 'svelte/store';
 import { paused, midiData, isRecording } from '../../stores/midi-stores';
+import { sessionSettings } from '../../stores/session-store';
 
 export const currentTick = writable(0);
 export const lastTick = writable(1);
@@ -47,6 +48,7 @@ export class Conductor {
 		this.container = new PIXI.Container();
 		this.container.sortableChildren = true;
 		this.#addContainersToStage();
+		this.colorBy = get(sessionSettings).customize.colorScheme.colorBy;
 	}
 
 	reset() {
@@ -85,6 +87,7 @@ export class Conductor {
 		this.noteCanvas.setPpq(this.ppq);
 
 		this.#addContainersToStage();
+		this.colorBy = get(sessionSettings).customize.colorScheme.colorBy;
 	}
 
 	update(deltaTime) {
@@ -144,9 +147,11 @@ export class Conductor {
 			this.advancedNoteIndex < this.notes.length &&
 			this.notes[this.advancedNoteIndex].ticks <= this.currentTick + this.fallingNotesOffset
 		) {
-			const { midi, durationTicks, track, ticks } = this.notes[this.advancedNoteIndex];
+			const { midi, durationTicks, track, ticks, channel } = this.notes[this.advancedNoteIndex];
 			const offset = this.currentTick + this.fallingNotesOffset - ticks;
-			this.noteCanvas.startNote(midi, durationTicks, track, offset);
+			const colorIndex = this.colorBy === 'track' ? track : channel;
+
+			this.noteCanvas.startNote(midi, durationTicks, colorIndex, offset);
 			this.advancedNoteIndex++;
 		}
 
@@ -160,8 +165,10 @@ export class Conductor {
 			this.currentNoteIndex < this.notes.length &&
 			this.notes[this.currentNoteIndex].ticks <= this.currentTick
 		) {
-			const { midi, durationTicks, track, ticks } = this.notes[this.currentNoteIndex];
-			this.piano.playNote(midi, ticks, durationTicks, track);
+			const { midi, durationTicks, track, ticks, channel } = this.notes[this.currentNoteIndex];
+			const colorIndex = this.colorBy === 'track' ? track : channel;
+
+			this.piano.playNote(midi, ticks, durationTicks, colorIndex);
 			this.currentNoteIndex++;
 		}
 		this.piano.checkExpired(this.currentTick);
@@ -236,6 +243,7 @@ export class Conductor {
 			for (const [i, track] of this.tracks.entries()) {
 				const trackNotes = track.notes.map((n) => {
 					n.track = i;
+					n.channel = track.channel;
 					return n;
 				});
 				notes = notes.concat(trackNotes);
