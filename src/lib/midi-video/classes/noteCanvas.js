@@ -92,6 +92,10 @@ export class NoteCanvas {
 		this.noteSpeed = deltaTicks * this.scale;
 	}
 
+	setFallScale(scale) {
+		this.scale = scale;
+	}
+
 	setPpq(ppq) {
 		this.ppq = ppq;
 	}

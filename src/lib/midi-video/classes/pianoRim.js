@@ -51,6 +51,8 @@ export class PianoRim {
 			ps.height = particleHeight;
 			ps.width = isBlack ? wkWidth * 0.6 : wkWidth;
 
+			ps.opacity = 0.5;
+
 			return { sprite: ps, isPlaying: false };
 		});
 
@@ -72,13 +74,13 @@ export class PianoRim {
 		return this.container;
 	}
 
-	startParticle(keyIndex, track) {
+	startParticle(keyIndex, track = 0) {
 		const ps = this.particleSystems[keyIndex - this.startKey];
 		ps.sprite.visible = true;
 		ps.isPlaying = true;
 	}
 
-	stopParticle(keyIndex, track) {
+	stopParticle(keyIndex, track = 0) {
 		const ps = this.particleSystems[keyIndex - this.startKey];
 		ps.sprite.visible = false;
 		ps.isPlaying = false;
