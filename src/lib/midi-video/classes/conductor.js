@@ -97,8 +97,8 @@ export class Conductor {
 		if (this.isPaused || !this.midiData) return;
 
 		this.updateTempo();
-		this.updateNoteCanvas();
 		this.updatePiano();
+		this.updateNoteCanvas();
 		this.#movePointer(deltaTime);
 
 		if (this.currentTick >= this.lastTick) {

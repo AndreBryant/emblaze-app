@@ -10,6 +10,7 @@
 	import SavedSettings from '../components/tab-settings/saved-settings/SavedSettings.svelte';
 	import { Info, Settings, Sparkles, Music, Video, Save, History } from 'lucide-svelte';
 	import Changelog from '../components/tab-settings/changelog/Changelog.svelte';
+	import Toaster from '../components/Toaster/Toaster.svelte';
 
 	let items = [
 		{
@@ -74,3 +75,5 @@
 	<Sidebar {items} />
 	<MainContent {items} />
 </div>
+
+<Toaster />

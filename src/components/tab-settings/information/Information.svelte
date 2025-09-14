@@ -44,13 +44,13 @@
 	}
 </script>
 
-<div class="flex flex-col gap-8 w-full backdrop-blur-sm">
+<div class="flex w-full flex-col gap-8 backdrop-blur-sm">
 	{#if !$midiData}
 		<NoFileLoaded />
 	{:else}
-		<div class="flex flex-col gap-4 mr-8">
+		<div class="mr-8 flex flex-col gap-4">
 			<!-- <pre>{JSON.stringify($midiData, null, 2)}</pre> -->
-			<ul class="flex flex-col gap-8 w-full lg:w-[30vw]">
+			<ul class="flex w-full flex-col gap-8 lg:w-[30vw]">
 				<li>
 					<Table data={fileData} />
 				</li>

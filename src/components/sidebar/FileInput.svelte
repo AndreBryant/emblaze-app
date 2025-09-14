@@ -1,4 +1,5 @@
 <script>
+	import { addToast } from '$lib/stores/toastStore.js';
 	import Button from '../Buttons/Button.svelte';
 	import { FileX2, FileCheck2, File, LoaderCircle } from 'lucide-svelte';
 	import { isSidebarCollapsed } from '$lib/stores/app-stores.js';
@@ -12,6 +13,8 @@
 		if (midiFile) {
 			isLoading = true;
 
+			addToast(`MIDI file is loading`, 'info');
+
 			worker = new Worker(new URL('$lib/workers/midiWorker.js', import.meta.url), {
 				type: 'module'
 			});
@@ -24,9 +27,11 @@
 					$midiData = result;
 					$filename = midiFile.name;
 					$midiLoaded = true;
+					addToast(`MIDI file: ${$filename} finished loading`, 'success');
 				} else {
 					console.error('MIDI parse error:', error);
 					$midiLoaded = false;
+					addToast(`MIDI file: ${$filename} failed to load`, 'fail');
 				}
 
 				worker.terminate();
@@ -41,10 +46,12 @@
 	};
 
 	const unloadFile = () => {
+		const midiName = $filename;
 		$filename = '';
 		$midiData = null;
 		$midiLoaded = false;
 		document.getElementById('midi-file').value = null;
+		addToast(`MIDI file: ${midiName} unloaded successfully`, 'success');
 	};
 
 	$: isLoading;
