@@ -1,6 +1,6 @@
 <script>
 	import { removeToast } from '$lib/stores/toastStore.js';
-	import { Info, TriangleAlert, Sword, Skull } from 'lucide-svelte';
+	import { Info, CircleCheck, CircleX, CircleAlert, Box } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 
 	export let toast = null;
@@ -25,15 +25,15 @@
 >
 	<div class="">
 		{#if toast.type === 'info'}
-			<Info />
+			<Info class="text-acc-1-light" />
 		{:else if toast.type === 'success'}
-			<TriangleAlert />
+			<CircleCheck class="text-green-600" />
 		{:else if toast.type === 'fail'}
-			<TriangleAlert />
+			<CircleX class="text-red-600" />
 		{:else if toast.type === 'warning'}
-			<Sword />
+			<CircleAlert class="text-red-600" />
 		{:else if toast.type === 'render'}
-			<Skull />
+			<Box class="text-acc-1-light" />
 		{/if}
 	</div>
 	<div>
