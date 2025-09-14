@@ -58,7 +58,7 @@
 		}
 		to {
 			opacity: 0;
-			transform: translateX(25%);
+			transform: translateX(10%);
 		}
 	}
 </style>

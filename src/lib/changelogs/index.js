@@ -7,7 +7,8 @@ export const changelogs = {
 			'Linked up "Number of keys field"',
 			'Linked up "Video settings"',
 			'Linked up Piano Rim color',
-			'linked up Color Scheme "Color By"'
+			'linked up Color Scheme "Color By"',
+			'Added Toaster Component'
 		],
 		todo: ['Implement Note Speed and note sizing', 'Implement note Type']
 	},

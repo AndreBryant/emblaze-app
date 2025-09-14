@@ -1,4 +1,5 @@
 <script>
+	import { addToast } from '$lib/stores/toastStore.js';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { ids, loadedSetting } from '$lib/stores/customize-stores.js';
 
@@ -17,6 +18,7 @@
 		dispatch('loadSave', {
 			id: selected
 		});
+		addToast(`Loaded ${selected} setting successfully.`, 'info');
 	};
 
 	const setSelected = (id) => {
@@ -35,12 +37,12 @@
 <!-- load Saved Setting -->
 <div class="flex flex-col gap-4">
 	<h3 class="text-lg font-semibold">Load Saved Settings</h3>
-	<div class="flex gap-2 items-center w-full lg:w-5/12 text-secondary-dark">
+	<div class="flex w-full items-center gap-2 text-secondary-dark lg:w-5/12">
 		<pre>Selected:</pre>
 		<select
 			name=""
 			id=""
-			class="bg-primary border border-secondary-acc px-2 py-1 w-full"
+			class="w-full border border-secondary-acc bg-primary px-2 py-1"
 			bind:value={selected}
 			on:change={handleSelect}
 		>

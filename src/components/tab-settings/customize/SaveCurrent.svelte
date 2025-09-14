@@ -1,4 +1,5 @@
 <script>
+	import { addToast } from '$lib/stores/toastStore.js';
 	import { hasError, ids, loadedSetting } from '$lib/stores/customize-stores.js';
 	import { createEventDispatcher } from 'svelte';
 	import { TriangleAlert } from 'lucide-svelte';
@@ -22,12 +23,14 @@
 			$hasError[field].value = true;
 			$hasError[field].errors = [];
 			$hasError[field].errors.push(errMsg);
+			addToast(errMsg, 'fail');
 			return;
 		} else if (checkForErrors($hasError)) {
 			const errMsg = 'Error: Unable to save as there are error in other fields.';
 			$hasError[field].value = true;
 			$hasError[field].errors = [];
 			$hasError[field].errors.push(errMsg);
+			addToast(errMsg, 'fail');
 			return;
 		}
 
@@ -49,6 +52,7 @@
 				id: name,
 				overwrite: true // TODO: handle this later
 			});
+			addToast(`${name} setting saved successfully`, 'success');
 
 			name = '';
 			description = '';
