@@ -168,10 +168,11 @@ export class Conductor {
 			this.currentNoteIndex < this.notes.length &&
 			this.notes[this.currentNoteIndex].ticks <= this.currentTick
 		) {
-			const { midi, durationTicks, track, ticks, channel } = this.notes[this.currentNoteIndex];
+			const { midi, durationTicks, track, ticks, channel, duration, velocity } =
+				this.notes[this.currentNoteIndex];
 			const colorIndex = this.colorBy === 'track' ? track : channel;
 
-			this.piano.playNote(midi, ticks, durationTicks, colorIndex);
+			this.piano.playNote(midi, ticks, durationTicks, velocity, duration, colorIndex);
 			this.currentNoteIndex++;
 		}
 		this.piano.checkExpired(this.currentTick);
@@ -184,6 +185,7 @@ export class Conductor {
 
 	async seekLeft() {
 		if (!this.midiData) return;
+
 		const wasPaused = this.isPaused;
 
 		if (!wasPaused) paused.set(true);

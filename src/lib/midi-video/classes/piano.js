@@ -1,5 +1,8 @@
 import * as PIXI from 'pixi.js';
 import { PianoRim } from './pianoRim';
+import { pianoSf } from './piano-soundfont.js';
+import { get } from 'svelte/store';
+import { paused } from '../../stores/midi-stores.js';
 
 const MOD_KEY_MAPPING = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 const WHITE_KEY_URL = '/sprites/white-key.png';
@@ -119,11 +122,11 @@ export class PixiPiano {
 		this.#addToContainer();
 	}
 
-	playNote(keyIndex, start, duration, colorIndex) {
+	playNote(keyIndex, start, durationTicks, velocity, duration, colorIndex) {
 		// play note if midikey is only within the range [startKey, lastKey]
 		if (keyIndex > this.lastKey || keyIndex < this.startKey) return;
 
-		const note = { start: start, duration: duration, track: colorIndex };
+		const note = { start: start, duration: durationTicks, track: colorIndex };
 		this.activeNotes[keyIndex].notes.push(note);
 		this.activeNotes[keyIndex].notes.sort((a, b) => b.track - a.track);
 
@@ -132,6 +135,15 @@ export class PixiPiano {
 			this.#getColor(colorIndex) + (this.#checkType(keyIndex) ? -0x101010 : 0x0f0f0f),
 			true
 		);
+
+		if (velocity > 0.1 && !get(paused)) {
+			// idk try to filter out some silent notes
+			pianoSf.start({
+				note: keyIndex,
+				velocity: velocity * 128,
+				duration
+			});
+		}
 
 		// const rim = this.graphics.keyRim;
 		// rim.startParticle(keyIndex, colorIndex);

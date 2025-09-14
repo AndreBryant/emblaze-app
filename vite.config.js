@@ -9,5 +9,8 @@ const pkg = JSON.parse(json);
 
 export default defineConfig({
 	plugins: [sveltekit()],
+
+	assetsInclude: ['**/*.sf2'],
+
 	define: { PKG: pkg }
 });

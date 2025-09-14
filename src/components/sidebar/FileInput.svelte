@@ -13,7 +13,7 @@
 		if (midiFile) {
 			isLoading = true;
 
-			addToast(`MIDI file is loading`, 'info');
+			addToast(`MIDI file is loading...`, 'info');
 
 			worker = new Worker(new URL('$lib/workers/midiWorker.js', import.meta.url), {
 				type: 'module'
@@ -27,11 +27,11 @@
 					$midiData = result;
 					$filename = midiFile.name;
 					$midiLoaded = true;
-					addToast(`MIDI file: ${$filename} finished loading`, 'success');
+					addToast(`MIDI file: ${$filename} finished loading.`, 'success');
 				} else {
 					console.error('MIDI parse error:', error);
 					$midiLoaded = false;
-					addToast(`MIDI file: ${$filename} failed to load`, 'fail');
+					addToast(`MIDI file: ${$filename} failed to load.`, 'fail');
 				}
 
 				worker.terminate();
@@ -51,7 +51,7 @@
 		$midiData = null;
 		$midiLoaded = false;
 		document.getElementById('midi-file').value = null;
-		addToast(`MIDI file: ${midiName} unloaded successfully`, 'success');
+		addToast(`MIDI file: ${midiName} unloaded successfully.`, 'success');
 	};
 
 	$: isLoading;
