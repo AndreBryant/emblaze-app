@@ -15,7 +15,7 @@
 
 <div
 	bind:this={toaster}
-	class="toaster fixed right-0 top-0 flex h-96 w-96 flex-col overflow-y-auto opacity-80 transition-all"
+	class="toaster fixed bottom-0 right-0 flex h-96 w-full flex-col-reverse overflow-y-auto transition-all lg:bottom-auto lg:top-0 lg:w-96 lg:flex-col"
 >
 	{#each $toasts as toast}
 		<Toast {toast} />
