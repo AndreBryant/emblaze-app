@@ -133,8 +133,8 @@ export class PixiPiano {
 			true
 		);
 
-		const rim = this.graphics.keyRim;
-		// rim.startParticle(keyIndex, track);
+		// const rim = this.graphics.keyRim;
+		// rim.startParticle(keyIndex, colorIndex);
 	}
 
 	checkExpired(currentTick) {

@@ -10,41 +10,49 @@
 	import SavedSettings from '../components/tab-settings/saved-settings/SavedSettings.svelte';
 	import { Info, Settings, Sparkles, Music, Video, Save, History } from 'lucide-svelte';
 	import Changelog from '../components/tab-settings/changelog/Changelog.svelte';
+	import Toaster from '../components/Toaster/Toaster.svelte';
 
 	let items = [
+		{
+			logo: History,
+			label: 'Changelog',
+			subtitle: 'Browse update changelogs',
+			value: 0,
+			component: Changelog
+		},
 		{
 			logo: Info,
 			label: 'MIDI Information',
 			subtitle: 'Specific details about the MIDI file.',
-			value: 0,
+			value: 1,
 			component: Information
 		},
 		{
 			logo: Settings,
 			label: 'Customize',
 			subtitle: 'Set the MIDI video configuration.',
-			value: 1,
+			value: 2,
 			component: Customize
 		},
 		{
 			logo: Sparkles,
 			label: 'Filters',
 			subtitle: 'Add filters and other effects',
-			value: 2,
+			value: 3,
 			component: Filters
 		},
 		{
 			logo: Music,
 			label: 'Audio',
 			subtitle: 'Configure the audio for the video.',
-			value: 3,
+			value: 4,
 			component: Audio
 		},
 		{
 			logo: Video,
 			label: 'Render/Preview',
 			subtitle: 'See how your video looks like before rendering.',
-			value: 4,
+			value: 5,
 			component: Render
 		},
 		{
@@ -52,15 +60,8 @@
 			label: 'Saved Settings',
 			subtitle:
 				'Here are your saved settings (these are stored in the local storage of the browser)',
-			value: 5,
-			component: SavedSettings
-		},
-		{
-			logo: History,
-			label: 'Changelog',
-			subtitle: 'Browse update changelogs',
 			value: 6,
-			component: Changelog
+			component: SavedSettings
 		}
 	];
 </script>
@@ -74,3 +75,5 @@
 	<Sidebar {items} />
 	<MainContent {items} />
 </div>
+
+<Toaster />

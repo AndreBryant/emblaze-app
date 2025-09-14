@@ -32,8 +32,10 @@ export class Conductor {
 		this.advancedNoteIndex = 0;
 
 		// Position in MIDI File
+		this.scale = 1;
 		this.currentTick = this.fallingNotesOffset * -1;
-		this.fallingNotesOffset = this.app.canvas.height - this.piano.getKeyboardHeight();
+		this.fallingNotesOffset =
+			(this.app.canvas.height - this.piano.getKeyboardHeight()) * this.scale;
 
 		// Flags (and other user controlled values)
 		this.isPaused = true;
@@ -49,6 +51,7 @@ export class Conductor {
 		this.container.sortableChildren = true;
 		this.#addContainersToStage();
 		this.colorBy = get(sessionSettings).customize.colorScheme.colorBy;
+		this.noteCanvas.setFallScale(this.scale);
 	}
 
 	reset() {
@@ -94,8 +97,8 @@ export class Conductor {
 		if (this.isPaused || !this.midiData) return;
 
 		this.updateTempo();
-		this.updateNoteCanvas();
 		this.updatePiano();
+		this.updateNoteCanvas();
 		this.#movePointer(deltaTime);
 
 		if (this.currentTick >= this.lastTick) {

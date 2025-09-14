@@ -6,6 +6,7 @@ import { CCapture } from 'ccapture.js-npmfixed';
 
 import { midiData, paused, isRecording } from '../stores/midi-stores';
 import { sessionSettings } from '../stores/session-store';
+import { addToast } from '../stores/toastStore';
 
 export const createPixiSketch = async (PIXI, canvas) => {
 	const app = new PIXI.Application();
@@ -107,6 +108,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 		if (loaded) {
 			if (recording && !isCapturing) {
 				capturer.start();
+				addToast('Rendering Started.', 'info');
 				isCapturing = true;
 			}
 
@@ -118,6 +120,7 @@ export const createPixiSketch = async (PIXI, canvas) => {
 			if (!recording && isCapturing) {
 				capturer.stop();
 				capturer.save();
+				addToast('Rendering Finished.', 'info');
 
 				isCapturing = false;
 				isRecording.set(false);
