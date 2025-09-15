@@ -19,7 +19,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-	class="toast flex w-full cursor-pointer items-center gap-4 rounded-lg border border-slate-50/20 bg-primary/20 p-4 backdrop-blur-sm hover:bg-secondary/5"
+	class="toast pointer-events-auto flex w-full cursor-pointer items-center gap-4 rounded-lg border border-slate-50/20 bg-primary/20 p-4 backdrop-blur-sm hover:bg-secondary/5"
 	class:exiting={isExiting}
 	on:click={startExit}
 >
